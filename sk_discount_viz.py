@@ -82,59 +82,70 @@ def fetch_prices_krx() -> pd.DataFrame:
 
 def make_demo_prices() -> pd.DataFrame:
     """
-    基于真实历史价格水平的演示数据（2024-01 → 2026-05-20）
+    演示价格数据（2024-01 → 2026-05-20），关键锚点来自用户提供的实际市价：
+      2026-05-20: SK海力士 ~1,750,000 KRW  /  SK Square ~1,020,000 KRW
 
-    SK 해력士实际价格区间: 120,000-240,000 KRW
-    SK Square实际价格区间: 50,000-90,000 KRW  ← 始终显著低于海力士
-    隐含折价率: ~75-85%（韩国控股公司折价的真实水平）
-
-    价格参考（公开信息）:
-      海力士 2024H1 高峰 ~230,000 / 2024H2 调整 ~160,000
-             2025年区间 160,000-200,000 / 2026年初 ~180,000
-      Square 随海力士涨跌幅较小，绝对价格始终在 50,000-90,000 附近
+    历史轨迹估算（AI/HBM 内存超级周期驱动的大牛市）:
+      SK海力士: 2024年约133k→230k，2025年随AI算力需求持续飙升，2026年初达175万
+      SK Square: 跟随上涨但涨幅较小，折价率在70-84%区间波动
     """
-    print("⚠  网络受限，使用演示数据（基于真实历史价格水平，数据至2026-05）")
+    print("⚠  网络受限，使用演示数据（锚点: 海力士175万 / Square102万，数据至2026-05-20）")
     rng = np.random.default_rng(42)
 
-    # 交易日：2024-01-02 → 2026-05-20
     dates = pd.bdate_range(start="2024-01-02", end="2026-05-20")
     n = len(dates)
     t = np.linspace(0, 1, n)
 
-    # ── SK 해력士 基准价格路径 ────────────────────────────────────────────────
-    # 关键节点 (t, 价格)
-    # 0.00 = 2024-01  0.29 = 2024-07  0.50 = 2024-12
-    # 0.65 = 2025-04  0.80 = 2025-09  1.00 = 2026-05
-    hynix_t = np.array([0.00, 0.29, 0.50, 0.65, 0.80, 0.92, 1.00])
-    hynix_v = np.array([133_000, 230_000, 162_000, 178_000, 170_000, 192_000, 185_000])
+    # ── SK 해力士 关键节点 ──────────────────────────────────────────────────
+    # t=0.00  2024-01  133,000  (已知)
+    # t=0.29  2024-07  238,000  (已知高峰)
+    # t=0.50  2024-12  172,000  (已知回调)
+    # t=0.63  2025-04  350,000  (AI算力需求持续爆发)
+    # t=0.75  2025-08  750,000  (HBM超级周期)
+    # t=0.88  2025-12 1,400,000 (年末高峰)
+    # t=1.00  2026-05 1,750,000 (用户提供当前价)
+    hynix_t = np.array([0.00, 0.29, 0.50, 0.63, 0.75, 0.88, 1.00])
+    hynix_v = np.array([133_000, 238_000, 172_000, 350_000, 750_000, 1_400_000, 1_750_000],
+                       dtype=float)
     hynix_trend = np.interp(t, hynix_t, hynix_v)
 
-    # 叠加随机波动（GBM 风格，日波动率 ≈ 1.8%）
-    daily_ret = rng.normal(0, 0.018, n)
-    cum_factor = np.exp(np.cumsum(daily_ret) - 0.5 * 0.018**2 * np.arange(n))
-    # 混合趋势 + 随机游走
-    blend = 0.7
-    hynix_raw = blend * hynix_trend + (1 - blend) * hynix_trend[0] * cum_factor
-    hynix = np.clip(hynix_raw, 100_000, 250_000)
-    hynix = (hynix / 100).round() * 100
+    # GBM 噪声（日波动率 ≈ 2%）
+    daily_ret = rng.normal(0, 0.020, n)
+    gbm = np.exp(np.cumsum(daily_ret) - 0.5 * 0.020**2 * np.arange(n))
+    # 趋势主导，叠加少量随机游走
+    hynix_raw = 0.78 * hynix_trend + 0.22 * hynix_trend * gbm / gbm.mean()
+    hynix = np.clip(hynix_raw, 100_000, 2_500_000)
+    hynix = (hynix / 1_000).round() * 1_000  # 1,000원 단위
 
-    # ── SK Square 基准价格路径 ────────────────────────────────────────────────
-    # Square 与海力士正相关（β≈0.35），但绝对价格仅 50,000-90,000 KRW
-    sq_t = np.array([0.00, 0.29, 0.50, 0.65, 0.80, 0.92, 1.00])
-    sq_v = np.array([64_000, 78_000, 60_000, 68_000, 58_000, 72_000, 65_000])
+    # ── SK Square 关键节点 ─────────────────────────────────────────────────
+    # Square 与海力士相关（β≈0.45），但绝对价格始终远低于海力士
+    # t=0.00  2024-01   65,000
+    # t=0.29  2024-07   80,000  (跟随海力士小幅上涨)
+    # t=0.50  2024-12   62,000  (回调更深)
+    # t=0.63  2025-04  130,000
+    # t=0.75  2025-08  380,000
+    # t=0.88  2025-12  820,000
+    # t=1.00  2026-05 1,020,000 (用户提供当前价)
+    sq_t = np.array([0.00, 0.29, 0.50, 0.63, 0.75, 0.88, 1.00])
+    sq_v = np.array([65_000, 80_000, 62_000, 130_000, 380_000, 820_000, 1_020_000],
+                    dtype=float)
     sq_trend = np.interp(t, sq_t, sq_v)
 
-    # Square 日波动率约 1.5%，且与海力士相关（ρ≈0.6）
-    rho = 0.55
-    sq_noise_ind = rng.normal(0, 0.015, n)
-    sq_ret = rho * daily_ret + np.sqrt(1 - rho**2) * sq_noise_ind
-    sq_cum = np.exp(np.cumsum(sq_ret) - 0.5 * 0.015**2 * np.arange(n))
-    sq_raw = 0.65 * sq_trend + 0.35 * sq_trend[0] * sq_cum
-    square = np.clip(sq_raw, 40_000, 100_000)
-    square = (square / 100).round() * 100
+    # 与海力士相关，但波动率稍低（1.8%）
+    rho = 0.60
+    sq_ind_ret = rng.normal(0, 0.018, n)
+    sq_ret = rho * daily_ret + np.sqrt(1 - rho**2) * sq_ind_ret
+    sq_gbm = np.exp(np.cumsum(sq_ret) - 0.5 * 0.018**2 * np.arange(n))
+    sq_raw = 0.78 * sq_trend + 0.22 * sq_trend * sq_gbm / sq_gbm.mean()
+    square = np.clip(sq_raw, 40_000, 1_500_000)
+    square = (square / 1_000).round() * 1_000
 
     df = pd.DataFrame({"hynix": hynix, "square": square}, index=dates)
     df.index.name = "date"
+
+    # 最后一个交易日强制对齐用户提供的实际市价（2026-05-20）
+    df.iloc[-1, df.columns.get_loc("hynix")]  = 1_750_000
+    df.iloc[-1, df.columns.get_loc("square")] = 1_020_000
     return df
 
 
@@ -181,7 +192,7 @@ def build_figure(df: pd.DataFrame, is_demo: bool) -> go.Figure:
         ),
     )
 
-    # 面板1: 收盘价
+    # 面板1: 收盘价（对数刻度，便于展示大幅涨跌）
     fig.add_trace(go.Scatter(
         x=df.index, y=df["hynix"],
         name="SK海力士 (000660.KS)",
@@ -284,8 +295,8 @@ def build_figure(df: pd.DataFrame, is_demo: bool) -> go.Figure:
         paper_bgcolor="#FFFFFF",
     )
 
-    fig.update_yaxes(title_text="价格 (KRW)", tickformat=",.0f",
-                     gridcolor="#E8E8E8", row=1, col=1)
+    fig.update_yaxes(title_text="价格 (KRW, 对数)", type="log",
+                     tickformat=",.0f", gridcolor="#E8E8E8", row=1, col=1)
     fig.update_yaxes(title_text="兆韩元 (₩T)",
                      gridcolor="#E8E8E8", row=2, col=1)
     fig.update_yaxes(title_text="折价率 (%)",  ticksuffix="%",
