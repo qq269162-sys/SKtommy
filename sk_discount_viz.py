@@ -1,7 +1,11 @@
 """
 SK Square vs SK Hynix 折价动态可视化
 持股关系: SK Square 持有 SK 海力士约 20.07% 股份
-折价率 = 1 - SK Square市值 / (SK Hynix持仓市值 + SK Square其他净资产)
+
+折价率 = 1 - SK Square市值 / (20.07% × SK海力士总市值)
+
+说明: SK Square其他净资产仅占持仓市值的 ~1%，忽略不计。
+      负债极少，同样忽略。纯市值法最直观。
 
 用法:
   python sk_discount_viz.py           # 自动获取实时数据（需 Yahoo Finance 访问权限）
@@ -26,7 +30,6 @@ SK_SQUARE_TOTAL_SHARES =  71_674_000
 SK_SQUARE_HYNIX_STAKE  = 0.2007
 
 SK_SQUARE_HYNIX_SHARES = int(SK_HYNIX_TOTAL_SHARES * SK_SQUARE_HYNIX_STAKE)
-OTHER_NET_ASSETS_KRW   = 2_500_000_000_000   # SK Square 기타 순자산 추정 2.5조 원
 
 PERIOD = "2y"
 
@@ -266,12 +269,21 @@ def fetch_prices(force_demo: bool = False) -> pd.DataFrame:
 # ── 计算折价率 ─────────────────────────────────────────────────────────────────
 
 def calc_nav_discount(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    纯市值法：
+      SK Square持仓市值 = SK_SQUARE_HYNIX_STAKE × 海力士股价 × 海力士总股数
+      SK Square自身市值 = Square股价 × Square总股数
+      折价率 = 1 - SK Square市值 / 持仓市值
+    """
     df = df.copy()
-    df["nav_total"]     = SK_SQUARE_HYNIX_SHARES * df["hynix"] + OTHER_NET_ASSETS_KRW
-    df["nav_per_share"] = df["nav_total"] / SK_SQUARE_TOTAL_SHARES
-    df["discount_pct"]  = (1 - df["square"] / df["nav_per_share"]) * 100
-    df["sq_mktcap_t"]   = df["square"] * SK_SQUARE_TOTAL_SHARES / 1e12
-    df["nav_total_t"]   = df["nav_total"] / 1e12
+    # 持仓市值 (兆 KRW)
+    df["stake_t"]      = SK_SQUARE_HYNIX_STAKE * df["hynix"] * SK_HYNIX_TOTAL_SHARES / 1e12
+    # SK Square 自身市值 (兆 KRW)
+    df["sq_mktcap_t"]  = df["square"] * SK_SQUARE_TOTAL_SHARES / 1e12
+    # P/NAV 比率 (%)：Square市值占持仓市值的比例
+    df["pnav_pct"]     = df["sq_mktcap_t"] / df["stake_t"] * 100
+    # 折价率 (%)：比 NAV 便宜多少
+    df["discount_pct"] = 100 - df["pnav_pct"]
     return df
 
 
@@ -307,10 +319,10 @@ def build_figure(df: pd.DataFrame, is_demo: bool) -> go.Figure:
 
     # 面板2: 市值 vs NAV
     fig.add_trace(go.Scatter(
-        x=df.index, y=df["nav_total_t"],
-        name="NAV (兆₩)",
+        x=df.index, y=df["stake_t"],
+        name="持仓市值 (20.07%×海力士, 兆₩)",
         line=dict(color="#2A9D8F", width=1.8, dash="dot"),
-        hovertemplate="%{x|%Y-%m-%d}<br>NAV: ₩%{y:.2f}兆<extra></extra>",
+        hovertemplate="%{x|%Y-%m-%d}<br>持仓市值: ₩%{y:.1f}兆<extra></extra>",
     ), row=2, col=1)
 
     fig.add_trace(go.Scatter(
@@ -319,7 +331,7 @@ def build_figure(df: pd.DataFrame, is_demo: bool) -> go.Figure:
         line=dict(color="#457B9D", width=1.8),
         fill="tonexty",
         fillcolor="rgba(69,123,157,0.14)",
-        hovertemplate="%{x|%Y-%m-%d}<br>市值: ₩%{y:.2f}兆<extra></extra>",
+        hovertemplate="%{x|%Y-%m-%d}<br>Square市值: ₩%{y:.1f}兆<extra></extra>",
     ), row=2, col=1)
 
     # 面板3: 折价率
@@ -372,10 +384,13 @@ def build_figure(df: pd.DataFrame, is_demo: bool) -> go.Figure:
         title=dict(
             text=(
                 f"SK Square 持有 SK海力士 ({SK_SQUARE_HYNIX_STAKE*100:.2f}%) 折价动态{demo_flag}<br>"
-                f"<sup>最新折价率 <b style='color:#E63946'>{latest['discount_pct']:.1f}%</b>  |  "
-                f"SK海力士 ₩{latest['hynix']:,.0f}  |  "
-                f"SK Square ₩{latest['square']:,.0f}  |  "
-                f"NAV/股 ₩{latest['nav_per_share']:,.0f}  |  {latest_dt}</sup>"
+                f"<sup>"
+                f"折价率 <b style='color:#E63946'>{latest['discount_pct']:.1f}%</b>  "
+                f"(P/NAV {latest['pnav_pct']:.1f}%)  |  "
+                f"海力士 ₩{latest['hynix']:,.0f}  |  "
+                f"Square ₩{latest['square']:,.0f}  |  "
+                f"持仓市值 ₩{latest['stake_t']:.1f}兆  |  {latest_dt}"
+                f"</sup>"
             ),
             font=dict(size=17),
             x=0.5,
@@ -421,19 +436,21 @@ def build_figure(df: pd.DataFrame, is_demo: bool) -> go.Figure:
 
 def print_summary(df: pd.DataFrame) -> None:
     l = df.iloc[-1]
-    print("\n" + "═" * 58)
-    print("  SK Square / SK海力士 折价分析摘要")
-    print("═" * 58)
-    print(f"  最新 SK海力士 收盘价  : ₩{l['hynix']:>12,.0f}")
-    print(f"  最新 SK Square 收盘价 : ₩{l['square']:>12,.0f}")
-    print(f"  最新 NAV/股           : ₩{l['nav_per_share']:>12,.0f}")
-    print(f"  最新折价率            :  {l['discount_pct']:>10.1f}%")
-    print("─" * 58)
-    print(f"  历史平均折价率        :  {df['discount_pct'].mean():>10.1f}%")
-    print(f"  历史最小折价率        :  {df['discount_pct'].min():>10.1f}%")
-    print(f"  历史最大折价率        :  {df['discount_pct'].max():>10.1f}%")
-    print(f"  数据区间              :  {df.index[0].date()} → {df.index[-1].date()}")
-    print("═" * 58)
+    print("\n" + "═" * 62)
+    print("  SK Square / SK海力士 折价分析摘要  (纯市值法)")
+    print("═" * 62)
+    print(f"  SK海力士 收盘价          : ₩{l['hynix']:>13,.0f}")
+    print(f"  SK Square 收盘价         : ₩{l['square']:>13,.0f}")
+    print(f"  20.07%海力士持仓市值     : ₩{l['stake_t']:>12.1f} 兆")
+    print(f"  SK Square 自身市值       : ₩{l['sq_mktcap_t']:>12.1f} 兆")
+    print(f"  P/NAV 比率               :  {l['pnav_pct']:>10.1f}%  (Square市值/持仓市值)")
+    print(f"  折价率                   :  {l['discount_pct']:>10.1f}%  (= 1 - P/NAV)")
+    print("─" * 62)
+    print(f"  历史平均折价率           :  {df['discount_pct'].mean():>10.1f}%")
+    print(f"  历史最小折价率           :  {df['discount_pct'].min():>10.1f}%")
+    print(f"  历史最大折价率           :  {df['discount_pct'].max():>10.1f}%")
+    print(f"  数据区间                 :  {df.index[0].date()} → {df.index[-1].date()}")
+    print("═" * 62)
 
 
 # ── 主程序 ─────────────────────────────────────────────────────────────────────
