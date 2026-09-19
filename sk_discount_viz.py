@@ -456,7 +456,7 @@ if __name__ == "__main__":
     fig = build_figure(df, is_demo=demo_mode)
 
     out_html = "/home/user/SKtommy/sk_discount_visualization.html"
-    fig.write_html(out_html, include_plotlyjs="cdn")
+    fig.write_html(out_html, include_plotlyjs=True)
     print(f"\n交互式图表已保存: {out_html}")
 
     try:
