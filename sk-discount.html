@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SK Square 折价追踪(离线版)</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --plane:#f2f2f0; --surface:#fbfbfa; --sunken:#ececeb;
+    --ink:#111214; --ink-2:#55565c; --muted:#8a8b92;
+    --rule:#e0e0dc; --rule-soft:#ebebe7;
+    --s1:#2a78d6; --s1-wash:rgba(42,120,214,.13); --s1-wash-2:rgba(42,120,214,.05);
+    --s2:#eb6834; --par:#9a9ba1; --focus:#2a78d6;
+    --shadow:0 1px 2px rgba(17,18,20,.05), 0 8px 24px -16px rgba(17,18,20,.22);
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --plane:#0e0e10; --surface:#171719; --sunken:#1e1e21;
+      --ink:#f4f4f3; --ink-2:#b4b5ba; --muted:#84858b;
+      --rule:#2a2a2d; --rule-soft:#232326;
+      --s1:#3987e5; --s1-wash:rgba(57,135,229,.20); --s1-wash-2:rgba(57,135,229,.06);
+      --s2:#d95926; --par:#75767c; --focus:#3987e5;
+      --shadow:0 1px 2px rgba(0,0,0,.5), 0 8px 24px -16px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"] {
+    --plane:#0e0e10; --surface:#171719; --sunken:#1e1e21;
+    --ink:#f4f4f3; --ink-2:#b4b5ba; --muted:#84858b;
+    --rule:#2a2a2d; --rule-soft:#232326;
+    --s1:#3987e5; --s1-wash:rgba(57,135,229,.20); --s1-wash-2:rgba(57,135,229,.06);
+    --s2:#d95926; --par:#75767c; --focus:#3987e5;
+    --shadow:0 1px 2px rgba(0,0,0,.5), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--plane);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%}
+  .sheet{max-width:960px;margin:0 auto;padding-inline:20px;padding-block:40px 56px;display:flex;flex-direction:column;gap:34px}
+  @media (max-width:560px){.sheet{padding-inline:16px;padding-block:26px 40px;gap:26px}}
+
+  .eyebrow{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  h1{font-size:clamp(29px,6.2vw,42px);line-height:1.1;font-weight:650;letter-spacing:-.022em;margin:10px 0 0;text-wrap:balance}
+  .standfirst{margin:12px 0 0;max-width:54ch;font-size:16px;color:var(--ink-2)}
+  .asof{margin-top:16px;padding-top:14px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+
+  h2{font-size:13px;font-weight:650;letter-spacing:.055em;text-transform:uppercase;color:var(--ink-2);margin:0 0 14px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  h2 .n{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:500;text-transform:none;letter-spacing:0}
+  .panel{background:var(--surface);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow)}
+
+  /* instrument */
+  .instrument{padding:26px 24px 22px}
+  @media (max-width:560px){.instrument{padding:20px 16px 18px}}
+  .readout{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 32px}
+  .figure{display:flex;align-items:baseline;gap:4px}
+  .figure .won{font-family:var(--mono);font-size:clamp(22px,4.6vw,30px);color:var(--muted);line-height:1}
+  .figure .val{font-family:var(--mono);font-size:clamp(52px,12vw,76px);font-weight:600;letter-spacing:-.035em;line-height:.92;color:var(--s1);font-variant-numeric:tabular-nums}
+  .figure-cap{font-size:13.5px;color:var(--ink-2);padding-bottom:6px;max-width:24ch}
+  .figure-cap b{color:var(--ink);font-weight:650}
+  .sidestats{display:flex;gap:26px;padding-bottom:6px;margin-left:auto}
+  @media (max-width:640px){.sidestats{margin-left:0;width:100%;padding-top:4px}}
+  .sidestat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .sidestat .v{font-family:var(--mono);font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.3}
+
+  .bars{margin-top:24px;display:flex;flex-direction:column;gap:11px}
+  .bar-row{display:grid;grid-template-columns:62px 1fr;align-items:center;gap:12px}
+  @media (max-width:480px){.bar-row{grid-template-columns:52px 1fr;gap:9px}}
+  .bar-label{font-size:12.5px;color:var(--ink-2);text-align:right;white-space:nowrap}
+  .bar-track{position:relative;height:40px;background:var(--sunken);border-radius:3px;overflow:hidden}
+  .bar-fill{position:absolute;inset:0 auto 0 0;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:flex-end;padding-right:11px}
+  .bar-fill.pay{background:var(--s1)}
+  .bar-fill.get{background:var(--s1-wash);border-right:2px solid var(--s1)}
+  .bar-amt{font-family:var(--mono);font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .bar-fill.pay .bar-amt{color:#fff}
+  .bar-fill.get .bar-amt{color:var(--ink)}
+  @media (prefers-reduced-motion:no-preference){.bar-fill{transition:width 260ms cubic-bezier(.22,.61,.36,1)}}
+  .bar-note{margin-top:12px;font-size:12.5px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:12px}
+
+  .inputs{margin-top:20px;padding-top:18px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px 18px}
+  .field{display:flex;flex-direction:column;gap:6px;flex:1 1 190px;min-width:0}
+  .field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .field label .tick{color:var(--ink-2)}
+  .field input{font-family:var(--mono);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink);background:var(--plane);border:1px solid var(--rule);border-radius:3px;padding:9px 11px;width:100%;min-width:0}
+  .field input:focus-visible{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+  button.reset{font-size:13px;font-weight:500;font-family:var(--sans);color:var(--ink-2);background:var(--plane);border:1px solid var(--rule);border-radius:3px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+  button.reset:hover{color:var(--ink);border-color:var(--muted)}
+  button.reset:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+
+  /* chart */
+  .chart-panel{padding:22px 20px 16px}
+  @media (max-width:560px){.chart-panel{padding:18px 12px 12px}}
+  .chart-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;padding-inline:4px;margin-bottom:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 18px}
+  .legend-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+  .swatch{width:15px;height:3px;border-radius:2px;flex:none}
+  .seg{display:flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+  .seg label{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--ink-2);padding:5px 12px;cursor:pointer;background:var(--surface);border-right:1px solid var(--rule)}
+  .seg label:last-child{border-right:0}
+  .seg input{position:absolute;opacity:0;width:0;height:0}
+  .seg input:checked + label{background:var(--s1);color:#fff}
+  .seg input:focus-visible + label{outline:2px solid var(--focus);outline-offset:-2px}
+  #chart{position:relative;width:100%}
+  #chart svg{display:block;width:100%;height:auto}
+  #chart svg text.t-mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  #chart svg text.t-sans{font-family:var(--sans)}
+  .tip{position:absolute;pointer-events:none;z-index:3;background:var(--surface);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow);padding:9px 11px;min-width:172px;opacity:0}
+  .tip[data-on="1"]{opacity:1}
+  @media (prefers-reduced-motion:no-preference){.tip{transition:opacity 110ms ease}}
+  .tip-d{font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:var(--muted);padding-bottom:6px;margin-bottom:6px;border-bottom:1px solid var(--rule-soft)}
+  .tip-row{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:12.5px;color:var(--ink-2);line-height:1.9}
+  .tip-row .tv{font-family:var(--mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .tip-row .tk{display:flex;align-items:center;gap:6px;white-space:nowrap}
+  .dot{width:8px;height:8px;border-radius:50%;flex:none}
+  .chart-foot{display:flex;flex-wrap:wrap;gap:6px 20px;padding:12px 4px 0;margin-top:8px;border-top:1px solid var(--rule-soft);font-size:12px;color:var(--muted)}
+  .chart-foot b{font-family:var(--mono);font-weight:500;color:var(--ink-2)}
+
+  /* formula */
+  .formula-panel{padding:22px 24px}
+  @media (max-width:560px){.formula-panel{padding:18px 16px}}
+  .eq{background:var(--plane);border:1px solid var(--rule);border-radius:4px;padding:18px 16px;overflow-x:auto;font-family:var(--mono);font-size:14.5px;line-height:2.1;color:var(--ink);font-variant-numeric:tabular-nums}
+  .eq .c{color:var(--s1);font-weight:600}
+  .eq .cm{color:var(--muted)}
+  .eq .op{color:var(--ink-2)}
+  .eq-line{white-space:nowrap}
+
+  /* tables */
+  .tw{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--rule-soft)}
+  th{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);white-space:nowrap}
+  td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+  td.k{color:var(--ink-2)}
+  td.v{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+  tbody tr:last-child td{border-bottom:none}
+  .src{font-size:12px;color:var(--muted)}
+  td.flag{color:var(--s2);font-family:var(--mono);font-size:12px}
+
+  details{border-top:1px solid var(--rule)}
+  summary{cursor:pointer;padding:13px 4px 12px;font-size:13px;color:var(--ink-2);list-style:none;display:flex;align-items:center;gap:8px}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"+";font-family:var(--mono);font-size:14px;color:var(--muted);width:14px;display:inline-block}
+  details[open] summary::before{content:"\2212"}
+  summary:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+  .dt-wrap{max-height:340px;overflow:auto;border-top:1px solid var(--rule-soft)}
+  .dt-wrap thead th{position:sticky;top:0;background:var(--surface);z-index:1}
+
+  /* notes */
+  .notes{padding:22px 24px}
+  @media (max-width:560px){.notes{padding:18px 16px}}
+  .notes ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:13px}
+  .notes li{display:grid;grid-template-columns:7px 1fr;gap:12px;font-size:13.5px;color:var(--ink-2)}
+  .notes li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rule);margin-top:8px}
+  .notes li.warn::before{background:var(--s2)}
+  .notes b{color:var(--ink);font-weight:650}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--sunken);padding:1px 5px;border-radius:3px;color:var(--ink)}
+  a{color:var(--s1);text-underline-offset:2px}
+  a:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:2px}
+  .colophon{font-size:12px;color:var(--muted);border-top:1px solid var(--rule);padding-top:16px}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header>
+    <div class="eyebrow">KOSPI 402340 &divide; 000660</div>
+    <h1>SK Square 折价追踪</h1>
+    <p class="standfirst">用 SK스퀘어 的市价,买下它手里那批 SK하이닉스 股票,一块钱的资产要花多少钱。</p>
+    <div class="asof">
+      <span>行情 AlphaSquare · 截至 2026-09-18</span>
+      <span>官方 NAV 基准 2026-09-17</span>
+      <span>离线单文件 · 无外部依赖</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>现在的价码 <span class="n">改股价即时重算</span></h2>
+    <div class="panel instrument">
+      <div class="readout">
+        <div class="figure"><span class="won">&#8361;</span><span class="val" id="cVal">0.523</span></div>
+        <p class="figure-cap">买到 <b>&#8361;1.00</b> 的 SK 海力士资产,<br>需要付出的 SK Square 市值</p>
+        <div class="sidestats">
+          <div class="sidestat"><div class="k">折价</div><div class="v" id="discVal">47.7%</div></div>
+          <div class="sidestat"><div class="k">放大倍数</div><div class="v" id="levVal">1.91&times;</div></div>
+        </div>
+      </div>
+      <div class="bars">
+        <div class="bar-row">
+          <div class="bar-label">你付出</div>
+          <div class="bar-track"><div class="bar-fill pay" id="barPay" style="width:52.3%"><span class="bar-amt" id="payAmt">&#8361;52.3</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-label">你得到</div>
+          <div class="bar-track"><div class="bar-fill get" style="width:100%"><span class="bar-amt">&#8361;100.0</span></div></div>
+        </div>
+      </div>
+      <p class="bar-note" id="barNote">以 &#8361;100 的海力士股权价值为基准 — 通过 SK Square 间接持有,当前只需付 &#8361;52.3。</p>
+      <div class="inputs">
+        <div class="field">
+          <label for="pHy">SK하이닉스 <span class="tick">000660</span> 股价 &#8361;</label>
+          <input id="pHy" type="number" inputmode="numeric" step="1000" min="1" value="1849000">
+        </div>
+        <div class="field">
+          <label for="pSq">SK스퀘어 <span class="tick">402340</span> 股价 &#8361;</label>
+          <input id="pSq" type="number" inputmode="numeric" step="1000" min="1" value="1072000">
+        </div>
+        <button class="reset" id="resetBtn" type="button">回到 9/18 收盘</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>历史走势 <span class="n" id="rangeLabel">—</span></h2>
+    <div class="panel chart-panel">
+      <div class="chart-head">
+        <div class="legend">
+          <div class="legend-item"><span class="swatch" style="background:var(--s1)"></span>简化法 c(本页公式)</div>
+          <div class="legend-item"><span class="swatch" style="background:var(--s2)"></span>官方 NAV 折价换算</div>
+        </div>
+        <div class="seg">
+          <input type="radio" name="period" id="p3" value="63"><label for="p3">3M</label>
+          <input type="radio" name="period" id="p6" value="126"><label for="p6">6M</label>
+          <input type="radio" name="period" id="p12" value="9999" checked><label for="p12">1Y</label>
+        </div>
+      </div>
+      <div id="chart"><div class="tip" id="tip"></div></div>
+      <div class="chart-foot">
+        <span>区间最低 <b id="fLo">—</b></span>
+        <span>区间最高 <b id="fHi">—</b></span>
+        <span>均值 <b id="fAvg">—</b></span>
+        <span>与官方口径平均偏差 <b id="fErr">—</b></span>
+      </div>
+      <details>
+        <summary>查看原始数据表</summary>
+        <div class="dt-wrap">
+          <table>
+            <thead><tr><th>日期</th><th class="num">海力士 &#8361;</th><th class="num">SK Q &#8361;</th><th class="num">简化 c</th><th class="num">官方 c</th></tr></thead>
+            <tbody id="dataBody"></tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section>
+    <h2>计算公式 <span class="n">两个股价即可求解</span></h2>
+    <div class="panel formula-panel">
+      <div class="eq">
+        <div class="eq-line"><span class="cm">// 每股 SK Q 背后压着多少股海力士</span></div>
+        <div class="eq-line">k <span class="op">=</span> 146,128,233 <span class="op">&divide;</span> 131,923,998 <span class="op">=</span> <b>1.107670</b></div>
+        <div class="eq-line">&nbsp;</div>
+        <div class="eq-line"><span class="cm">// 买 &#8361;1 海力士资产的成本</span></div>
+        <div class="eq-line"><span class="c">c</span> <span class="op">=</span> P<sub>SK Q</sub> <span class="op">&divide;</span> ( k <span class="op">&times;</span> P<sub>海力士</sub> )</div>
+        <div class="eq-line">&nbsp;</div>
+        <div class="eq-line"><span class="cm">// 代入 9/18 收盘(AlphaSquare)</span></div>
+        <div class="eq-line"><span class="c">c</span> <span class="op">=</span> 1,072,000 <span class="op">&divide;</span> 2,048,082 <span class="op">=</span> <span class="c">0.5234</span></div>
+        <div class="eq-line"><span class="cm">// 传统口径折价率 = 1 &minus; c = 47.66%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>参数与出处</h2>
+    <div class="panel">
+      <div class="tw">
+        <table>
+          <thead><tr><th>参数</th><th class="num">取值</th><th>来源与校验</th></tr></thead>
+          <tbody>
+            <tr><td class="k">SK Q 持有海力士股数</td><td class="v num">146,128,233</td><td class="src">DART/KRX 披露(「SK스퀘어 외 9인」20.00%);用 241 个交易日的官方日频 NAV 折价反解,中位数 146,208,444,偏差 +0.055%</td></tr>
+            <tr><td class="k">占海力士总股本</td><td class="v num">20.00%</td><td class="src">分母为总发行股数 730,492,365 股(含库藏股 17,892,726 股)</td></tr>
+            <tr><td class="k">SK Q 自身总股本</td><td class="v num">131,923,998</td><td class="src">SK Square IR「Number of Stocks Issued」</td></tr>
+            <tr><td class="k">系数 k</td><td class="v num">1.107670</td><td class="src">146,128,233 &divide; 131,923,998</td></tr>
+            <tr><td class="k">非海力士资产</td><td class="v num">&#8361;4.86 万亿</td><td class="src">TMAP 1.46 / SK shieldus 1.02 / SK planet 0.61 / wavve 0.26 / 其他 0.66 / 净现金 0.80,占总 NAV 1.9%,<b>本页简化公式未计入</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>数据源校验 <span class="n">AlphaSquare vs 官方 NAV 基准</span></h2>
+    <div class="panel">
+      <div class="tw">
+        <table>
+          <thead><tr><th>日期</th><th class="num">海力士 AS</th><th class="num">海力士 基准</th><th class="num">SK Q AS</th><th class="num">SK Q 基准</th></tr></thead>
+          <tbody id="divBody"></tbody>
+        </table>
+      </div>
+      <div class="notes" style="border-top:1px solid var(--rule)">
+        <ul>
+          <li><span><b>300 个交易日里 290 天完全一致。</b> 上表是 AlphaSquare 与「官方 NAV 所用收盘价基准」不一致的全部 10 天,集中在最近数个交易日。</span></li>
+          <li class="warn"><span><b>分歧日上,基准口径更可信。</b> 拿官方日频 NAV 折价反解持股数(真值恒定,越稳越对):9 月分歧区间内,基准口径的反解标准差是 <code>78,051</code> 股,AlphaSquare 是 <code>366,702</code> 股 — 相差 4.7 倍。说明这几天 AlphaSquare 的收盘价大概率是尚未结算的暂定值。</span></li>
+          <li><span><b>对本页结论影响有限。</b> 9/18 用 AlphaSquare 算得 c = 0.5234,用基准口径算得 0.5246,差 0.0012。</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使用须知</h2>
+    <div class="panel notes">
+      <ul>
+        <li><span><b>简化法系统性高估 c,幅度随行情变化。</b> 公式只算海力士一项,忽略了 &#8361;4.86 万亿其他资产;海力士越便宜,这部分占 NAV 的比重越大,偏差也越大。近三个月偏差稳定在 <code>+0.010</code> 左右,拉到一年平均则约 <code>+0.027</code>(切换上方 3M/6M/1Y 可看到该数字变化)。要贴近官方口径可用加强版:<code>c = P_SKQ &divide; (k &times; P海力士 + 36,835)</code>。</span></li>
+        <li><span><b>k 需要按季复核。</b> SK Square 每年回购注销自家股票,分母会慢慢变小、k 会慢慢变大。建议每季 DART 季报公布后重算。</span></li>
+        <li class="warn"><span><b>11 月前后会有一次口径变动。</b> 海力士 2026-08-19 董事会决议的 40 万亿回购(约 2,407 万股,占总股本 3.3%)按计划在收购期结束后全部注销。注销不改变 k,但会让 SK Square 的<b>持股比例</b>从 20.00% 被动升到约 20.7%。</span></li>
+        <li><span><b>这是估值观察工具,不是交易建议。</b> 控股公司折价长期存在(官网数据显示 2022–2023 年常年在 65–75%),收窄与否取决于治理、分红、分拆等公司行为。</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="colophon">
+    行情:AlphaSquare <code>api.alphasquare.co.kr/data/v3/prices/candles</code>(日线,stock_id 1456 / 3493)·
+    NAV 与官方日频折价:SK Square IR <code>sksquare.com/eng/ir/nav.do</code> ·
+    股本与股东结构:DART / KRX。基准口径对照取自 Yahoo Finance(000660.KS / 402340.KS)。
+  </div>
+</div>
+
+<script>
+const K=1.107670;
+const D=[["250701",285500,185000,0.5195],["250702",279000,176200,0.5047],["250703",278500,171800,0.4929],["250704",270500,163200,0.4804],["250707",271000,162000,0.476],["250708",282000,172900,0.4906],["250709",281000,181200,0.5157],["250710",297000,183600,0.4976],["250711",294500,174000,0.4752],["250714",300000,178300,0.479],["250715",298500,173000,0.4669],["250716",296000,174100,0.4733],["250717",269500,158900,0.4692],["250718",269000,160500,0.4746],["250721",272500,161400,0.472],["250722",268500,156800,0.4647],["250723",269000,156000,0.4615],["250724",269500,152000,0.4489],["250725",266000,153000,0.4571],["250728",262000,150200,0.4548],["250729",262500,149200,0.451],["250730",263500,148000,0.4459],["250731",273500,152100,0.4435],["250801",258000,140300,0.4306],["250804",258000,140200,0.4302],["250805",263500,143500,0.4322],["250806",258500,140300,0.4297],["250807",262000,141900,0.4296],["250808",256500,139300,0.4296],["250811",267000,142000,0.4227],["250812",269000,141500,0.4185],["250813",278000,144600,0.4156],["250814",276500,143700,0.415],["250818",267500,137600,0.4091],["250819",263000,140400,0.4238],["250820",255500,137100,0.4245],["250821",245000,135200,0.4341],["250822",251000,135200,0.425],["250825",259500,144800,0.4422],["250826",261500,141200,0.4283],["250827",260000,139900,0.4264],["250828",268500,149600,0.4432],["250829",269000,149000,0.4408],["250901",256000,145000,0.448],["250902",260500,143600,0.437],["250903",262500,143900,0.435],["250904",265500,149400,0.4472],["250905",273500,152800,0.4456],["250908",277000,153600,0.4429],["250909",288000,162000,0.4513],["250910",304000,174300,0.4628],["250911",307000,182100,0.4792],["250912",328500,197300,0.4884],["250915",331000,200500,0.4928],["250916",348000,206000,0.484],["250917",333500,200500,0.4893],["250918",353000,208500,0.4803],["250919",353000,216500,0.5018],["250922",351000,215500,0.502],["250923",361000,220000,0.4996],["250924",357500,217500,0.4983],["250925",356500,211000,0.4846],["250926",336500,195300,0.4727],["250929",349000,197100,0.4618],["250930",347500,201500,0.474],["251001",360000,205500,0.472],["251002",395500,238000,0.5057],["251010",428000,247000,0.484],["251013",415000,245500,0.4949],["251014",411500,234500,0.4764],["251015",422500,243500,0.4828],["251016",452500,257500,0.4792],["251017",465500,257500,0.4667],["251020",485500,262000,0.4566],["251021",479000,256000,0.4518],["251022",481500,258500,0.454],["251023",478500,253000,0.447],["251024",510000,271000,0.4511],["251027",535000,291500,0.4639],["251028",521000,272000,0.4438],["251029",558000,275000,0.4207],["251030",568000,281000,0.4227],["251031",559000,260000,0.3971],["251103",620000,282500,0.3913],["251104",586000,274000,0.4003],["251105",579000,260000,0.3841],["251106",593000,270000,0.39],["251107",580000,279000,0.4115],["251110",606000,290000,0.4104],["251111",619000,311500,0.4321],["251112",617000,322500,0.4487],["251113",612000,323500,0.4536],["251114",560000,291000,0.4437],["251117",606000,304500,0.4309],["251118",570000,283500,0.4251],["251119",562000,283000,0.43],["251120",571000,293500,0.4394],["251121",521000,266000,0.434],["251124",520000,276000,0.4496],["251125",519000,290500,0.4741],["251126",524000,291000,0.4706],["251127",544000,301000,0.47],["251128",530000,298000,0.4768],["251201",538000,302000,0.4765],["251202",558000,308500,0.4703],["251203",552000,310500,0.4782],["251204",542000,312500,0.4896],["251205",544000,302000,0.4716],["251208",577000,322000,0.4757],["251209",566000,323000,0.4859],["251210",587000,324000,0.4709],["251211",565000,307500,0.4633],["251212",571000,308000,0.4595],["251215",554000,292500,0.449],["251216",530000,281000,0.4496],["251217",551000,283000,0.4366],["251218",552000,290500,0.4474],["251219",547000,290500,0.4513],["251222",580000,315000,0.4631],["251223",584000,315000,0.4601],["251224",588000,321000,0.4658],["251226",599000,334500,0.477],["251229",640000,346000,0.4634],["251230",651000,368000,0.485],["260102",677000,392000,0.4977],["260105",696000,416000,0.5144],["260106",726000,432000,0.5131],["260107",742000,429500,0.4997],["260108",756000,430500,0.492],["260109",744000,430500,0.4995],["260112",749000,427500,0.4929],["260113",738000,426500,0.4987],["260114",742000,435500,0.5066],["260115",749000,429500,0.4952],["260116",756000,446500,0.5102],["260119",764000,435500,0.4927],["260120",743000,427000,0.4961],["260121",740000,430000,0.5015],["260122",755000,446500,0.5109],["260123",767000,445500,0.5021],["260126",736000,441000,0.517],["260127",800000,473000,0.512],["260128",841000,504000,0.5201],["260129",861000,531000,0.5357],["260130",909000,570000,0.5458],["260202",830000,505000,0.5277],["260203",907000,546000,0.5239],["260204",900000,569000,0.5501],["260205",842000,534000,0.5504],["260206",839000,514000,0.5316],["260209",887000,563000,0.552],["260210",876000,543000,0.5388],["260211",860000,532000,0.5373],["260212",888000,570000,0.5582],["260213",880000,558000,0.5513],["260219",894000,566000,0.5507],["260220",949000,580000,0.5328],["260223",951000,580000,0.5317],["260224",1005000,617000,0.5363],["260225",1018000,647000,0.5554],["260226",1099000,679000,0.5413],["260227",1061000,645000,0.532],["260303",939000,581000,0.5392],["260304",849000,507000,0.5184],["260305",941000,566000,0.5242],["260306",924000,553000,0.5213],["260309",836000,509000,0.5282],["260310",938000,554000,0.5147],["260311",955000,565000,0.5159],["260312",930000,554000,0.519],["260313",910000,534000,0.5108],["260316",974000,562000,0.5035],["260317",970000,587000,0.528],["260318",1056000,630000,0.522],["260319",1013000,611000,0.527],["260320",1007000,608000,0.5275],["260323",933000,557000,0.5201],["260324",986000,595000,0.5268],["260325",995000,605000,0.531],["260326",933000,558000,0.5211],["260327",922000,544000,0.4817],["260330",873000,510000,0.4644],["260331",807000,466500,0.5003],["260401",893000,501000,0.4854],["260402",830000,469500,0.4902],["260403",876000,483000,0.4788],["260406",886000,487000,0.4775],["260407",916000,499000,0.4738],["260408",1033000,578000,0.4887],["260409",998000,560000,0.4896],["260410",1027000,568000,0.483],["260413",1040000,580000,0.4872],["260414",1103000,640000,0.5079],["260415",1136000,665000,0.5129],["260416",1155000,690000,0.5236],["260417",1128000,682000,0.5296],["260420",1166000,701000,0.5271],["260421",1224000,718000,0.515],["260422",1223000,720000,0.5169],["260423",1225000,728000,0.5218],["260424",1222000,725000,0.5209],["260427",1292000,789000,0.537],["260428",1300000,811000,0.5486],["260429",1293000,830000,0.5644],["260430",1286000,841000,0.575],["260504",1447000,991000,0.6039],["260506",1601000,1089000,0.6012],["260507",1654000,1099000,0.5876],["260508",1686000,1098000,0.5762],["260511",1880000,1187000,0.5598],["260512",1835000,1126000,0.5438],["260513",1976000,1190000,0.5344],["260514",1970000,1171000,0.5275],["260515",1819000,1098000,0.5349],["260518",1840000,1093000,0.5265],["260519",1745000,1020000,0.5175],["260520",1745000,1029000,0.5221],["260521",1940000,1179000,0.5391],["260522",1941000,1185000,0.5416],["260526",2052000,1181000,0.5111],["260527",2243000,1276000,0.5059],["260528",2289000,1237000,0.4807],["260529",2333000,1233000,0.4703],["260601",2363000,1256000,0.473],["260602",2360000,1346000,0.5076],["260604",2298000,1361000,0.5269],["260605",2070000,1258000,0.5397],["260608",1911000,1118000,0.5189],["260609",2215000,1269000,0.5094],["260610",2048000,1183000,0.5129],["260611",2101000,1228000,0.5192],["260612",2150000,1358000,0.5613],["260615",2288000,1413000,0.5494],["260616",2382000,1501000,0.5609],["260617",2521000,1596000,0.5639],["260618",2685000,1700000,0.5645],["260619",2764000,1780000,0.5744],["260622",2919000,1970000,null],["260623",2555000,1832000,0.6388],["260624",2580000,1799000,0.6117],["260625",2917000,1899000,0.581],["260626",2673000,1720000,0.5736],["260629",2628000,1640000,0.5562],["260630",2650000,1697000,0.5708],["260701",2560000,1757000,0.6115],["260702",2187000,1525000,0.6198],["260703",2425000,1589000,0.5834],["260706",2343000,1495000,0.5678],["260707",2201000,1356000,0.5477],["260708",2076000,1270000,0.5433],["260709",2186000,1327000,0.5396],["260710",2180000,1409000,0.5745],["260713",1845000,1161000,0.5577],["260714",1913000,1190000,0.5517],["260715",2082000,1382000,0.5896],["260716",1842000,1212000,0.5832],["260720",1764000,1177000,0.5909],["260721",1836000,1253000,0.6048],["260722",1830000,1230000,0.5956],["260723",1919000,1221000,0.5643],["260724",1759000,1109000,0.5583],["260727",1816000,1096000,0.5348],["260728",1550000,925000,0.5271],["260729",1401000,850000,0.5346],["260730",1322000,799000,0.5317],["260731",1718000,1038000,0.5348],["260803",1567000,1025000,0.5778],["260804",1577000,1060000,0.6178],["260805",1668000,1119000,0.6078],["260806",1495000,970000,0.573],["260807",1422000,939000,0.583],["260810",1420000,949000,0.59],["260811",1425000,945000,0.585],["260812",1504000,1024000,0.602],["260813",1593000,1117000,0.62],["260814",1645000,1154000,0.621],["260818",1662000,1135000,0.605],["260819",1500000,1004000,0.592],["260820",1691000,1123000,0.588],["260821",1730000,1123000,0.575],["260824",1671000,1076000,0.57],["260825",1678000,1060000,0.56],["260826",1688000,1058000,0.555],["260827",1730000,1068000,0.547],["260828",1653000,1028000,0.551],["260831",1674000,1037000,0.549],["260901",1693000,1067000,0.558],["260902",1613000,982000,0.539],["260903",1596000,981000,0.544],["260904",1647000,1041000,0.56],["260907",1783000,1125000,0.56],["260908",1793000,1131000,0.559],["260909",1856000,1138000,0.544],["260910",1853000,1135000,0.543],["260911",1812000,1089000,0.533],["260914",1683000,1000000,0.522],["260915",1712000,1014000,0.524],["260916",1757000,1017000,0.514],["260917",1766000,1019000,0.512],["260918",1849000,1072000,null]];
+const DIV=[["2025-09-18",353000,355500,208500,208500],["2025-10-02",395500,395500,238000,240000],["2026-03-27",922000,933000,544000,544000],["2026-04-01",893000,897000,501000,501000],["2026-06-24",2580000,2621000,1799000,1799000],["2026-09-14",1683000,1697000,1000000,1000000],["2026-09-15",1712000,1690000,1014000,1000000],["2026-09-16",1757000,1759000,1017000,1020000],["2026-09-17",1766000,1745000,1019000,1008000],["2026-09-18",1849000,1857000,1072000,1079000]];
+
+const LAST=D[D.length-1];
+const cOf=(hy,sq)=>sq/(K*hy);
+const fmtInt=n=>n.toLocaleString('en-US');
+const ymd=s=>'20'+s.slice(0,2)+'-'+s.slice(2,4)+'-'+s.slice(4);
+const md=s=>s.slice(2,4)+'/'+s.slice(4);
+
+/* ---- instrument ---- */
+const elHy=document.getElementById('pHy'), elSq=document.getElementById('pSq');
+function updateInstrument(){
+  const hy=Number(elHy.value), sq=Number(elSq.value);
+  const ok=hy>0&&sq>0&&isFinite(hy)&&isFinite(sq);
+  const c=ok?cOf(hy,sq):NaN;
+  document.getElementById('cVal').textContent=ok?c.toFixed(3):'—';
+  document.getElementById('discVal').textContent=ok?((1-c)*100).toFixed(1)+'%':'—';
+  document.getElementById('levVal').textContent=ok?(1/c).toFixed(2)+'×':'—';
+  document.getElementById('barPay').style.width=(ok?Math.max(0,Math.min(100,c*100)):0)+'%';
+  document.getElementById('payAmt').textContent=ok?'₩'+(c*100).toFixed(1):'—';
+  document.getElementById('barNote').textContent=ok
+    ?'以 ₩100 的海力士股权价值为基准 — 通过 SK Square 间接持有,当前只需付 ₩'+(c*100).toFixed(1)+'。'
+    :'请输入两个有效股价。';
+}
+elHy.addEventListener('input',updateInstrument);
+elSq.addEventListener('input',updateInstrument);
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  elHy.value=LAST[1]; elSq.value=LAST[2]; updateInstrument();
+});
+
+/* ---- divergence table ---- */
+document.getElementById('divBody').innerHTML=DIV.map(r=>{
+  const cell=(a,b)=>'<td class="num'+(a!==b?' flag':'')+'">'+fmtInt(a)+'</td>';
+  return '<tr><td class="num">'+r[0]+'</td>'+cell(r[1],r[2])+'<td class="num">'+fmtInt(r[2])+'</td>'
+    +cell(r[3],r[4])+'<td class="num">'+fmtInt(r[4])+'</td></tr>';
+}).join('');
+
+/* ---- chart ---- */
+const series=D.map(r=>({d:r[0],hy:r[1],sq:r[2],c:cOf(r[1],r[2]),co:r[3]}));
+const chartEl=document.getElementById('chart'), tipEl=document.getElementById('tip');
+let view=series, geom=null;
+
+function setPeriod(n){
+  view=series.slice(Math.max(0,series.length-n));
+  const cs=view.map(s=>s.c);
+  const lo=view.reduce((a,b)=>b.c<a.c?b:a), hi=view.reduce((a,b)=>b.c>a.c?b:a);
+  const pairs=view.filter(s=>s.co!=null);
+  document.getElementById('rangeLabel').textContent=
+    ymd(view[0].d)+' → '+ymd(view[view.length-1].d)+' · '+view.length+' 个交易日';
+  document.getElementById('fLo').textContent=lo.c.toFixed(3)+'('+md(lo.d)+')';
+  document.getElementById('fHi').textContent=hi.c.toFixed(3)+'('+md(hi.d)+')';
+  document.getElementById('fAvg').textContent=(cs.reduce((a,b)=>a+b,0)/cs.length).toFixed(3);
+  document.getElementById('fErr').textContent=pairs.length
+    ? (pairs.reduce((a,s)=>a+Math.abs(s.c-s.co),0)/pairs.length).toFixed(4) : '—';
+  document.getElementById('dataBody').innerHTML=view.map(s=>
+    '<tr><td class="num">'+ymd(s.d)+'</td><td class="num">'+fmtInt(s.hy)+'</td><td class="num">'
+    +fmtInt(s.sq)+'</td><td class="num">'+s.c.toFixed(4)+'</td><td class="num">'
+    +(s.co!=null?s.co.toFixed(4):'—')+'</td></tr>').join('');
+  renderChart();
+}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+
+function renderChart(){
+  const W=Math.max(280,chartEl.clientWidth), mob=W<560, H=mob?300:364;
+  const m={t:20,r:mob?14:62,b:30,l:mob?42:50}, iw=W-m.l-m.r, ih=H-m.t-m.b;
+  const n=view.length;
+  const allc=view.map(s=>s.c).concat(view.filter(s=>s.co!=null).map(s=>s.co));
+  const Y0=Math.floor(Math.min(...allc)*20-0.5)/20, Y1=1.0;
+  const X=i=>m.l+(n===1?iw/2:i*iw/(n-1));
+  const Y=v=>m.t+ih-((v-Y0)/(Y1-Y0))*ih;
+  geom={X,Y,m,iw,ih,W,H};
+  const ink=cssVar('--ink'),muted=cssVar('--muted'),rule=cssVar('--rule-soft'),par=cssVar('--par');
+  const s1=cssVar('--s1'),s2=cssVar('--s2'),wash=cssVar('--s1-wash-2'),surf=cssVar('--surface');
+  let g='';
+  for(let v=Math.ceil(Y0*20)/20; v<=Y1+1e-9; v+=0.05){
+    const yy=Y(v), isPar=Math.abs(v-1)<1e-9;
+    g+='<line x1="'+m.l+'" y1="'+yy+'" x2="'+(m.l+iw)+'" y2="'+yy+'" stroke="'+(isPar?par:rule)
+      +'" stroke-width="1"'+(isPar?' stroke-dasharray="5 4"':'')+'/>';
+    g+='<text class="t-mono" x="'+(m.l-8)+'" y="'+(yy+4)+'" text-anchor="end" fill="'+muted
+      +'" font-size="'+(mob?10:11)+'">'+v.toFixed(2)+'</text>';
+  }
+  g+='<text class="t-sans" x="'+(m.l+iw)+'" y="'+(Y(1)-7)+'" text-anchor="end" fill="'+par
+    +'" font-size="'+(mob?10:11)+'">₩1.00 · 无折价</text>';
+  const step=Math.ceil(n/(mob?4:7));
+  for(let i=0;i<n;i+=step){
+    g+='<text class="t-mono" x="'+X(i)+'" y="'+(m.t+ih+19)+'" text-anchor="middle" fill="'+muted
+      +'" font-size="'+(mob?10:11)+'">'+md(view[i].d)+'</text>';
+  }
+  const pts=view.map((s,i)=>X(i)+' '+Y(s.c));
+  g+='<path d="M '+m.l+' '+(m.t+ih)+' L '+pts.join(' L ')+' L '+(m.l+iw)+' '+(m.t+ih)
+    +' Z" fill="'+wash+'" stroke="none"/>';
+  let seg=[],segs=[];
+  view.forEach((s,i)=>{ if(s.co!=null) seg.push(X(i)+' '+Y(s.co)); else {if(seg.length>1)segs.push(seg); seg=[];} });
+  if(seg.length>1)segs.push(seg);
+  segs.forEach(sg=>{g+='<path d="M '+sg.join(' L ')+'" fill="none" stroke="'+s2
+    +'" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';});
+  g+='<path d="M '+pts.join(' L ')+'" fill="none" stroke="'+s1
+    +'" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>';
+  const last=view[n-1], lx=X(n-1), ly=Y(last.c);
+  g+='<circle cx="'+lx+'" cy="'+ly+'" r="4.5" fill="'+s1+'" stroke="'+surf+'" stroke-width="2"/>';
+  if(!mob) g+='<text class="t-mono" x="'+(lx+9)+'" y="'+(ly+4)+'" fill="'+ink
+    +'" font-size="13" font-weight="600">'+last.c.toFixed(3)+'</text>';
+  g+='<g id="hoverG" style="pointer-events:none"></g>';
+  g+='<rect id="hitRect" x="'+m.l+'" y="'+m.t+'" width="'+iw+'" height="'+ih
+    +'" fill="transparent" style="cursor:crosshair"/>';
+  const old=chartEl.querySelector('svg'); if(old) old.remove();
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  svg.setAttribute('width',W); svg.setAttribute('height',H);
+  svg.setAttribute('role','img');
+  svg.setAttribute('aria-label','成本系数 c 走势,最新 '+last.c.toFixed(3)+'。完整数值见下方数据表。');
+  svg.innerHTML=g;
+  chartEl.insertBefore(svg,tipEl);
+  bindHover(svg);
+}
+
+function bindHover(svg){
+  const hit=svg.querySelector('#hitRect'), hg=svg.querySelector('#hoverG');
+  const s1=cssVar('--s1'),s2=cssVar('--s2'),surf=cssVar('--surface'),muted=cssVar('--muted');
+  function show(evt){
+    const r=svg.getBoundingClientRect();
+    const px=(evt.clientX-r.left)*(geom.W/r.width);
+    const i=Math.max(0,Math.min(view.length-1,Math.round((px-geom.m.l)/geom.iw*(view.length-1))));
+    const s=view[i], x=geom.X(i), y=geom.Y(s.c);
+    let h='<line x1="'+x+'" y1="'+geom.m.t+'" x2="'+x+'" y2="'+(geom.m.t+geom.ih)
+      +'" stroke="'+muted+'" stroke-width="1" stroke-dasharray="3 3"/>';
+    if(s.co!=null) h+='<circle cx="'+x+'" cy="'+geom.Y(s.co)+'" r="4.5" fill="'+s2
+      +'" stroke="'+surf+'" stroke-width="2"/>';
+    h+='<circle cx="'+x+'" cy="'+y+'" r="5.5" fill="'+s1+'" stroke="'+surf+'" stroke-width="2"/>';
+    hg.innerHTML=h;
+    tipEl.innerHTML='<div class="tip-d">'+ymd(s.d)+'</div>'
+      +'<div class="tip-row"><span class="tk"><span class="dot" style="background:'+s1+'"></span>简化 c</span><span class="tv">'+s.c.toFixed(4)+'</span></div>'
+      +'<div class="tip-row"><span class="tk"><span class="dot" style="background:'+s2+'"></span>官方 c</span><span class="tv">'+(s.co!=null?s.co.toFixed(4):'—')+'</span></div>'
+      +'<div class="tip-row"><span class="tk">海力士</span><span class="tv">₩'+fmtInt(s.hy)+'</span></div>'
+      +'<div class="tip-row"><span class="tk">SK Q</span><span class="tv">₩'+fmtInt(s.sq)+'</span></div>';
+    const sx=x*(r.width/geom.W), tw=tipEl.offsetWidth||180;
+    let left=sx+14; if(left+tw>r.width-4) left=sx-tw-14; if(left<4) left=4;
+    tipEl.style.left=left+'px';
+    tipEl.style.top=Math.max(4,y*(r.height/geom.H)-60)+'px';
+    tipEl.dataset.on='1';
+  }
+  hit.addEventListener('pointermove',show);
+  hit.addEventListener('pointerdown',show);
+  hit.addEventListener('pointerleave',()=>{hg.innerHTML='';tipEl.dataset.on='0';});
+}
+
+document.querySelectorAll('input[name="period"]').forEach(r=>{
+  r.addEventListener('change',()=>setPeriod(Number(r.value)));
+});
+updateInstrument();
+setPeriod(9999);
+let rt; addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(renderChart,120);});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>setTimeout(renderChart,60));
+</script>
+</body>
+</html>
