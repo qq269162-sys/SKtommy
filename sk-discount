@@ -409,6 +409,7 @@ def cmd_html(args, f):
     html = render_html(rows, div, {
         "source": src_name, "nav_asof": nav["asof"], "other_krw": nav["other_krw"],
         "calib": calib, "n_total": len(days),
+        "built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
     })
     with open(args.out, "w", encoding="utf-8") as fh:
         fh.write(html)
@@ -618,7 +619,7 @@ _HTML_TMPL = """<!doctype html>
   <div class="asof">
     <span>行情 $src · 截至 $asof</span>
     <span>官方 NAV 基准 $nav_asof</span>
-    <span>离线单文件</span>
+    <span>构建 $built</span>
   </div>
 </header>
 
@@ -908,6 +909,7 @@ def render_html(rows, div_rows, meta):
         n_total=meta["n_total"],
         calib=meta["calib"],
         other=f"{meta['other_krw'] / 1e12:.2f}",
+        built=meta["built"],
     )
 
 
