@@ -1,0 +1,467 @@
+#!/usr/bin/env python3
+"""sk-discount — SK스퀘어(402340) 相对其 SK하이닉스(000660) 持仓的折价追踪器。
+
+核心指标 c:买到 ₩1 的 SK 海力士资产,需要付出多少 SK Square 市值。
+    c = P_SKQ / (k * P_HYNIX)        k = SK Q 持有的海力士股数 / SK Q 总股本
+
+只依赖 Python 3 标准库。
+"""
+
+import argparse
+import datetime as dt
+import json
+import os
+import re
+import statistics
+import sys
+import urllib.error
+import urllib.request
+
+# --- 结构参数 ---------------------------------------------------------------
+# SK Square 持有的 SK 海力士股数。来源:DART/KRX 披露的「SK스퀘어 외 9인」
+# 持股 146,128,233 股 = 海力士总发行股数 730,492,365 股的 20.00%。
+# 用 SK Square 官网日频 NAV 折价反解可独立验证(见 `calibrate` 子命令)。
+SHARES_HYNIX_HELD = 146_128_233
+
+# SK Square 自身总发行股数。来源:SK Square IR「Number of Stocks Issued」。
+SHARES_SKQ_ISSUED = 131_923_998
+
+K = SHARES_HYNIX_HELD / SHARES_SKQ_ISSUED
+
+# 海力士以外的资产(TMAP / SK shieldus / SK planet / wavve / 其他 / 净现金)。
+# 仅 --precise 模式使用;能连上官网时以官网实时数值覆盖此兜底值。
+OTHER_ASSETS_KRW_FALLBACK = 4.86e12
+
+HYNIX = ("000660.KS", "SK하이닉스")
+SKQ = ("402340.KS", "SK스퀘어")
+
+YAHOO = "https://query1.finance.yahoo.com/v8/finance/chart/{sym}?range={rng}&interval=1d"
+NAV_URL = "https://www.sksquare.com/eng/ir/nav.do"
+UA = "Mozilla/5.0 (compatible; sk-discount/1.0)"
+
+PERIODS = {"3m": "3mo", "6m": "6mo", "1y": "1y", "2y": "2y", "5y": "5y"}
+
+
+class DataError(RuntimeError):
+    pass
+
+
+# --- 取数 -------------------------------------------------------------------
+def fetch(url, timeout=20):
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "*/*"})
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.read()
+    except urllib.error.HTTPError as e:
+        raise DataError(f"{url} 返回 HTTP {e.code}") from e
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        raise DataError(f"无法访问 {url}:{e}") from e
+
+
+def quote(sym, rng="3mo"):
+    """返回 (日收盘序列 {YYYY-MM-DD: 价格}, 最新价, 最新价时间戳)。"""
+    raw = json.loads(fetch(YAHOO.format(sym=sym, rng=rng)))
+    res = (raw.get("chart") or {}).get("result")
+    if not res:
+        err = ((raw.get("chart") or {}).get("error") or {}).get("description", "无数据")
+        raise DataError(f"{sym}:{err}")
+    node = res[0]
+    meta = node.get("meta") or {}
+    closes = {}
+    stamps = node.get("timestamp") or []
+    vals = ((node.get("indicators") or {}).get("quote") or [{}])[0].get("close") or []
+    for ts, px in zip(stamps, vals):
+        if px is None:
+            continue
+        # KST(UTC+9)下的自然日
+        day = dt.datetime.utcfromtimestamp(ts + 9 * 3600).strftime("%Y-%m-%d")
+        closes[day] = round(px)
+    last = meta.get("regularMarketPrice")
+    if last is None and closes:
+        last = closes[max(closes)]
+    if last is None:
+        raise DataError(f"{sym}:未取到价格")
+    at = meta.get("regularMarketTime")
+    at = dt.datetime.utcfromtimestamp(at + 9 * 3600).strftime("%Y-%m-%d %H:%M KST") if at else "—"
+    return closes, round(last), at
+
+
+def nav_page():
+    """解析 SK Square IR 的 NAV 页面。"""
+    html = fetch(NAV_URL, timeout=30).decode("utf-8", "replace")
+    series = [
+        (d, float(v))
+        for d, v in re.findall(r'date:\s*"(\d{4}-\d{2}-\d{2})"\s*,\s*value:\s*"([\d.]+)"', html)
+    ]
+    text = re.sub(r"<(script|style).*?</\1>", " ", html, flags=re.S | re.I)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text)
+
+    def grab(pattern, cast=float):
+        m = re.search(pattern, text)
+        return cast(m.group(1).replace(",", "")) if m else None
+
+    out = {
+        "asof": (re.search(r"Key Financials As of ([A-Z][a-z]{2}\.? \d{1,2}, \d{4})", text) or [None, None])[1],
+        "hynix_tn": grab(r"SK hynix\s+([\d.]+)"),
+        "total_tn": grab(r"Total Net Asset Value\s+([\d.]+)"),
+        "shares_issued": grab(r"Number of Stocks Issued\s+([\d,]+)", int),
+        "nav_per_share": grab(r"Number of Stocks Issued[^A-Z]*NAV per Share KRW ([\d,]+)", int),
+        "series": series,
+    }
+    if out["nav_per_share"] is None:
+        out["nav_per_share"] = grab(r"NAV per Share KRW ([\d,]+)", int)
+    if not series or out["hynix_tn"] is None or out["total_tn"] is None:
+        raise DataError("NAV 页面结构已变,解析失败")
+    out["other_krw"] = (out["total_tn"] - out["hynix_tn"]) * 1e12
+    return out
+
+
+# --- 计算 -------------------------------------------------------------------
+def cost_ratio(p_hynix, p_skq, other_krw=None):
+    """c = 买 ₩1 海力士资产的成本。other_krw 非空时计入非海力士资产。"""
+    backing = K * p_hynix
+    if other_krw:
+        backing += other_krw / SHARES_SKQ_ISSUED
+    return p_skq / backing
+
+
+def implied_shares(p_hynix, p_skq, discount_pct, other_krw):
+    """由官方折价率反解 SK Q 持有的海力士股数。"""
+    nav_per_share = p_skq / (1 - discount_pct / 100)
+    return (nav_per_share * SHARES_SKQ_ISSUED - other_krw) / p_hynix
+
+
+# --- 输出 -------------------------------------------------------------------
+class Fmt:
+    def __init__(self, on):
+        self.on = on
+
+    def __call__(self, s, code):
+        return f"\033[{code}m{s}\033[0m" if self.on else str(s)
+
+    def dim(self, s):
+        return self(s, "2")
+
+    def bold(self, s):
+        return self(s, "1")
+
+    def accent(self, s):
+        return self(s, "36")
+
+    def warn(self, s):
+        return self(s, "33")
+
+
+def bars(c, width, f):
+    """付出 vs 得到 的对照条。"""
+    width = max(12, min(width, 46))
+    pay = max(1, round(width * min(c, 1.0)))
+    rows = [
+        ("你付出", "█" * pay + "·" * (width - pay), f"₩{c * 100:,.1f}"),
+        ("你得到", "█" * width, "₩100.0"),
+    ]
+    out = []
+    for label, bar, amt in rows:
+        tint = f.accent(bar) if label == "你付出" else f.dim(bar)
+        out.append(f"  {label}  {tint}  {f.bold(amt)}")
+    return "\n".join(out)
+
+
+SPARK = "▁▂▃▄▅▆▇█"
+
+
+def sparkline(values):
+    lo, hi = min(values), max(values)
+    span = hi - lo or 1.0
+    return "".join(SPARK[min(7, int((v - lo) / span * 7.999))] for v in values)
+
+
+def term_width():
+    try:
+        return os.get_terminal_size().columns
+    except OSError:
+        return 80
+
+
+# --- 子命令 -----------------------------------------------------------------
+def cmd_now(args, f):
+    other = None
+    nav = None
+    if args.hynix and args.skq:
+        p_hy, p_sq, at_hy, at_sq = args.hynix, args.skq, "手动输入", "手动输入"
+    else:
+        _, p_hy, at_hy = quote(HYNIX[0], "5d")
+        _, p_sq, at_sq = quote(SKQ[0], "5d")
+        if args.hynix:
+            p_hy, at_hy = args.hynix, "手动输入"
+        if args.skq:
+            p_sq, at_sq = args.skq, "手动输入"
+    p_hy, p_sq = round(p_hy), round(p_sq)
+    if args.precise:
+        try:
+            nav = nav_page()
+            other = nav["other_krw"]
+        except DataError as e:
+            print(f"  提示:{e},改用兜底值 ₩{OTHER_ASSETS_KRW_FALLBACK / 1e12:.2f} 万亿", file=sys.stderr)
+            other = OTHER_ASSETS_KRW_FALLBACK
+
+    c = cost_ratio(p_hy, p_sq, other)
+
+    if args.json:
+        print(json.dumps({
+            "cost_ratio": round(c, 6),
+            "discount_pct": round((1 - c) * 100, 4),
+            "leverage": round(1 / c, 4),
+            "hynix_price": p_hy,
+            "skq_price": p_sq,
+            "k": round(K, 6),
+            "mode": "precise" if other else "simple",
+            "other_assets_krw": other,
+            "hynix_asof": at_hy,
+            "skq_asof": at_sq,
+        }, ensure_ascii=False, indent=2))
+        return
+
+    print()
+    print(f"  {f.bold('买 ₩1 的 SK 海力士资产,要花')}  {f.accent(f.bold(f'₩{c:.3f}'))}")
+    print(f"  {f.dim(f'折价 {(1 - c) * 100:.1f}%   放大 {1 / c:.2f}×   口径 ' + ('全资产' if other else '仅海力士'))}")
+    print()
+    print(bars(c, term_width() - 26, f))
+    print()
+    print(f"  {f.dim(f'{HYNIX[1]} {HYNIX[0][:6]}')}  ₩{p_hy:>11,}   {f.dim(at_hy)}")
+    print(f"  {f.dim(f'{SKQ[1]} {SKQ[0][:6]}')}  ₩{p_sq:>11,}   {f.dim(at_sq)}")
+    print(f"  {f.dim(f'k = {K:.6f}  ({SHARES_HYNIX_HELD:,} / {SHARES_SKQ_ISSUED:,})')}")
+    if other:
+        origin = f"官网 {nav['asof']}" if nav else "兜底值"
+        print(f"  {f.dim(f'非海力士资产 ₩{other / 1e12:.2f} 万亿({origin})')}")
+    print()
+
+
+def cmd_history(args, f):
+    rng = PERIODS[args.period]
+    hy, _, _ = quote(HYNIX[0], rng)
+    sq, _, _ = quote(SKQ[0], rng)
+    official = {}
+    if args.official:
+        nav = nav_page()
+        official = dict(nav["series"])
+    days = sorted(set(hy) & set(sq))
+    if not days:
+        raise DataError("两只股票没有共同交易日")
+    rows = [(d, hy[d], sq[d], cost_ratio(hy[d], sq[d])) for d in days]
+    cs = [r[3] for r in rows]
+
+    if args.csv:
+        w = sys.stdout
+        w.write("date,hynix_close,skq_close,cost_ratio" + (",official_cost_ratio\n" if official else "\n"))
+        for d, a, b, c in rows:
+            line = f"{d},{a},{b},{c:.6f}"
+            if official:
+                line += f",{1 - official[d] / 100:.6f}" if d in official else ","
+            w.write(line + "\n")
+        return
+
+    if args.json:
+        print(json.dumps({
+            "period": args.period,
+            "k": round(K, 6),
+            "rows": [
+                dict(date=d, hynix=a, skq=b, cost_ratio=round(c, 6),
+                     **({"official_cost_ratio": round(1 - official[d] / 100, 6)} if d in official else {}))
+                for d, a, b, c in rows
+            ],
+        }, ensure_ascii=False, indent=2))
+        return
+
+    lo = min(rows, key=lambda r: r[3])
+    hi = max(rows, key=lambda r: r[3])
+    print()
+    print(f"  {f.bold(f'近{args.period} 成本系数 c')}   {f.dim(f'{days[0]} → {days[-1]} · {len(rows)} 个交易日')}")
+    print()
+    print(f"  {f.accent(sparkline(cs))}")
+    axis = days[0][5:].ljust(max(1, len(cs) - 5)) + days[-1][5:]
+    print(f"  {f.dim(axis)}")
+    print()
+    head = f"  {'日期':<11} {'海力士 ₩':>11} {'SK Q ₩':>10} {'c':>7}"
+    if official:
+        head += f" {'官方 c':>7} {'偏差':>7}"
+    print(f.dim(head))
+    show = rows if args.all else rows[-args.tail:]
+    for d, a, b, c in show:
+        line = f"  {d:<11} {a:>11,} {b:>10,} {c:>7.4f}"
+        if official:
+            if d in official:
+                oc = 1 - official[d] / 100
+                line += f" {oc:>7.4f} {c - oc:>+7.4f}"
+            else:
+                line += f" {'—':>7} {'—':>7}"
+        print(line)
+    if not args.all and len(rows) > len(show):
+        print(f.dim(f"  … 另有 {len(rows) - len(show)} 行,用 --all 全部显示"))
+    print()
+    print(f"  {f.dim('最低')} {lo[3]:.4f} ({lo[0]})   "
+          f"{f.dim('最高')} {hi[3]:.4f} ({hi[0]})   "
+          f"{f.dim('均值')} {statistics.mean(cs):.4f}")
+    if official:
+        pairs = [(c, 1 - official[d] / 100) for d, _, _, c in rows if d in official]
+        if pairs:
+            mae = statistics.mean(abs(a - b) for a, b in pairs)
+            print(f"  {f.dim(f'与官方全资产口径平均偏差 {mae:.4f}({len(pairs)} 个交易日)')}")
+    print()
+
+
+def cmd_calibrate(args, f):
+    nav = nav_page()
+    official = dict(nav["series"])
+    rng = PERIODS[args.period]
+    hy, _, _ = quote(HYNIX[0], rng)
+    sq, _, _ = quote(SKQ[0], rng)
+    days = sorted(set(hy) & set(sq) & set(official))
+    if len(days) < 5:
+        raise DataError(f"可用于标定的共同交易日只有 {len(days)} 天")
+    vals = [implied_shares(hy[d], sq[d], official[d], nav["other_krw"]) for d in days]
+    med = statistics.median(vals)
+    drift = med / SHARES_HYNIX_HELD - 1
+
+    if args.json:
+        print(json.dumps({
+            "days": len(days), "from": days[0], "to": days[-1],
+            "implied_median": round(med), "implied_stdev": round(statistics.stdev(vals)),
+            "constant": SHARES_HYNIX_HELD, "drift_pct": round(drift * 100, 4),
+            "nav_asof": nav["asof"], "other_assets_krw": nav["other_krw"],
+        }, ensure_ascii=False, indent=2))
+        return
+
+    print()
+    span = f"{len(days)} 个交易日 · {days[0]} → {days[-1]} · NAV 基准 {nav['asof']}"
+    print(f"  {f.bold('用官方日频 NAV 折价反解 SK Q 持有的海力士股数')}")
+    print(f"  {f.dim(span)}")
+    print()
+    print(f"  {'反解中位数':<14} {med:>15,.0f}")
+    print(f"  {'标准差':<15} {statistics.stdev(vals):>15,.0f}")
+    print(f"  {'程序内置常数':<13} {SHARES_HYNIX_HELD:>15,}")
+    print(f"  {'偏离':<16} {drift * 100:>14.3f}%")
+    print()
+    if abs(drift) < 0.005:
+        print(f"  {f.accent('✓')} 内置常数仍然可用(偏离 < 0.5%)。")
+    else:
+        print(f"  {f.warn('!')} 偏离超过 0.5%,持股数或总股本可能已变动,")
+        print(f"    请核对最新 DART 季报后更新 SHARES_HYNIX_HELD / SHARES_SKQ_ISSUED。")
+    comp = (f"官网 NAV 构成:海力士 ₩{nav['hynix_tn']:.2f} 万亿 / "
+            f"合计 ₩{nav['total_tn']:.2f} 万亿 / 其他 ₩{nav['other_krw'] / 1e12:.2f} 万亿")
+    print()
+    print(f"  {f.dim(comp)}")
+    print()
+
+
+def cmd_params(args, f):
+    data = {
+        "shares_hynix_held": SHARES_HYNIX_HELD,
+        "shares_skq_issued": SHARES_SKQ_ISSUED,
+        "k": round(K, 6),
+        "other_assets_krw_fallback": OTHER_ASSETS_KRW_FALLBACK,
+        "sources": {
+            "prices": "Yahoo Finance chart API (000660.KS / 402340.KS)",
+            "nav": NAV_URL,
+            "shares": "DART/KRX 披露;SK Square IR",
+        },
+    }
+    if args.json:
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+        return
+    print()
+    print(f"  {f.bold('结构参数')}")
+    print(f"  {'SK Q 持有海力士股数':<22} {SHARES_HYNIX_HELD:>15,}   {f.dim('DART/KRX,占海力士总股本 20.00%')}")
+    print(f"  {'SK Q 自身总股本':<24} {SHARES_SKQ_ISSUED:>15,}   {f.dim('SK Square IR')}")
+    print(f"  {'k = 前者 / 后者':<25} {K:>15.6f}   {f.dim('每股 SK Q 背后的海力士股数')}")
+    fallback = f"₩{OTHER_ASSETS_KRW_FALLBACK / 1e12:.2f} 万亿"
+    print(f"  {'非海力士资产(兜底)':<21} {fallback:>15}   {f.dim('--precise 时优先取官网实时值')}")
+    print()
+    print(f"  {f.bold('公式')}")
+    print(f"    c = P_SKQ / (k × P_HYNIX)                      {f.dim('简化,仅海力士')}")
+    print(f"    c = P_SKQ / (k × P_HYNIX + 其他资产/总股本)      {f.dim('--precise,全资产')}")
+    print(f"    传统折价率 = 1 − c")
+    print()
+    print(f"  {f.bold('数据源')}")
+    print(f"    {f.dim('价格')}  Yahoo Finance chart API(000660.KS / 402340.KS)")
+    print(f"    {f.dim('NAV ')}  {NAV_URL}")
+    print()
+
+
+# --- 入口 -------------------------------------------------------------------
+def build_parser():
+    p = argparse.ArgumentParser(
+        prog="sk-discount",
+        description="SK스퀘어 相对其 SK하이닉스 持仓的折价追踪器。不带子命令时输出当前读数。",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="示例:\n"
+               "  sk-discount                      当前折价\n"
+               "  sk-discount --precise            计入非海力士资产\n"
+               "  sk-discount --hynix 1857000 --skq 1079000\n"
+               "  sk-discount history -p 6m --official\n"
+               "  sk-discount history --csv > c.csv\n"
+               "  sk-discount calibrate            校验内置持股数\n",
+    )
+    # 全局开关放在主解析器上给出默认值;子解析器上再挂一份同名开关,
+    # 好让它们写在子命令之后也生效。子解析器那份必须 default=SUPPRESS,
+    # 否则它的默认值会把主解析器已经设好的值覆盖掉。
+    def add_global(q, primary):
+        kw = {} if primary else {"default": argparse.SUPPRESS}
+        q.add_argument("--json", action="store_true",
+                       help="以 JSON 输出" if primary else argparse.SUPPRESS, **kw)
+        q.add_argument("--no-color", action="store_true",
+                       help="禁用彩色输出" if primary else argparse.SUPPRESS, **kw)
+
+    def add_now(q, primary):
+        kw = {} if primary else {"default": argparse.SUPPRESS}
+        hide = (lambda t: t if primary else argparse.SUPPRESS)
+        q.add_argument("--hynix", type=float, metavar="₩", help=hide("手动指定海力士股价"), **kw)
+        q.add_argument("--skq", type=float, metavar="₩", help=hide("手动指定 SK Square 股价"), **kw)
+        q.add_argument("--precise", action="store_true",
+                       help=hide("计入非海力士资产(需联网取官网 NAV)"), **kw)
+
+    add_global(p, True)
+    add_now(p, True)
+    sub = p.add_subparsers(dest="cmd")
+
+    n = sub.add_parser("now", help="当前折价读数")
+    add_now(n, False)
+    add_global(n, False)
+
+    h = sub.add_parser("history", help="历史序列 + 走势图")
+    h.add_argument("-p", "--period", choices=list(PERIODS), default="3m", help="区间,默认 3m")
+    h.add_argument("--official", action="store_true", help="附官网日频 NAV 折价做对照")
+    h.add_argument("--tail", type=int, default=15, metavar="N", help="只显示最后 N 行,默认 15")
+    h.add_argument("--all", action="store_true", help="显示全部行")
+    h.add_argument("--csv", action="store_true", help="输出 CSV")
+    add_global(h, False)
+
+    c = sub.add_parser("calibrate", help="用官网 NAV 折价反解并校验内置持股数")
+    c.add_argument("-p", "--period", choices=list(PERIODS), default="6m", help="标定区间,默认 6m")
+    add_global(c, False)
+
+    s = sub.add_parser("params", help="显示结构参数、公式与数据源")
+    add_global(s, False)
+    return p
+
+
+def main(argv=None):
+    parser = build_parser()
+    args = parser.parse_args(argv)
+    color = sys.stdout.isatty() and not args.no_color and not os.environ.get("NO_COLOR")
+    f = Fmt(color)
+    handlers = {None: cmd_now, "now": cmd_now, "history": cmd_history,
+                "calibrate": cmd_calibrate, "params": cmd_params}
+    try:
+        handlers[args.cmd](args, f)
+    except DataError as e:
+        print(f"sk-discount: {e}", file=sys.stderr)
+        return 2
+    except KeyboardInterrupt:
+        return 130
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
