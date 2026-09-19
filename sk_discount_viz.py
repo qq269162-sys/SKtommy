@@ -33,38 +33,119 @@ PERIOD = "2y"
 
 # ── 데이터 취득 ───────────────────────────────────────────────────────────────
 
+def fetch_prices_pykrx() -> pd.DataFrame:
+    """
+    【推荐】pykrx — 直接从韩国交易所(KRX)获取官方数据
+    安装: pip install pykrx
+    延迟: 当日收盘价（KST 15:30 后可用）
+    """
+    from pykrx import stock
+    from datetime import datetime, timedelta
+
+    end_dt   = datetime.today()
+    start_dt = end_dt - timedelta(days=730)
+    start    = start_dt.strftime("%Y%m%d")
+    end      = end_dt.strftime("%Y%m%d")
+
+    print(f"正在从 KRX 获取数据 ({start} → {end})...")
+    hynix_df  = stock.get_market_ohlcv(start, end, "000660")
+    square_df = stock.get_market_ohlcv(start, end, "402340")
+
+    hynix  = hynix_df["종가"].rename("hynix").astype(float)
+    square = square_df["종가"].rename("square").astype(float)
+
+    df = pd.concat([hynix, square], axis=1).dropna()
+    df.index = pd.to_datetime(df.index)
+    df.index.name = "date"
+    if len(df) < 5:
+        raise ValueError("pykrx 返回数据不足")
+    return df
+
+
 def fetch_prices_yfinance() -> pd.DataFrame:
+    """
+    yfinance — Yahoo Finance（约15分钟延迟）
+    安装: pip install yfinance
+    """
     import yfinance as yf
     print("正在从 Yahoo Finance 获取数据...")
-    hynix  = yf.download(SK_HYNIX_TICKER,  period=PERIOD, progress=False, auto_adjust=True)["Close"]
-    square = yf.download(SK_SQUARE_TICKER, period=PERIOD, progress=False, auto_adjust=True)["Close"]
-    df = pd.DataFrame({"hynix": hynix.astype(float), "square": square.astype(float)}).dropna()
+    raw = yf.download(
+        [SK_HYNIX_TICKER, SK_SQUARE_TICKER],
+        period=PERIOD, progress=False, auto_adjust=True,
+    )
+    # yfinance 返回 MultiIndex
+    hynix  = raw["Close"][SK_HYNIX_TICKER].astype(float)
+    square = raw["Close"][SK_SQUARE_TICKER].astype(float)
+    df = pd.DataFrame({"hynix": hynix, "square": square}).dropna()
     df.index = pd.to_datetime(df.index)
     df.index.name = "date"
     return df
 
 
+def fetch_prices_naver() -> pd.DataFrame:
+    """
+    Naver Finance 非官方 API（约2分钟延迟）
+    无需 API Key，仅需 requests
+    """
+    import requests
+    from datetime import datetime, timedelta
+    import xml.etree.ElementTree as ET
+
+    end_dt   = datetime.today()
+    start_dt = end_dt - timedelta(days=730)
+    days_back = 730
+
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"}
+    results = {}
+
+    for col, code in [("hynix", "000660"), ("square", "402340")]:
+        url = (
+            f"https://fchart.stock.naver.com/sise.nhn"
+            f"?symbol={code}&timeframe=day&count={days_back}&requestType=0"
+        )
+        r = requests.get(url, headers=headers, timeout=15)
+        r.raise_for_status()
+        root = ET.fromstring(r.content)
+        series = {}
+        for item in root.iter("item"):
+            parts = item.attrib.get("data", "").split("|")
+            if len(parts) >= 5:
+                dt_str, o, h, l, c = parts[:5]
+                if c.strip():
+                    series[pd.Timestamp(dt_str)] = int(c)
+        results[col] = pd.Series(series)
+
+    df = pd.DataFrame(results).sort_index().dropna()
+    df.index.name = "date"
+    if len(df) < 5:
+        raise ValueError("Naver API 返回数据不足")
+    return df
+
+
 def fetch_prices_krx() -> pd.DataFrame:
-    """KRX(한국거래소) 공식 API 시도"""
-    import requests, json
+    """
+    KRX 官方 REST API（当日收盘，无需登录）
+    注意: 需要浏览器 Referer 头，某些网络环境可能被限制
+    """
+    import requests
     from datetime import datetime, timedelta
 
-    end   = datetime.today()
-    start = end - timedelta(days=730)
-
+    end_dt   = datetime.today()
+    start_dt = end_dt - timedelta(days=730)
+    headers  = {
+        "User-Agent": "Mozilla/5.0",
+        "Referer":    "http://data.krx.co.kr/",
+    }
     results = {}
-    for name, isin in [("hynix", "KR7000660001"), ("square", "KR7402340001")]:
+
+    for col, isin in [("hynix", "KR7000660001"), ("square", "KR7402340001")]:
         url = "http://data.krx.co.kr/comm/bldAttendant/getJsonData.cmd"
         payload = {
-            "bld": "dbms/MDC/STAT/standard/MDCSTAT01701",
-            "isuCd": isin,
-            "strtDd": start.strftime("%Y%m%d"),
-            "endDd":  end.strftime("%Y%m%d"),
-            "adjStkPrc_check": "Y",
-        }
-        headers = {
-            "User-Agent": "Mozilla/5.0",
-            "Referer": "http://data.krx.co.kr/",
+            "bld":            "dbms/MDC/STAT/standard/MDCSTAT01701",
+            "isuCd":          isin,
+            "strtDd":         start_dt.strftime("%Y%m%d"),
+            "endDd":          end_dt.strftime("%Y%m%d"),
+            "adjStkPrc_check":"Y",
         }
         r = requests.post(url, data=payload, headers=headers, timeout=15)
         r.raise_for_status()
@@ -73,7 +154,7 @@ def fetch_prices_krx() -> pd.DataFrame:
             pd.Timestamp(row["TRD_DD"].replace("/", "-")): int(row["TDD_CLSPRC"].replace(",", ""))
             for row in data
         }
-        results[name] = pd.Series(series)
+        results[col] = pd.Series(series)
 
     df = pd.DataFrame(results).sort_index().dropna()
     df.index.name = "date"
@@ -89,23 +170,24 @@ def make_demo_prices() -> pd.DataFrame:
       SK海力士: 2024年约133k→230k，2025年随AI算力需求持续飙升，2026年初达175万
       SK Square: 跟随上涨但涨幅较小，折价率在70-84%区间波动
     """
-    print("⚠  网络受限，使用演示数据（锚点: 海力士175万 / Square102万，数据至2026-05-20）")
+    print("⚠  网络受限，使用演示数据（锚点: 海力士175万 / Square102万，数据至2026-09-19）")
     rng = np.random.default_rng(42)
 
-    dates = pd.bdate_range(start="2024-01-02", end="2026-05-20")
+    dates = pd.bdate_range(start="2024-01-02", end="2026-09-19")
     n = len(dates)
     t = np.linspace(0, 1, n)
 
     # ── SK 해力士 关键节点 ──────────────────────────────────────────────────
     # t=0.00  2024-01  133,000  (已知)
-    # t=0.29  2024-07  238,000  (已知高峰)
-    # t=0.50  2024-12  172,000  (已知回调)
-    # t=0.63  2025-04  350,000  (AI算力需求持续爆发)
-    # t=0.75  2025-08  750,000  (HBM超级周期)
-    # t=0.88  2025-12 1,400,000 (年末高峰)
-    # t=1.00  2026-05 1,750,000 (用户提供当前价)
-    hynix_t = np.array([0.00, 0.29, 0.50, 0.63, 0.75, 0.88, 1.00])
-    hynix_v = np.array([133_000, 238_000, 172_000, 350_000, 750_000, 1_400_000, 1_750_000],
+    # t=0.26  2024-07  238,000  (已知高峰)
+    # t=0.45  2024-12  172,000  (已知回调)
+    # t=0.57  2025-04  350,000  (AI算力需求持续爆发)
+    # t=0.67  2025-08  750,000  (HBM超级周期)
+    # t=0.80  2025-12 1,400,000 (年末高峰)
+    # t=0.90  2026-05 1,750,000 (用户提供价格)
+    # t=1.00  2026-09 1,750,000 (演示延伸，价格参考用户数据)
+    hynix_t = np.array([0.00, 0.26, 0.45, 0.57, 0.67, 0.80, 0.90, 1.00])
+    hynix_v = np.array([133_000, 238_000, 172_000, 350_000, 750_000, 1_400_000, 1_750_000, 1_750_000],
                        dtype=float)
     hynix_trend = np.interp(t, hynix_t, hynix_v)
 
@@ -120,14 +202,15 @@ def make_demo_prices() -> pd.DataFrame:
     # ── SK Square 关键节点 ─────────────────────────────────────────────────
     # Square 与海力士相关（β≈0.45），但绝对价格始终远低于海力士
     # t=0.00  2024-01   65,000
-    # t=0.29  2024-07   80,000  (跟随海力士小幅上涨)
-    # t=0.50  2024-12   62,000  (回调更深)
-    # t=0.63  2025-04  130,000
-    # t=0.75  2025-08  380,000
-    # t=0.88  2025-12  820,000
-    # t=1.00  2026-05 1,020,000 (用户提供当前价)
-    sq_t = np.array([0.00, 0.29, 0.50, 0.63, 0.75, 0.88, 1.00])
-    sq_v = np.array([65_000, 80_000, 62_000, 130_000, 380_000, 820_000, 1_020_000],
+    # t=0.26  2024-07   80,000  (跟随海力士小幅上涨)
+    # t=0.45  2024-12   62,000  (回调更深)
+    # t=0.57  2025-04  130,000
+    # t=0.67  2025-08  380,000
+    # t=0.80  2025-12  820,000
+    # t=0.90  2026-05 1,020,000 (用户提供价格)
+    # t=1.00  2026-09 1,020,000 (演示延伸)
+    sq_t = np.array([0.00, 0.26, 0.45, 0.57, 0.67, 0.80, 0.90, 1.00])
+    sq_v = np.array([65_000, 80_000, 62_000, 130_000, 380_000, 820_000, 1_020_000, 1_020_000],
                     dtype=float)
     sq_trend = np.interp(t, sq_t, sq_v)
 
@@ -143,26 +226,41 @@ def make_demo_prices() -> pd.DataFrame:
     df = pd.DataFrame({"hynix": hynix, "square": square}, index=dates)
     df.index.name = "date"
 
-    # 最后一个交易日强制对齐用户提供的实际市价（2026-05-20）
+    # 最后一个交易日强制对齐用户提供的参考价格
     df.iloc[-1, df.columns.get_loc("hynix")]  = 1_750_000
     df.iloc[-1, df.columns.get_loc("square")] = 1_020_000
     return df
 
 
 def fetch_prices(force_demo: bool = False) -> pd.DataFrame:
+    """
+    数据源优先级（自动降级）:
+      1. pykrx    — KRX 官方，最准确，当日 15:30 后可用
+      2. yfinance — Yahoo Finance，约15分钟延迟
+      3. Naver    — Naver Finance，约2分钟延迟
+      4. KRX REST — KRX 官方 REST API
+      5. 演示数据  — 离线回退
+    """
     if force_demo:
         return make_demo_prices()
-    for fetcher, label in [(fetch_prices_yfinance, "Yahoo Finance"),
-                           (fetch_prices_krx,     "KRX"),
-                           (make_demo_prices,      "演示数据")]:
+
+    fetchers = [
+        (fetch_prices_pykrx,   "pykrx (KRX官方)"),
+        (fetch_prices_yfinance, "Yahoo Finance"),
+        (fetch_prices_naver,    "Naver Finance"),
+        (fetch_prices_krx,      "KRX REST API"),
+    ]
+    for fetcher, label in fetchers:
         try:
             df = fetcher()
-            if len(df) > 10:
-                print(f"数据来源: {label}  ({len(df)} 个交易日)")
+            if len(df) > 5:
+                print(f"✓ 数据来源: {label}  ({len(df)} 个交易日)")
                 return df
         except Exception as e:
-            print(f"{label} 获取失败: {e}")
-    raise RuntimeError("所有数据源均不可用")
+            print(f"✗ {label}: {e}")
+
+    print("所有在线数据源均不可用，切换到演示数据")
+    return make_demo_prices()
 
 
 # ── 计算折价率 ─────────────────────────────────────────────────────────────────
