@@ -45,6 +45,30 @@ UA = "Mozilla/5.0 (compatible; sk-discount/1.0)"
 ALPHA_API = "https://api.alphasquare.co.kr"
 ALPHA_IDS = {"000660": 1456, "402340": 3493}
 
+# Naver 日线接口每根 K 线都带 foreignRetentionRate(外国人保有比率),
+# 是能公开取到的、覆盖最长的外资持股率序列(海力士可回溯至 1996 年上市)。
+NAVER_DAY = ("https://api.stock.naver.com/chart/domestic/item/{code}/day"
+             "?startDateTime={s}0000&endDateTime={e}0000")
+NAVER_TREND = "https://m.stock.naver.com/api/stock/{code}/trend?pageSize={n}&page=1"
+OWN_CODES = [("000660", "SK하이닉스", "SK 海力士"), ("402340", "SK스퀘어", "SK Square")]
+
+# 公司层面的关键事件,用于给年份加注(均为公开披露事实)。
+OWN_EVENTS = {
+    "000660": {
+        "1996": "现代电子产业上市(12/26)",
+        "2001": "债权团接管,更名海力士半导体,大规模减资",
+        "2012": "SK 电信收购,更名 SK 海力士",
+        "2021": "SK 电信分拆,SK Square 成为持股母公司",
+        "2024": "HBM 周期,外资持股创历史新高 56.41%",
+        "2026": "8/19 决议 40 万亿韩元自社股回购注销",
+    },
+    "402340": {
+        "2021": "11/29 自 SK 电信分割上市",
+        "2024": "外资持股升至 51.89%",
+        "2026": "海力士回购注销推进,持股比例将被动上升",
+    },
+}
+
 PERIODS = {"3m": "3mo", "6m": "6mo", "1y": "1y", "2y": "2y", "5y": "5y"}
 
 
@@ -105,6 +129,47 @@ def alpha_series(code):
         day = dt.datetime.utcfromtimestamp(r[0] / 1000 + 9 * 3600).strftime("%Y-%m-%d")
         out[day] = int(r[4])
     return out
+
+
+def naver_daily(code, start="19900101", end="20991231"):
+    """Naver 日线,含 foreignRetentionRate。"""
+    raw = json.loads(fetch(NAVER_DAY.format(code=code, s=start, e=end), timeout=60))
+    if not raw:
+        raise DataError(f"Naver 未返回 {code} 的日线数据")
+    return raw
+
+
+def annual_ownership(daily):
+    """按年汇总外资持股率。返回 [{y, end, hi, lo, chg, px, n}]。"""
+    buckets = {}
+    for r in daily:
+        if r.get("foreignRetentionRate") is None:
+            continue
+        buckets.setdefault(r["localDate"][:4], []).append(r)
+    out, prev = [], None
+    for y in sorted(buckets):
+        rows = buckets[y]
+        fr = [x["foreignRetentionRate"] for x in rows]
+        end = fr[-1]
+        out.append({"y": y, "end": end, "hi": max(fr), "lo": min(fr),
+                    "chg": None if prev is None else round(end - prev, 2),
+                    "px": int(rows[-1]["closePrice"]), "n": len(rows),
+                    "last": rows[-1]["localDate"]})
+        prev = end
+    return out
+
+
+def recent_flows(code, days=60):
+    """最近 N 个交易日的投资者别净买超(股)。"""
+    raw = json.loads(fetch(NAVER_TREND.format(code=code, n=days), timeout=30))
+
+    def total(key):
+        return sum(int(r[key].replace(",", "").replace("+", "")) for r in raw)
+
+    return {"from": raw[-1]["bizdate"], "to": raw[0]["bizdate"], "days": len(raw),
+            "foreign": total("foreignerPureBuyQuant"),
+            "organ": total("organPureBuyQuant"),
+            "individual": total("individualPureBuyQuant")}
 
 
 def nav_page():
@@ -416,6 +481,225 @@ def cmd_html(args, f):
     size = os.path.getsize(args.out)
     print(f"已写出 {args.out}({size / 1024:.0f} KB,{len(rows)} 个交易日,"
           f"行情源 {src_name},分歧 {len(div)} 天)")
+
+
+_OWN_TMPL = """<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SK 海力士 / SK Square 外资持股结构</title>
+<style>$css
+.yr{font-family:var(--mono);font-weight:650;color:var(--ink);white-space:nowrap}
+.ytd{font-family:var(--mono);font-size:9px;letter-spacing:.06em;background:var(--sunken);color:var(--muted);padding:1px 4px;border-radius:2px;vertical-align:middle}
+td.big{font-size:16px;font-weight:650;color:var(--ink)}
+td.dim{color:var(--muted)}
+td.chg-up{color:#0ca30c}
+td.chg-dn{color:var(--s2)}
+.flowbox{display:flex;flex-wrap:wrap;gap:14px 28px;padding:14px 16px;border-top:1px solid var(--rule);font-size:13px}
+.flowbox .fk{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block}
+.flowbox .fv{font-family:var(--mono);font-size:16px;font-weight:650;font-variant-numeric:tabular-nums}
+.pos{color:#0ca30c}.neg{color:var(--s2)}
+@media (max-width:600px){
+ table.own{font-size:11.5px}
+ table.own th,table.own td{padding:7px 4px}
+ table.own td.src,table.own th.ev{display:none}
+ table.own th{white-space:normal;line-height:1.35}
+ table.own td.dim{white-space:normal}
+ table.own td.big{font-size:13.5px}
+ table.own .ytd{display:none}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+<header>
+  <div class="eyebrow">KOSPI 000660 &middot; 402340</div>
+  <h1>外资持股结构 历年统计</h1>
+  <p class="standfirst">SK 海力士与 SK Square 的外国人持股比率逐年变化。持股率为各年最后一个交易日的收盘口径。</p>
+  <div class="asof">
+    <span>数据源 Naver 证券</span>
+    <span>截至 $asof</span>
+    <span>构建 $built</span>
+  </div>
+</header>
+$sections
+<section>
+  <h2>方法与口径</h2>
+  <div class="panel pad notes">
+    <ul>
+      <li><span><b>外资持股率取自 Naver 证券日线接口的 <code>foreignRetentionRate</code> 字段</b>,逐日提供,海力士可回溯至 1996-12-26 上市首日。表中「年末」为该年最后一个交易日的数值。</span></li>
+      <li><span><b>已做三源交叉验证。</b> 当前值:海力士 Naver 50.10% / AlphaSquare 50.2% / WiseReport 50.10%;SK Square 46.50% / 46.49% / 46.50%。历史时点抽查:2026-03-06 海力士 53.76%,与公开报道的「约 53%」一致。上市日期 1996-12-26 与 AlphaSquare 登记的 <code>list_date</code> 完全吻合。</span></li>
+      <li class="warn"><span><b>没有做到的部分:逐年「外资/投信/自营」分项买卖超。</b> 韩国交易所数据系统(data.krx.co.kr)现已要求登录账号,Naver 的旧版投资者动向页面(<code>frgn.naver</code>)已下线,其新版接口忽略翻页参数、最多只返回最近 60 个交易日。因此本表只能给出最近 60 日的分项净买超,更早的年度分项数据需要 KRX 账号或付费终端。</span></li>
+      <li><span><b>净买超三项不轧平。</b> Naver 只给外资 / 机构 / 个人三类,不含「其他法人」等类别,三者相加不等于零。</span></li>
+      <li class="warn"><span><b>历史价格为复权价,不可直接比较。</b> 海力士 2001–2003 年经历债权团接管与大规模减资,复权后的早期价格与当时实际股价差异极大。外资持股率不受此影响。</span></li>
+      <li><span><b>2001 年的异常值。</b> 该年外资持股率在 7.42%–53.39% 间剧烈波动,年末落至 8.00%,主要与当年的减资及债转股导致股本基数剧变有关,不宜按常规年份解读。</span></li>
+    </ul>
+  </div>
+</section>
+<div class="colophon">
+  由 <code>sk-discount ownership --html</code> 生成。外资持股率与投资者净买超:Naver 证券
+  · 当前值交叉验证:AlphaSquare、WiseReport(整合 DART / KRX 公示)。
+</div>
+</div>
+</body>
+</html>
+"""
+
+
+_OWN_SECTION = """<section>
+  <h2>$cname <span class="n">$kname &middot; $code &middot; $span</span></h2>
+  <div class="panel">
+    <div class="pad" style="padding-bottom:6px">$svg_d$svg_m</div>
+    <div class="flowbox">
+      <div><span class="fk">近 $fdays 日 外资净买超</span><span class="fv $fcls">$fval</span></div>
+      <div><span class="fk">机构</span><span class="fv $ocls">$oval</span></div>
+      <div><span class="fk">个人</span><span class="fv $icls">$ival</span></div>
+      <div><span class="fk">区间</span><span class="fv" style="font-size:13px;color:var(--muted)">$frange</span></div>
+    </div>
+    <div class="tw"><table class="own">
+      <thead><tr><th>年度</th><th class="num">年末外资持股 %</th><th class="num">同比 pp</th>
+      <th class="num">年内高 / 低</th><th class="num">年末收盘 &#8361;</th><th class="ev">事件</th></tr></thead>
+      <tbody>$rows</tbody>
+    </table></div>
+  </div>
+</section>
+"""
+
+
+def _svg_own(series, W, H, ml, mr, mt, mb, fs, xticks):
+    """外资持股率折线(按年末取点)。"""
+    n = len(series)
+    ys = [r["end"] for r in series]
+    y0 = max(0, math.floor(min(ys) / 10) * 10 - 0)
+    y1 = math.ceil(max(ys) / 10) * 10
+    if y1 - y0 < 20:
+        y1 = y0 + 20
+    iw, ih = W - ml - mr, H - mt - mb
+    X = lambda i: round(ml + (iw / 2 if n == 1 else i * iw / (n - 1)), 1)
+    Y = lambda v: round(mt + ih - (v - y0) / (y1 - y0) * ih, 1)
+    g = []
+    stepv = 10 if (y1 - y0) <= 60 else 20
+    v = y0
+    while v <= y1 + 1e-9:
+        yy = Y(v)
+        g.append(f'<line class="grid" x1="{ml}" y1="{yy}" x2="{ml + iw}" y2="{yy}"/>')
+        g.append(f'<text x="{ml - 7}" y="{yy + fs * 0.35:.0f}" text-anchor="end" '
+                 f'font-size="{fs}">{v:.0f}%</text>')
+        v += stepv
+    step = max(1, n // xticks)
+    for i in range(0, n, step):
+        g.append(f'<text x="{X(i)}" y="{mt + ih + fs + 6}" text-anchor="middle" '
+                 f'font-size="{fs}">{series[i]["y"][2:]}</text>')
+    pts = " L ".join(f"{X(i)} {Y(r['end'])}" for i, r in enumerate(series))
+    g.append(f'<path class="s1-area" d="M {ml} {mt + ih} L {pts} L {ml + iw} {mt + ih} Z"/>')
+    g.append(f'<path class="s1-line" d="M {pts}"/>')
+    hi = max(range(n), key=lambda i: series[i]["end"])
+    for i in (hi, n - 1):
+        g.append(f'<circle class="dot" cx="{X(i)}" cy="{Y(series[i]["end"])}" r="4"/>')
+    g.append(f'<text class="val" x="{X(hi)}" y="{Y(series[hi]["end"]) - 9}" '
+             f'text-anchor="middle" font-size="{fs + 1}">{series[hi]["end"]:.1f}%</text>')
+    last = series[-1]
+    g.append(f'<text class="val" x="{X(n - 1)}" y="{Y(last["end"]) + fs + 12}" '
+             f'text-anchor="end" font-size="{fs + 1}">{last["end"]:.1f}%</text>')
+    return (f'<svg class="ch" viewBox="0 0 {W} {H}" role="img" '
+            f'aria-label="外资持股率历年走势,最新 {last["end"]:.1f}%">' + "".join(g) + "</svg>")
+
+
+def _own_table(rows, code, ytd_year):
+    body = []
+    ev = OWN_EVENTS.get(code, {})
+    for r in rows:
+        chg = "—" if r["chg"] is None else f'{r["chg"]:+.2f}'
+        cls = ' class="chg-up"' if (r["chg"] or 0) > 0 else (
+            ' class="chg-dn"' if (r["chg"] or 0) < 0 else "")
+        ytd = " <span class=\"ytd\">YTD</span>" if r["y"] == ytd_year else ""
+        body.append(
+            f'<tr><td class="yr">{r["y"]}{ytd}</td>'
+            f'<td class="num big">{r["end"]:.2f}</td>'
+            f'<td class="num"{cls} data-l="同比">{chg}</td>'
+            f'<td class="num dim" data-l="年内高/低">{r["hi"]:.2f} / {r["lo"]:.2f}</td>'
+            f'<td class="num dim" data-l="年末收盘">{r["px"]:,}</td>'
+            f'<td class="src" data-l="事件">{ev.get(r["y"], "")}</td></tr>')
+    return "".join(body)
+
+
+def render_ownership_html(data):
+    secs = []
+    for d in data:
+        ann, fl = d["ann"], d["flows"]
+        ytd = ann[-1]["y"]
+
+        def sign(v):
+            return ("pos" if v > 0 else "neg" if v < 0 else "", f"{v:+,}")
+
+        fcls, fval = sign(fl["foreign"])
+        ocls, oval = sign(fl["organ"])
+        icls, ival = sign(fl["individual"])
+        span = f'{d["first"][:4]} – {d["last"][:4]} · {len(ann)} 个年度'
+        secs.append(string.Template(_OWN_SECTION).substitute(
+            cname=d["cname"], kname=d["kname"], code=d["code"], span=span,
+            svg_d=_svg_own(ann, 880, 300, 52, 26, 22, 34, 12, 10)
+                  .replace('class="ch"', 'class="ch wide"'),
+            svg_m=_svg_own(ann, 380, 250, 42, 14, 18, 30, 11, 5)
+                  .replace('class="ch"', 'class="ch narrow"'),
+            fdays=fl["days"], fval=fval, fcls=fcls, oval=oval, ocls=ocls,
+            ival=ival, icls=icls,
+            frange=f'{fl["from"][4:6]}/{fl["from"][6:]} – {fl["to"][4:6]}/{fl["to"][6:]}',
+            rows=_own_table(ann, d["code"], ytd),
+        ))
+    return string.Template(_OWN_TMPL).substitute(
+        css=_HTML_CSS, sections="".join(secs),
+        asof=f'{data[0]["last"][:4]}-{data[0]["last"][4:6]}-{data[0]["last"][6:]}',
+        built=dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
+    )
+
+
+def cmd_ownership(args, f):
+    data = []
+    for code, kname, cname in OWN_CODES:
+        daily = naver_daily(code)
+        ann = annual_ownership(daily)
+        flows = recent_flows(code)
+        data.append({"code": code, "kname": kname, "cname": cname,
+                     "ann": ann, "flows": flows,
+                     "first": daily[0]["localDate"], "last": daily[-1]["localDate"]})
+
+    if args.json:
+        print(json.dumps(data, ensure_ascii=False, indent=2))
+        return
+    if args.csv:
+        w = sys.stdout
+        w.write("code,name,year,foreign_pct_year_end,change_pp,year_high,year_low,close,sessions\n")
+        for d in data:
+            for r in d["ann"]:
+                w.write(f'{d["code"]},{d["kname"]},{r["y"]},{r["end"]},'
+                        f'{"" if r["chg"] is None else r["chg"]},{r["hi"]},{r["lo"]},'
+                        f'{r["px"]},{r["n"]}\n')
+        return
+    if args.html:
+        html = render_ownership_html(data)
+        with open(args.html, "w", encoding="utf-8") as fh:
+            fh.write(html)
+        print(f"已写出 {args.html}({os.path.getsize(args.html) / 1024:.0f} KB)")
+        return
+
+    for d in data:
+        ytd = d["ann"][-1]["y"]
+        print()
+        print(f"  {f.bold(d['cname'] + ' ' + d['code'])}  "
+              f"{f.dim(d['first'][:4] + '-' + d['first'][4:6] + ' → ' + d['last'][:4] + '-' + d['last'][4:6])}")
+        print(f.dim(f"  {'年':<6}{'年末外资%':>10}{'同比pp':>9}{'年内高':>8}{'年内低':>8}{'年末收盘':>12}"))
+        for r in d["ann"]:
+            chg = "—" if r["chg"] is None else f'{r["chg"]:+.2f}'
+            mark = " (YTD)" if r["y"] == ytd else ""
+            print(f"  {r['y']:<6}{r['end']:>10.2f}{chg:>9}{r['hi']:>8.2f}"
+                  f"{r['lo']:>8.2f}{r['px']:>12,}{mark}")
+        fl = d["flows"]
+        head = f"近 {fl['days']} 个交易日净买超(股):"
+        print(f"  {f.dim(head)} 外资 {fl['foreign']:+,}  "
+              f"机构 {fl['organ']:+,}  个人 {fl['individual']:+,}")
+    print()
 
 
 def cmd_params(args, f):
@@ -971,6 +1255,11 @@ def build_parser():
                    help="行情源,默认 alphasquare")
     add_global(w, False)
 
+    o = sub.add_parser("ownership", help="外资持股结构历年统计(海力士 / SK Square)")
+    o.add_argument("--html", metavar="FILE", help="写出独立网页而不是打印表格")
+    o.add_argument("--csv", action="store_true", help="输出 CSV")
+    add_global(o, False)
+
     s = sub.add_parser("params", help="显示结构参数、公式与数据源")
     add_global(s, False)
     return p
@@ -982,7 +1271,8 @@ def main(argv=None):
     color = sys.stdout.isatty() and not args.no_color and not os.environ.get("NO_COLOR")
     f = Fmt(color)
     handlers = {None: cmd_now, "now": cmd_now, "history": cmd_history,
-                "calibrate": cmd_calibrate, "params": cmd_params, "html": cmd_html}
+                "calibrate": cmd_calibrate, "params": cmd_params, "html": cmd_html,
+                "ownership": cmd_ownership}
     try:
         handlers[args.cmd](args, f)
     except DataError as e:

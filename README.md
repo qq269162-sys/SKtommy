@@ -68,6 +68,27 @@ sk-discount html --source yahoo -o out.html
 行情来自 AlphaSquare(`api.alphasquare.co.kr/data/v3/prices/candles`,stock_id 1456 / 3493)。
 页面数据是生成时的快照;要看最新数字重跑 `sk-discount html`,或在页面里手动填两个股价。
 
+## 外资持股结构统计
+
+`sk-discount ownership` 输出 SK 海力士与 SK Square 的外国人持股比率逐年统计
+(海力士可回溯至 1996-12-26 上市首日,共 31 个年度):
+
+```sh
+sk-discount ownership                      # 终端表格
+sk-discount ownership --csv > own.csv      # 导出 CSV
+sk-discount ownership --html own.html      # 独立网页(含折线图,零 JS 可读)
+```
+
+字段:年末外资持股率、同比变化(pp)、年内高/低、年末收盘价,并对关键年份标注公司事件。
+同时给出最近 60 个交易日的外资 / 机构 / 个人净买超。
+
+数据取自 Naver 证券日线接口的 `foreignRetentionRate` 字段,当前值经 AlphaSquare 与
+WiseReport 三源交叉验证一致。
+
+**口径限制**:逐年的「外资 / 投信 / 自营」分项买卖超无法取得 —— 韩国交易所数据系统
+(data.krx.co.kr)现要求登录账号,Naver 旧版投资者动向页已下线、新版接口忽略翻页
+参数且最多返回 60 个交易日。故分项净买超仅覆盖最近 60 日。
+
 ## 计算方法
 
 每股 SK Square 背后压着固定数量的海力士股票,这个比值就是系数 `k`:
