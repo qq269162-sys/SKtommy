@@ -1,0 +1,594 @@
+<title>UPUPX 的二十七年</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#f6f6f3; --surface:#ffffff; --surface-2:#fbfbf8; --raise:#ffffff;
+  --ink:#15171a; --ink-2:#4e535b; --ink-3:#878c93;
+  --rule:#e5e5e0; --rule-2:#d0d1cb;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7; --neg:#e34948;
+  --r0:#f0f1ee; --r1:#e2ecf9; --r2:#cde2fb; --r3:#9ec5f4; --r4:#5598e7; --r5:#2a78d6; --r6:#1c5cab; --r7:#0d366b;
+  --rt0:var(--ink-3); --rt4:#ffffff;
+  --shadow:0 1px 2px rgba(20,22,26,.05),0 6px 18px -12px rgba(20,22,26,.25);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#121311; --surface:#1b1c19; --surface-2:#1f211d; --raise:#24261f;
+  --ink:#f3f3ef; --ink-2:#b3b5ac; --ink-3:#7e8178;
+  --rule:#2b2d28; --rule-2:#3b3d37;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --neg:#e66767;
+  --r0:#232420; --r1:#1a2a3c; --r2:#16385f; --r3:#184f95; --r4:#256abf; --r5:#3987e5; --r6:#6da7ec; --r7:#9ec5f4;
+  --rt0:var(--ink-3); --rt4:#0b1b2e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px -14px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --ground:#121311; --surface:#1b1c19; --surface-2:#1f211d; --raise:#24261f;
+  --ink:#f3f3ef; --ink-2:#b3b5ac; --ink-3:#7e8178;
+  --rule:#2b2d28; --rule-2:#3b3d37;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9; --neg:#e66767;
+  --r0:#232420; --r1:#1a2a3c; --r2:#16385f; --r3:#184f95; --r4:#256abf; --r5:#3987e5; --r6:#6da7ec; --r7:#9ec5f4;
+  --rt0:var(--ink-3); --rt4:#0b1b2e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px -14px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding-inline:20px; padding-block:0 72px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace; font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-size:clamp(28px,5.2vw,42px); font-weight:700; letter-spacing:-.022em; line-height:1.18}
+h2{font-size:clamp(19px,2.6vw,23px); font-weight:600; letter-spacing:-.012em}
+h3{font-size:16px; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
+
+header.top{padding-block:52px 34px; border-bottom:1px solid var(--rule-2)}
+.dek{margin-top:16px; max-width:64ch; color:var(--ink-2); font-size:16.5px}
+.prov{margin-top:22px; display:flex; flex-wrap:wrap; gap:6px 26px; font-size:12.5px; color:var(--ink-3)}
+.prov b{color:var(--ink-2); font-weight:500}
+
+section{padding-block:40px; border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.shead{display:flex; flex-direction:column; gap:7px; margin-bottom:22px}
+.shead p{color:var(--ink-2); font-size:14.5px; max-width:68ch}
+
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(196px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:3px; overflow:hidden}
+.tile{background:var(--surface); padding:20px 18px 18px}
+.tile .lab{font-size:12px; color:var(--ink-3); letter-spacing:.01em}
+.tile .row{display:flex; align-items:baseline; gap:9px; margin-top:12px}
+.tile .from{font-size:15px; color:var(--ink-3)}
+.tile .arrow{color:var(--ink-3); font-size:13px}
+.tile .to{font-size:29px; font-weight:600; letter-spacing:-.02em; line-height:1}
+.tile .note{margin-top:9px; font-size:12px; color:var(--ink-3)}
+
+figure{margin:0}
+.chart{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:18px 16px 14px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{margin-top:11px; font-size:12.5px; color:var(--ink-3); max-width:72ch}
+.legend{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:14px; padding-top:13px; border-top:1px solid var(--rule)}
+.lg{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2)}
+.sw{width:11px; height:11px; border-radius:2px; flex:none}
+.grid-line{stroke:var(--rule); stroke-width:1}
+.axis-txt{fill:var(--ink-3); font-size:11px; font-family:"IBM Plex Mono",monospace}
+.dlabel{font-size:11.5px; font-family:"IBM Plex Mono",monospace; font-weight:500}
+
+.scroller{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.hm{display:grid; gap:2px; min-width:880px}
+.hm-row{display:grid; grid-template-columns:150px repeat(23,1fr); gap:2px; align-items:stretch}
+.hm-name{font-size:12.5px; color:var(--ink-2); display:flex; align-items:center; padding-right:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.hm-head{font-size:10.5px; color:var(--ink-3); text-align:center; font-family:"IBM Plex Mono",monospace; padding-bottom:3px}
+.cell{height:23px; border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:10px; font-family:"IBM Plex Mono",monospace; font-weight:500; cursor:default}
+.scale{display:flex; align-items:center; gap:9px; margin-top:16px; font-size:12px; color:var(--ink-3); flex-wrap:wrap}
+.scale .bar{display:flex; gap:2px}
+.scale .bar i{width:22px; height:11px; border-radius:2px; display:block}
+
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:12px; padding:5px 10px; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); border-radius:3px; cursor:pointer; line-height:1.3}
+.chip[aria-pressed="true"]{background:var(--s1); border-color:var(--s1); color:#fff}
+.chip:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+table{width:100%; border-collapse:collapse; font-size:14px}
+th,td{padding:9px 10px; text-align:left; border-bottom:1px solid var(--rule)}
+th{font-size:11.5px; font-weight:500; color:var(--ink-3); letter-spacing:.05em; text-transform:uppercase}
+td.n{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.r{color:var(--ink-3); font-family:"IBM Plex Mono",monospace; width:34px}
+tbody tr:last-child td{border-bottom:0}
+.wbar{display:block; height:5px; border-radius:2px; background:var(--s1); min-width:2px}
+
+.phases{display:flex; flex-direction:column; gap:2px}
+.phase{background:var(--surface); border:1px solid var(--rule); padding:22px 20px; display:grid; grid-template-columns:118px 1fr; gap:22px}
+.phase + .phase{border-top:0}
+.phase .when{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-3); line-height:1.6}
+.phase .when b{display:block; color:var(--s1); font-weight:600; font-size:13px; margin-bottom:3px}
+.phase h3{margin-bottom:9px}
+.phase p{color:var(--ink-2); font-size:14.5px; max-width:70ch}
+.phase p + p{margin-top:10px}
+.phase .k{color:var(--ink); font-weight:600}
+.phase .k.mono{font-weight:500}
+
+blockquote{margin:22px 0 0; padding:16px 20px; border-left:2px solid var(--s1); background:var(--surface-2); color:var(--ink-2); font-size:14.5px}
+blockquote cite{display:block; margin-top:9px; font-size:12px; color:var(--ink-3); font-style:normal}
+
+.notes{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:20px 30px; margin-top:6px}
+.notes div{font-size:13.5px; color:var(--ink-2)}
+.notes h3{font-size:13px; margin-bottom:7px; color:var(--ink)}
+
+#tip{position:fixed; z-index:50; pointer-events:none; opacity:0; transition:opacity .09s;
+  background:var(--raise); color:var(--ink); border:1px solid var(--rule-2); border-radius:4px;
+  padding:9px 11px; font-size:12.5px; box-shadow:var(--shadow); max-width:260px; line-height:1.55}
+#tip .th{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); margin-bottom:5px; letter-spacing:.05em}
+#tip .tr{display:flex; align-items:center; gap:7px; justify-content:space-between}
+#tip .tr span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; margin-left:14px}
+.tk{display:inline-flex; align-items:center; gap:6px}
+
+@media (max-width:640px){
+  .phase{grid-template-columns:1fr; gap:12px}
+  .tile .to{font-size:25px}
+  body{font-size:14.5px}
+}
+
+.bars{display:block}
+.dualnote{font-size:12px;color:var(--ink-3);margin:4px 0 0}
+.panel + .panel{margin-top:6px;padding-top:14px;border-top:1px solid var(--rule)}
+.ptitle{font-size:12px;color:var(--ink-2);letter-spacing:.02em;margin-bottom:6px;font-weight:500}
+.quote-sm{font-size:13.5px;color:var(--ink-2);border-left:2px solid var(--rule-2);padding-left:14px;margin-top:14px}
+.warn{display:inline-block;font-size:11px;font-family:"IBM Plex Mono",monospace;padding:2px 7px;border-radius:2px;background:var(--surface-2);border:1px solid var(--rule-2);color:var(--ink-2)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+
+@media print{
+  @page{size:A4; margin:16mm 14mm 18mm}
+  html,body{background:#ffffff!important}
+  body{font-size:10.5pt; line-height:1.62}
+  .wrap{max-width:none; padding-inline:0; padding-block:0}
+  #tip,#chips{display:none!important}
+  header.top{padding-block:0 22px; break-after:avoid}
+  h1{font-size:26pt}
+  h2{font-size:14pt; break-after:avoid}
+  h3{break-after:avoid}
+  .shead{break-after:avoid}
+  section{padding-block:20px; break-inside:auto}
+  figure,.chart,.tile,.phase,blockquote,.notes div,table{break-inside:avoid}
+  .chart{box-shadow:none}
+  .scroller{overflow:visible!important}
+  .hm{min-width:0}
+  .hm-row{grid-template-columns:106px repeat(23,1fr); gap:1.2px}
+  .hm-name{font-size:7.4pt; padding-right:5px}
+  .cell{height:16px; font-size:6pt}
+  .hm-head{font-size:6.6pt}
+  .scale .bar i{width:16px; height:9px}
+  #liveTable{display:none}
+  #printTables{display:block!important}
+  .pt{break-inside:avoid; margin-bottom:16px}
+  .pt h3{font-family:"IBM Plex Mono",monospace; font-size:9.5pt; color:var(--s1); margin-bottom:5px; letter-spacing:.02em}
+  .pt table{font-size:8.6pt}
+  .pt th,.pt td{padding:3.5px 7px}
+  .ptgrid{display:grid; grid-template-columns:1fr 1fr; gap:0 26px}
+  .phase{grid-template-columns:104px 1fr; gap:16px; padding:14px 0; border:0; border-top:1px solid var(--rule)}
+  .phase:first-child{border-top:0}
+  .tiles{border-radius:0}
+  .legend{break-inside:avoid}
+  a{text-decoration:none; color:inherit}
+}
+#printTables{display:none}
+
+</style>
+
+<div id="tip" role="status" aria-live="polite"></div>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">SEC EDGAR · CIK 1058587 · N-CSR &amp; N-PORT · FY1999–FY2025</p>
+  <h1>UPUPX 的二十七年</h1>
+  <p class="dek">Upright Growth Fund 自 1999 年 1 月成立至今的完整记录：每一个财年的规模、回报、资产构成与逐笔持仓，全部从 SEC 原始申报文件里解析出来。这是一只规模始终不到 2,500 万美元的单人基金，它的档案里有一件在大基金身上几乎看不到的事——单一股票占到净资产的一半。</p>
+  <div class="prov">
+    <span><b>基金</b> Upright Growth Fund（UPUPX），Upright Investments Trust 旗下</span>
+    <span><b>经理</b> David Y.S. Chiueh（Upright Financial Corporation）</span>
+    <span><b>成立</b> 1999 年 1 月 21 日 · 财年末 9 月 30 日</span>
+  </div>
+</header>
+
+<section>
+  <div class="shead">
+    <h2>二十七年，四个数字</h2>
+    <p>成立至今 26.7 年。规模涨了三十倍，净值只涨了一倍。</p>
+  </div>
+  <div class="tiles">
+    <div class="tile"><div class="lab">净资产</div><div class="row"><span class="from mono">$0.81M</span><span class="arrow">→</span><span class="to mono">$24.2M</span></div><div class="note">FY1999 → FY2025，峰值 $25.0M（FY2021）</div></div>
+    <div class="tile"><div class="lab">$10,000 成立至今</div><div class="row"><span class="from mono">$10,000</span><span class="arrow">→</span><span class="to mono">$20,403</span></div><div class="note">年化 2.71%，期间最低跌回 $5,510（FY2019）</div></div>
+    <div class="tile"><div class="lab">第一大持仓占净资产</div><div class="row"><span class="from mono">6.6%</span><span class="arrow">→</span><span class="to mono">49.1%</span></div><div class="note">FY2003 → FY2021 峰值（Himax Technologies）</div></div>
+    <div class="tile"><div class="lab">持股只数</div><div class="row"><span class="from mono">71</span><span class="arrow">→</span><span class="to mono">18</span></div><div class="note">FY2003 → FY2025，最少时只有 17 只</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>规模与业绩，分开看</h2>
+    <p>两个量纲不同，所以画成上下两幅共用同一条时间轴，而不是塞进一张双轴图。上面是财年末净资产，下面是当年总回报率——两者的节奏经常是反的。</p>
+  </div>
+  <figure>
+    <div class="chart">
+      <div class="panel"><p class="ptitle">财年末净资产（百万美元）</p><svg id="c1" viewBox="0 0 900 240" role="img" aria-label="净资产折线图"></svg></div>
+      <div class="panel"><p class="ptitle">年度总回报率（%，基金自报，含分红再投资）</p><svg id="c2" viewBox="0 0 900 250" role="img" aria-label="年度回报柱状图"></svg></div>
+    </div>
+    <figcaption>回报率取自每份年报「Financial Highlights」的 Total Return 一行。相邻年报之间有重叠年份，全部逐年核对一致。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>钱在最差的时点进来</h2>
+    <p>把「净资产变化」减去「当年投资回报带来的变化」，剩下的就是申购赎回的净额。这是一个估算量，但方向和量级足够清楚。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c3" viewBox="0 0 900 260" role="img" aria-label="隐含净申赎柱状图"></svg></div>
+    <figcaption>隐含净申赎 = 本年末净资产 − 上年末净资产 ×（1 + 本年回报率）。未考虑资金在年内流入的时点差异，因此是近似值。</figcaption>
+  </figure>
+  <p class="quote-sm">FY2017 与 FY2018 两年合计净流入约 <b>1,180 万美元</b>，是基金历史上最大的一轮申购——发生在净值连续两年下跌 37.97% 和 36.07% 的前夜与当中。此后八年里有六年是净流出。</p>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>$10,000 的二十七年</h2>
+    <p>成立日投入 1 万美元，按基金自报的年度回报逐年滚动。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c4" viewBox="0 0 900 250" role="img" aria-label="一万美元成长曲线"></svg></div>
+    <figcaption>2025 年 9 月 30 日为 $20,403，折合年化 2.71%。曲线两次跌回起点以下：FY2002（$5,525）与 FY2019（$5,510）。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>集中度：从 71 只股票到一只股票占一半</h2>
+    <p>第一、前五、前十大个股占净资产的比重（ETF 与货币基金不计入）。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c5" viewBox="0 0 900 300" role="img" aria-label="集中度折线图"></svg>
+      <div class="legend" id="l5"></div>
+    </div>
+    <figcaption>FY2017 之后第一大持仓再没有低于 24%。FY2018 与 FY2021 两年，Himax Technologies 一只股票分别占净资产的 46.6% 与 49.1%。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>持仓迁移图</h2>
+    <p>二十三个财年里曾进过前十、且出现四次以上或单年超过 8% 的 23 只个股。颜色深浅是当年占净资产的比重，空白代表不持有。</p>
+  </div>
+  <figure>
+    <div class="chart">
+      <div class="scroller"><div class="hm" id="hm"></div></div>
+      <div class="scale" id="hmscale"></div>
+    </div>
+    <figcaption>三段轮廓很清楚：左上角 FY2003–FY2008 的医药股（Andrx、Merck、Pfizer、Amgen、UnitedHealth），中段 FY2009–FY2013 的 Apple 与 Silicon Motion，右下角 FY2014 之后被 Himax、TSMC、Teva 主导的台系半导体与仿制药。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>资产构成：现金比例摆动得比持仓还大</h2>
+    <p>个股、ETF、现金与货币基金三档占净资产的比重。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c6" viewBox="0 0 900 280" role="img" aria-label="资产构成堆叠面积图"></svg>
+      <div class="legend" id="l6"></div>
+    </div>
+    <figcaption>现金档在 FY2016 达到 38.5% 的高点，而 FY2017 只剩 0.6%——这一年正是净流入 769 万美元、随后连续两年重挫的年份。ETF 档在最近三年升到 10%–14%。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>逐年前十大持仓</h2>
+    <p>选择财年查看当年前十大个股。金额为财年末市值（千美元）。</p>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="选择财年"></div>
+  <div class="scroller" id="liveTable"><table>
+    <thead><tr><th style="width:34px">#</th><th>个股</th><th style="width:160px">占净资产</th><th style="width:110px; text-align:right">市值</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table></div>
+  <div id="printTables"></div>
+</section>
+
+<section>
+  <div class="shead"><h2>四个阶段</h2></div>
+  <div class="phases">
+    <div class="phase">
+      <div class="when"><b>阶段一</b>FY1999–FY2008<br>医药与分散</div>
+      <div>
+        <h3>七十只股票的医药组合</h3>
+        <p>FY2003 的组合里有 <span class="k mono">71</span> 只个股，第一大持仓 PacifiCare Health 只占 <span class="k mono">6.6%</span>，前十合计 <span class="k mono">32.9%</span>——按今天的标准这是一只很普通的分散型基金。重仓集中在医药与医疗服务：<span class="k">Andrx</span>、<span class="k">Pfizer</span>、<span class="k">Biovail</span>、<span class="k">Amgen</span>、<span class="k">Odyssey Healthcare</span>、<span class="k">UnitedHealth</span>。</p>
+        <p>这十年吃满了两轮熊市：FY2001 <span class="k mono">−34.91%</span>、FY2002 <span class="k mono">−36.24%</span>、FY2008 <span class="k mono">−45.83%</span>。到 FY2008 末，成立时的 1 万美元只剩 <span class="k mono">$5,995</span>。</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>阶段二</b>FY2009–FY2013<br>Apple + Silicon Motion</div>
+      <div>
+        <h3>两只股票撑起来的复苏</h3>
+        <p>持股数从 71 只压到 27–33 只。<span class="k">Apple</span> 从 FY2009 的 11.6% 一路加到 FY2012 的 <span class="k mono">22.5%</span>，台湾的 <span class="k">Silicon Motion</span> 同期占到 <span class="k mono">14.7%</span>——两只股票就是净资产的三分之一以上。这一阶段业绩确实起来了：FY2012 <span class="k mono">+32.54%</span>、FY2013 <span class="k mono">+19.08%</span>、FY2014 <span class="k mono">+35.01%</span>。</p>
+        <p>同时现金档开始大幅摆动：FY2013 现金与货币基金占 <span class="k mono">27.7%</span>，FY2014 占 <span class="k mono">28.6%</span>。</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>阶段三</b>FY2014–FY2019<br>押注与流入</div>
+      <div>
+        <h3>仓位押上去，钱也涌进来</h3>
+        <p><span class="k">Himax Technologies</span> 在 FY2014 首次进入前十（12.1%）。FY2017 的组合更极端：<span class="k">Teva Pharmaceutical</span> <span class="k mono">23.4%</span> 加 <span class="k">Mylan</span> <span class="k mono">20.5%</span>，两只仿制药公司合计 <span class="k mono">43.9%</span>，前五大合计 <span class="k mono">81.1%</span>，现金只剩 <span class="k mono">0.6%</span>。</p>
+        <p>就在这一年，基金净流入约 <span class="k mono">769 万</span>美元，规模从 1,002 万跳到 <span class="k mono">1,656 万</span>——历史最大单年申购。随后 FY2018 <span class="k mono">−37.97%</span>、FY2019 <span class="k mono">−36.07%</span>，净值两年腰斩再腰斩，$10,000 的累计值跌到 <span class="k mono">$5,510</span>，比 2002 年的低点还低。FY2018 末，<span class="k">Himax</span> 一只股票占净资产 <span class="k mono">46.6%</span>。</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>阶段四</b>FY2020–FY2025<br>反弹与净流出</div>
+      <div>
+        <h3>回报回来了，钱走了</h3>
+        <p>FY2020 <span class="k mono">+53.08%</span>、FY2021 <span class="k mono">+93.63%</span>——两年把净值翻了近三倍，规模冲到历史最高的 <span class="k mono">$24.98M</span>。这轮上涨同样是单一押注的结果：FY2021 末 <span class="k">Himax</span> 占 <span class="k mono">49.1%</span>，<span class="k">Apple</span> 14.0%，<span class="k">Plug Power</span> 7.4%。</p>
+        <p>但资金在反弹中离场：FY2021 净流出 <span class="k mono">253 万</span>、FY2025 净流出 <span class="k mono">322 万</span>，近八年有六年净流出。FY2022 <span class="k mono">−33.21%</span> 之后，FY2023–FY2025 连续三年正回报（+13.22%、+24.07%、+33.16%），规模回到 <span class="k mono">$24.2M</span>，几乎与 FY2021 的峰值持平——但那是靠涨回来的，不是靠新钱。</p>
+        <p>最近三年组合也在变形：ETF 档从 6.0% 升到 <span class="k mono">13.5%</span>，现金档 <span class="k mono">14.3%</span>，个股仓位降到 <span class="k mono">72.9%</span>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>档案里的另外两件事</h2></div>
+  <div class="notes">
+    <div><h3>年报长期迟交</h3>EDGAR 上有 <b>12 份 NT-NCSR</b>（年报延期通知）和 <b>22 份 NT NPORT-P</b>。FY2021 年报在 2022-02-25 才报送，FY2023 年报拖到 2024-03-13，FY2024 年报报送于 <b>2025-10-28</b>——距财年结束已超过十三个月。另有 <b>8 份 N-CSR/A</b> 修订，其中 FY2018 年报被修订过两次。</div>
+    <div><h3>信托下已有三只基金</h3>FY2018 起，Upright Investments Trust 旗下同时有 Upright Growth Fund（UPUPX）、Upright Growth &amp; Income Fund（UPDDX）、Upright Assets Allocation Plus Fund（UPAAX）。后两只规模都只有一两百万美元，三只的持仓高度重叠（Himax、TSMC、Silicon Motion、Teva 同时出现在三只里）。本报告只统计 UPUPX。</div>
+  </div>
+</section>
+
+<section>
+  <div class="shead"><h2>数据来源与口径</h2></div>
+  <div class="notes">
+    <div><h3>原始文件</h3>FY2003–FY2025 的持仓来自 23 份年报 N-CSR 中的 Schedule of Investments / Statement of Investment in Securities；FY1999–FY2002 的规模与回报来自 FY2003 年报 Financial Highlights 的五年栏。全部取自 SEC EDGAR，CIK 1058587。</div>
+    <div><h3>交叉校验</h3>净资产以每份年报自报的 Net Assets 为准，并与 N-PORT 独立核对：FY2021 $24,978,640、FY2023 $17,403,368、FY2024 约 $20.6M 完全吻合。FY2023 的逐笔持仓与同日 N-PORT 也逐项一致（Himax 24.87%、Apple 24.40%、TSMC 8.49%）。各年报表之间重叠的年份全部对齐。</div>
+    <div><h3>合并与分类</h3>同一公司的不同写法（Apple / Apple Computer、Taiwan Semiconductor / TSMC ADR）合并为一个名字。持仓按个股、ETF、现金与货币基金三类分开统计；「集中度」与「前十大」只计个股。</div>
+    <div><h3>需要注意</h3>隐含净申赎为推算值，未考虑年内申赎时点；回报率与净资产均为基金自报数据，本报告未做独立重算。部分年份年报中未逐笔列示现金，现金比例取自报表中的 Cash and Money Funds / Short Term Investments 一行。</div>
+  </div>
+</section>
+
+</div>
+
+<script type="application/json" id="payload">{"years":[1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"hy":[2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"size":[0.81,1.96,2.32,2.19,3.84,5.7,7.48,8.39,8.69,5.27,5.77,4.87,5.08,7.13,8.86,12.63,8.72,10.02,16.56,14.39,9.38,14.21,24.98,16.34,17.4,20.6,24.21],"ret":[0.8,32.06,-34.91,-36.24,51.54,6.11,13.64,3.67,5.75,-45.83,2.01,11.8,-0.88,32.54,19.08,35.01,-6.78,16.62,-11.5,-37.97,-36.07,53.08,93.63,-33.21,13.22,24.07,33.16],"cum":[10080,13312,8665,5525,8372,8883,10095,10466,11067,5995,6116,6837,6777,8982,10696,14441,13462,15699,13894,8618,5510,8434,16331,10908,12350,15322,20403],"flow":[null,0.89,1.04,0.71,0.53,1.62,1.0,0.64,-0.19,0.56,0.4,-1.59,0.26,0.39,0.37,0.66,-3.05,-0.15,7.69,4.11,0.18,-0.15,-2.53,-0.34,-1.1,-0.99,-3.22],"stock":[80.1,74.2,86.0,98.9,95.2,83.3,87.8,85.8,85.0,93.5,70.1,71.5,83.9,60.7,99.0,92.0,94.8,96.0,94.1,87.7,76.8,81.7,72.9],"etf":[0,0,0,0,0,0,4.1,11.2,6.0,3.9,2.8,0.7,0.4,0.4,0.6,2.0,2.8,4.7,5.2,12.6,6.0,9.7,13.5],"cash":[19.7,33.0,10.3,5.3,1.1,6.7,1.1,4.2,9.9,2.8,27.7,28.6,16.4,38.5,0.6,6.4,1.3,1.7,1.5,8.7,18.6,10.0,14.3],"top1":[6.6,4.8,8.7,8.6,13.0,7.0,11.6,14.0,18.0,22.5,12.9,15.1,22.2,21.4,23.4,46.6,28.1,29.1,49.1,34.0,24.9,28.0,24.5],"top5":[20.7,19.4,29.9,34.7,41.7,30.9,36.4,43.1,49.5,52.8,38.4,48.0,71.5,49.1,81.1,72.8,63.1,75.4,81.9,76.7,65.5,71.8,61.2],"top10":[32.8,31.6,44.4,53.8,63.2,51.9,59.9,66.7,66.2,68.6,53.2,58.1,78.3,55.7,91.6,83.4,81.1,89.6,90.1,84.9,74.1,78.9,69.4],"nstock":[71,69,52,48,31,31,31,27,29,33,30,35,28,25,31,31,31,25,20,19,18,17,18],"heat":[{"name":"Andrx","v":[2.9,3.9,2.7,6.7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"Merck","v":[2.6,2.3,2.9,3.0,2.4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"SanDisk","v":[0,2.3,8.7,8.6,9.5,6.7,6.8,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"Pfizer","v":[0,3.8,5.0,8.4,7.0,7.0,4.8,5.9,5.8,5.9,3.5,1.8,0.2,0,0,0,0,0,0,0,0,0,0]},{"name":"Vishay","v":[0,2.3,2.4,4.9,4.3,1.3,0,0,0,0,0,1.7,1.7,0,0,0,0,0,0,0,0,0,0]},{"name":"Corning","v":[0.6,0.3,2.6,2.9,4.3,4.5,4.8,6.8,4.4,3.3,2.5,0.2,0.2,0,0,0,0,0,0,0,0,0,0]},{"name":"Amgen","v":[1.5,0.9,5.4,4.3,3.3,5.7,5.3,3.5,2.3,0,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"UnitedHealth","v":[0,0,0,6.0,6.3,5.9,4.8,7.9,1.8,1.6,0,0,0,0,0,0,0,0,0,0,0,0,0]},{"name":"Silicon Motion","v":[0,0,0,1.2,13.0,5.6,4.9,8.0,16.1,14.7,10.5,15.1,22.2,1.5,0.9,1.1,5.1,3.6,3.7,5.2,3.8,3.8,5.1]},{"name":"Manitowoc","v":[0,0,0,1.1,5.6,3.5,4.3,6.5,3.8,5.4,6.4,0.4,0.3,0,0,0,0,0,0,0,0,0,0]},{"name":"Alphabet","v":[0,0,0,0,5.9,2.3,2.6,0,0,0,0,0.5,0.7,0.8,0.6,0.8,1.3,1.0,1.1,1.2,1.5,1.6,2.0]},{"name":"Starbucks","v":[0,0,0,0,0,4.0,5.0,5.3,5.1,3.2,3.9,3.0,0.1,0.1,0.1,0.1,0.2,0,0,0,0,0,0]},{"name":"Apple","v":[0,0,0,1.8,1.8,3.2,11.6,14.0,18.0,22.5,12.9,13.4,21.2,18.9,15.6,10.2,15.5,20.2,14.0,21.0,24.4,28.0,6.5]},{"name":"Aflac","v":[0,0,0,0,0,0,3.3,4.8,3.1,3.7,2.8,0.2,0,0,0,0,0,0,0,0,0,0,0]},{"name":"TSMC","v":[0,1.1,1.1,1.1,0.7,0.5,0.6,0.6,3.4,4.3,2.7,4.1,6.1,5.2,3.9,5.2,8.4,9.7,7.6,7.1,8.5,14.3,19.6]},{"name":"Teva Pharmaceutical","v":[0,0,0,0,0,0,0,0,2.2,2.9,2.1,1.7,1.3,0.9,23.4,7.2,3.5,3.0,2.4,3.0,3.9,5.8,5.5]},{"name":"Himax Technologies","v":[0,0,0,0,0,1.9,0,0,0.8,1.0,3.4,12.1,20.1,21.4,17.8,46.6,28.1,29.1,49.1,34.0,24.9,19.8,24.5]},{"name":"Plug Power","v":[0,0,0,0,0,0,0,0,0,0,0,3.3,1.9,1.5,1.4,1.2,2.5,12.3,7.4,9.3,3.2,0.8,0.7]},{"name":"Bank of America","v":[0,0,0,0,0,0,1.8,1.6,0.7,1.1,1.4,1.2,1.6,1.4,0.9,1.2,1.9,1.0,1.0,1.1,0.9,1.2,1.3]},{"name":"Lannett","v":[0,0,0,0,0,0,0,0,0,0,0,0,0,1.6,2.2,0.7,6.0,2.2,0.6,0.1,0,0,0]},{"name":"Mylan","v":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,20.5,3.1,3.6,1.8,0,0,0,0,0]},{"name":"AbbVie","v":[0,0,0,0,0,0,0,0,0,0,0.8,0.2,0.3,0.3,3.0,3.6,4.8,3.7,2.6,2.0,2.1,2.3,2.3]},{"name":"Alibaba","v":[0,0,0,0,0,0,0,0,0,0,0,0,0,0.5,2.1,2.3,3.6,4.1,1.2,1.0,1.0,1.0,1.5]}],"tables":{"2003":[["PacifiCare Health",6.6,254],["NetApp",4.27,164],["Genentech",4.17,160],["Andrx",2.91,112],["Computer Associates",2.72,104],["Boeing",2.68,103],["Merck",2.63,101],["Verisign",2.53,97],["McData CL",2.17,84],["Watson Pharmaceuticals",2.17,83]],"2004":[["PacifiCare Health",4.83,275],["Andrx",3.93,224],["Pfizer",3.76,214],["Biovail",3.64,208],["Elan",3.29,187],["Scientific-Atlanta",2.73,156],["Verisign",2.52,143],["Merck",2.32,132],["SanDisk",2.3,131],["Vishay",2.26,129]],"2005":[["SanDisk",8.71,651],["Biovail",5.63,421],["Amgen",5.43,406],["Odyssey Healthcare",5.11,382],["Pfizer",5.01,375],["PacifiCare Health",3.2,239],["EMC",3.11,233],["Merck",2.91,218],["Andrx",2.7,202],["Corning",2.59,193]],"2006":[["SanDisk",8.61,723],["Pfizer",8.45,709],["Andrx",6.7,562],["UnitedHealth",6.04,507],["Vishay",4.85,407],["Micron",4.35,365],["Amgen",4.35,365],["Integrated Device Technology",3.83,321],["Biovail",3.63,305],["Merck",3.0,251]],"2007":[["Silicon Motion",12.96,1126],["SanDisk",9.51,826],["Pfizer",7.03,611],["UnitedHealth",6.3,547],["Alphabet",5.88,511],["Manitowoc",5.61,487],["Vishay",4.35,378],["Corning",4.26,370],["Aeropostale",3.95,343],["Amgen",3.32,289]],"2008":[["Pfizer",7.0,369],["SanDisk",6.68,352],["UnitedHealth",5.93,312],["Amgen",5.74,302],["Silicon Motion",5.58,294],["Coach",5.23,275],["Corning",4.45,235],["Starbucks",3.95,208],["Oracle",3.85,203],["Manitowoc",3.54,187]],"2009":[["Apple",11.56,667],["Coach",7.7,444],["SanDisk",6.77,391],["Amgen",5.32,307],["Starbucks",5.01,289],["Silicon Motion",4.9,283],["Pfizer",4.82,278],["Corning",4.77,276],["UnitedHealth",4.77,275],["Manitowoc",4.27,246]],"2010":[["Apple",13.99,681],["Silicon Motion",7.95,387],["UnitedHealth",7.94,386],["Corning",6.76,329],["Manitowoc",6.47,315],["Pfizer",5.93,288],["Starbucks",5.25,256],["Aflac",4.78,233],["Humana",4.13,201],["Amgen",3.51,171]],"2011":[["Apple",18.0,915],["Silicon Motion",16.14,821],["Pfizer",5.84,297],["Starbucks",5.13,261],["Corning",4.38,222],["Manitowoc",3.83,195],["Abbott Laboratories",3.52,179],["TSMC",3.36,171],["Aflac",3.09,157],["Humana",2.86,145]],"2012":[["Apple",22.45,1601],["Silicon Motion",14.71,1049],["Pfizer",5.85,417],["Manitowoc",5.42,387],["TSMC",4.31,307],["Aflac",3.69,263],["Corning",3.32,237],["Starbucks",3.2,228],["Teva Pharmaceutical",2.9,207],["Dow",2.72,194]],"2013":[["Apple",12.91,1144],["Silicon Motion",10.46,927],["Manitowoc",6.4,567],["SunEdison",4.68,414],["Starbucks",3.91,346],["Pfizer",3.5,310],["Himax Technologies",3.38,300],["Aflac",2.8,248],["TSMC",2.68,237],["Corning",2.47,219]],"2014":[["Silicon Motion",15.15,1913],["Apple",13.4,1693],["Himax Technologies",12.06,1522],["TSMC",4.07,515],["Plug Power",3.27,413],["Starbucks",2.99,377],["Dow",1.95,246],["Pfizer",1.83,231],["Teva Pharmaceutical",1.7,215],["Vishay",1.7,214]],"2015":[["Silicon Motion",22.23,1939],["Apple",21.24,1853],["Himax Technologies",20.1,1753],["TSMC",6.07,529],["Plug Power",1.89,165],["Vishay",1.67,145],["Bank of America",1.61,140],["MetLife",1.35,118],["Teva Pharmaceutical",1.29,113],["NOBLE CORPORATION PLC",0.88,76]],"2016":[["Himax Technologies",21.42,2148],["Apple",18.95,1899],["TSMC",5.19,520],["Genworth",2.0,201],["Lannett",1.59,159],["Silicon Motion",1.55,155],["Plug Power",1.54,154],["Bank of America",1.4,141],["MetLife",1.11,111],["Teva Pharmaceutical",0.92,92]],"2017":[["Teva Pharmaceutical",23.38,3872],["Mylan",20.46,3390],["Himax Technologies",17.82,2951],["Apple",15.63,2589],["TSMC",3.85,638],["AbbVie",2.95,489],["Lannett",2.23,369],["Alibaba",2.09,345],["Abbott Laboratories",1.77,293],["Plug Power",1.42,235]],"2018":[["Himax Technologies",46.57,6700],["Apple",10.2,1467],["Teva Pharmaceutical",7.17,1032],["TSMC",5.22,751],["AbbVie",3.62,520],["Mylan",3.06,440],["Abbott Laboratories",2.8,403],["Alibaba",2.29,330],["Bank of America",1.23,177],["Plug Power",1.2,173]],"2019":[["Himax Technologies",28.06,2632],["Apple",15.52,1456],["TSMC",8.42,790],["Lannett",5.97,560],["Silicon Motion",5.09,477],["AbbVie",4.84,454],["Mylan",3.59,337],["Alibaba",3.57,334],["Teva Pharmaceutical",3.51,329],["Plug Power",2.52,237]],"2020":[["Himax Technologies",29.05,4127],["Apple",20.22,2872],["Plug Power",12.27,1743],["TSMC",9.7,1378],["Alibaba",4.14,588],["AbbVie",3.7,526],["Silicon Motion",3.59,510],["Teva Pharmaceutical",3.04,432],["Lannett",2.15,306],["Mylan",1.78,253]],"2021":[["Himax Technologies",49.1,12264],["Apple",14.05,3509],["TSMC",7.6,1898],["Plug Power",7.41,1852],["Silicon Motion",3.73,931],["AbbVie",2.59,647],["Teva Pharmaceutical",2.37,593],["Alibaba",1.19,296],["Alphabet",1.07,267],["Bank of America",1.02,255]],"2022":[["Himax Technologies",34.05,5563],["Apple",20.98,3427],["Plug Power",9.32,1523],["TSMC",7.13,1166],["Silicon Motion",5.19,847],["Teva Pharmaceutical",3.01,491],["AbbVie",1.97,322],["Alphabet",1.18,192],["Bank of America",1.11,181],["Alibaba",0.98,160]],"2023":[["Himax Technologies",24.87,4329],["Apple",24.4,4246],["TSMC",8.49,1477],["Teva Pharmaceutical",3.87,674],["Silicon Motion",3.83,666],["Plug Power",3.17,551],["AbbVie",2.06,358],["Alphabet",1.52,264],["Alibaba",1.0,173],["Bank of America",0.94,164]],"2024":[["Apple",28.05,5778],["Himax Technologies",19.79,4077],["TSMC",14.33,2952],["Teva Pharmaceutical",5.78,1191],["Silicon Motion",3.83,790],["AbbVie",2.3,474],["Alphabet",1.62,334],["Bank of America",1.16,238],["Alibaba",1.03,212],["MetLife",1.0,206]],"2025":[["Himax Technologies",24.48,5927],["TSMC",19.61,4748],["Apple",6.52,1579],["Teva Pharmaceutical",5.52,1335],["Silicon Motion",5.09,1233],["AbbVie",2.3,556],["Alphabet",2.01,487],["Alibaba",1.48,357],["Bank of America",1.28,310],["PDD Holdings",1.09,264]]}}</script>
+<script>
+const D = JSON.parse(document.getElementById("payload").textContent);
+const YS = D.years, N = YS.length;          // 1999..2025  (size / return / cum / flow)
+const HY = D.hy, M = HY.length;             // 2003..2025  (holdings series)
+const tip = document.getElementById("tip");
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+function showTip(evt, html) {
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let x = evt.clientX + 14, y = evt.clientY - r.height - 12;
+  if (x + r.width > innerWidth - 8) x = evt.clientX - r.width - 14;
+  if (x < 8) x = 8;
+  if (y < 8) y = evt.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.style.opacity = 0; };
+const path = p => p.map((q, i) => (i ? "L" : "M") + q[0].toFixed(1) + " " + q[1].toFixed(1)).join(" ");
+
+function frame(svg, o, years) {
+  const { W, H, ml, mr, mt, mb, yMin, yMax, ticks, fmt, every } = o;
+  const n = years.length, pw = W - ml - mr, ph = H - mt - mb;
+  const X = i => ml + (pw * i) / (n - 1);
+  const Y = v => mt + ph - (ph * (v - yMin)) / (yMax - yMin);
+  ticks.forEach(t => {
+    svg.appendChild(el("line", { x1: ml, x2: ml + pw, y1: Y(t), y2: Y(t), class: "grid-line" }));
+    const lb = el("text", { x: ml - 9, y: Y(t) + 4, class: "axis-txt", "text-anchor": "end" });
+    lb.textContent = fmt ? fmt(t) : t; svg.appendChild(lb);
+  });
+  years.forEach((y, i) => {
+    if (i % (every || 2)) return;
+    const lb = el("text", { x: X(i), y: mt + ph + 20, class: "axis-txt", "text-anchor": "middle" });
+    lb.textContent = "’" + String(y).slice(2); svg.appendChild(lb);
+  });
+  return { X, Y, pw, ph };
+}
+function crosshair(svg, o, X, years, rowsFor) {
+  const { W, ml, mr, mt, mb, H } = o, n = years.length, pw = W - ml - mr, ph = H - mt - mb;
+  const rule = el("line", { y1: mt, y2: mt + ph, style: "stroke:var(--rule-2);stroke-width:1", opacity: 0 });
+  svg.appendChild(rule);
+  const hit = el("rect", { x: ml, y: mt, width: pw, height: ph, style: "fill:transparent" });
+  svg.appendChild(hit);
+  hit.addEventListener("pointermove", e => {
+    const b = svg.getBoundingClientRect();
+    const sx = ((e.clientX - b.left) / b.width) * W;
+    let i = Math.round(((sx - ml) / pw) * (n - 1));
+    i = Math.max(0, Math.min(n - 1, i));
+    rule.setAttribute("x1", X(i)); rule.setAttribute("x2", X(i)); rule.setAttribute("opacity", 1);
+    showTip(e, `<div class="th">FY${years[i]} · 09/30</div>` + rowsFor(i));
+  });
+  hit.addEventListener("pointerleave", () => { rule.setAttribute("opacity", 0); hideTip(); });
+}
+function endpoint(svg, x, y, txt, c) {
+  svg.appendChild(el("circle", { cx: x, cy: y, r: 4, style: `fill:var(${c});stroke:var(--surface);stroke-width:2` }));
+  const t = el("text", { x: x + 11, y: y + 4, class: "dlabel", style: `fill:var(${c})` });
+  t.textContent = txt; svg.appendChild(t);
+}
+
+/* 1 — net assets */
+(function () {
+  const svg = document.getElementById("c1");
+  const o = { W: 900, H: 240, ml: 52, mr: 96, mt: 14, mb: 34, yMin: 0, yMax: 28, ticks: [0, 10, 20, 28], fmt: t => "$" + t + "M" };
+  const { X, Y } = frame(svg, o, YS);
+  const pts = D.size.map((v, i) => [X(i), Y(v)]);
+  svg.appendChild(el("path", { d: path(pts) + ` L${X(N - 1).toFixed(1)} ${Y(0).toFixed(1)} L${X(0).toFixed(1)} ${Y(0).toFixed(1)} Z`, style: "fill:var(--s1);opacity:.13" }));
+  svg.appendChild(el("path", { d: path(pts), style: "fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round;stroke-linecap:round" }));
+  endpoint(svg, pts[N - 1][0], pts[N - 1][1], "$" + D.size[N - 1].toFixed(1) + "M", "--s1");
+  crosshair(svg, o, X, YS, i =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(--s1)"></i>净资产</span><span>$${D.size[i].toFixed(2)}M</span></div>`);
+})();
+
+/* 2 — annual returns, diverging bars */
+(function () {
+  const svg = document.getElementById("c2");
+  const o = { W: 900, H: 250, ml: 52, mr: 96, mt: 14, mb: 34, yMin: -60, yMax: 100, ticks: [-50, 0, 50, 100], fmt: t => t + "%" };
+  const { X, Y, pw } = frame(svg, o, YS);
+  svg.appendChild(el("line", { x1: 52, x2: 900 - 96, y1: Y(0), y2: Y(0), style: "stroke:var(--rule-2);stroke-width:1" }));
+  const bw = Math.max(6, (pw / N) * 0.62);
+  D.ret.forEach((v, i) => {
+    const y0 = Y(0), y1 = Y(v);
+    svg.appendChild(el("rect", {
+      x: X(i) - bw / 2, y: Math.min(y0, y1), width: bw, height: Math.max(1.5, Math.abs(y1 - y0)), rx: 1.5,
+      style: `fill:var(${v >= 0 ? "--s1" : "--neg"})`
+    }));
+  });
+  const best = D.ret.indexOf(Math.max(...D.ret)), worst = D.ret.indexOf(Math.min(...D.ret));
+  [[best, "--s1"], [worst, "--neg"]].forEach(([i, c]) => {
+    const t = el("text", { x: X(i), y: D.ret[i] >= 0 ? Y(D.ret[i]) - 7 : Y(D.ret[i]) + 15, class: "dlabel", "text-anchor": "middle", style: `fill:var(${c})` });
+    t.textContent = (D.ret[i] > 0 ? "+" : "") + D.ret[i].toFixed(1) + "%"; svg.appendChild(t);
+  });
+  crosshair(svg, o, X, YS, i =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(${D.ret[i] >= 0 ? "--s1" : "--neg"})"></i>年度回报</span><span>${D.ret[i] > 0 ? "+" : ""}${D.ret[i].toFixed(2)}%</span></div>`);
+})();
+
+/* 3 — implied flows */
+(function () {
+  const svg = document.getElementById("c3");
+  const o = { W: 900, H: 260, ml: 56, mr: 96, mt: 16, mb: 34, yMin: -4, yMax: 8, ticks: [-4, -2, 0, 4, 8], fmt: t => (t > 0 ? "+$" : t < 0 ? "−$" : "$") + Math.abs(t) + "M" };
+  const { X, Y, pw } = frame(svg, o, YS);
+  svg.appendChild(el("line", { x1: 56, x2: 900 - 96, y1: Y(0), y2: Y(0), style: "stroke:var(--rule-2);stroke-width:1" }));
+  const bw = Math.max(6, (pw / N) * 0.62);
+  D.flow.forEach((v, i) => {
+    if (v === null) return;
+    const y0 = Y(0), y1 = Y(v);
+    svg.appendChild(el("rect", {
+      x: X(i) - bw / 2, y: Math.min(y0, y1), width: bw, height: Math.max(1.5, Math.abs(y1 - y0)), rx: 1.5,
+      style: `fill:var(${v >= 0 ? "--s1" : "--neg"})`
+    }));
+  });
+  const i17 = YS.indexOf(2017);
+  const lab = el("text", { x: X(i17), y: Y(D.flow[i17]) - 8, class: "dlabel", "text-anchor": "middle", style: "fill:var(--s1)" });
+  lab.textContent = "+$7.69M"; svg.appendChild(lab);
+  const i25 = YS.indexOf(2025);
+  const lab2 = el("text", { x: X(i25), y: Y(D.flow[i25]) + 15, class: "dlabel", "text-anchor": "middle", style: "fill:var(--neg)" });
+  lab2.textContent = "−$3.22M"; svg.appendChild(lab2);
+  crosshair(svg, o, X, YS, i => D.flow[i] === null ? "<div class=\"tr\"><span>成立年，无上年可比</span></div>" :
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(${D.flow[i] >= 0 ? "--s1" : "--neg"})"></i>隐含净申赎</span><span>${D.flow[i] > 0 ? "+" : "−"}$${Math.abs(D.flow[i]).toFixed(2)}M</span></div>` +
+    `<div class="tr"><span>当年回报</span><span>${D.ret[i] > 0 ? "+" : ""}${D.ret[i].toFixed(1)}%</span></div>`);
+})();
+
+/* 4 — growth of 10k */
+(function () {
+  const svg = document.getElementById("c4");
+  const o = { W: 900, H: 250, ml: 58, mr: 96, mt: 16, mb: 34, yMin: 0, yMax: 22000, ticks: [0, 5000, 10000, 15000, 20000], fmt: t => "$" + (t / 1000) + "k" };
+  const { X, Y } = frame(svg, o, YS);
+  svg.appendChild(el("line", { x1: 58, x2: 900 - 96, y1: Y(10000), y2: Y(10000), style: "stroke:var(--rule-2);stroke-width:1;stroke-dasharray:none" }));
+  const pts = D.cum.map((v, i) => [X(i), Y(v)]);
+  svg.appendChild(el("path", { d: path(pts), style: "fill:none;stroke:var(--s2);stroke-width:2;stroke-linejoin:round;stroke-linecap:round" }));
+  endpoint(svg, pts[N - 1][0], pts[N - 1][1], "$20,403", "--s2");
+  const lb = el("text", { x: 900 - 96 + 11, y: Y(10000) + 4, class: "dlabel", style: "fill:var(--ink-3)" });
+  lb.textContent = "起点 $10k"; svg.appendChild(lb);
+  crosshair(svg, o, X, YS, i =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(--s2)"></i>累计值</span><span>$${D.cum[i].toLocaleString()}</span></div>` +
+    `<div class="tr"><span>当年回报</span><span>${D.ret[i] > 0 ? "+" : ""}${D.ret[i].toFixed(1)}%</span></div>`);
+})();
+
+/* 5 — concentration */
+(function () {
+  const svg = document.getElementById("c5");
+  const o = { W: 900, H: 300, ml: 48, mr: 104, mt: 16, mb: 34, yMin: 0, yMax: 100, ticks: [0, 25, 50, 75, 100], fmt: t => t + "%" };
+  const { X, Y } = frame(svg, o, HY);
+  const S = [{ k: "top10", n: "前十大合计", c: "--s1" }, { k: "top5", n: "前五大合计", c: "--s2" }, { k: "top1", n: "第一大持仓", c: "--s3" }];
+  S.forEach(s => {
+    const pts = D[s.k].map((v, i) => [X(i), Y(v)]);
+    svg.appendChild(el("path", { d: path(pts), style: `fill:none;stroke:var(${s.c});stroke-width:2;stroke-linejoin:round;stroke-linecap:round` }));
+    endpoint(svg, pts[M - 1][0], pts[M - 1][1], D[s.k][M - 1].toFixed(1) + "%", s.c);
+  });
+  crosshair(svg, o, X, HY, i => S.map(s =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(${s.c})"></i>${s.n}</span><span>${D[s.k][i].toFixed(1)}%</span></div>`).join("") +
+    `<div class="tr"><span>持股只数</span><span>${D.nstock[i]}</span></div>`);
+  document.getElementById("l5").innerHTML = S.map(s =>
+    `<span class="lg"><i class="sw" style="background:var(${s.c})"></i>${s.n}</span>`).join("");
+})();
+
+/* 6 — asset mix */
+(function () {
+  const svg = document.getElementById("c6");
+  const o = { W: 900, H: 280, ml: 48, mr: 104, mt: 16, mb: 34, yMin: 0, yMax: 110, ticks: [0, 25, 50, 75, 100], fmt: t => t + "%" };
+  const { X, Y } = frame(svg, o, HY);
+  const S = [{ k: "stock", n: "个股", c: "--s1" }, { k: "etf", n: "ETF", c: "--s2" }, { k: "cash", n: "现金与货币基金", c: "--s3" }];
+  const base = new Array(M).fill(0);
+  S.forEach(s => {
+    const lo = base.slice(), hi = base.map((b, i) => b + D[s.k][i]);
+    const pts = hi.map((v, i) => [X(i), Y(v)]).concat(lo.map((v, i) => [X(i), Y(v)]).reverse());
+    svg.appendChild(el("path", { d: path(pts) + " Z", style: `fill:var(${s.c});stroke:var(--surface);stroke-width:2;stroke-linejoin:round` }));
+    hi.forEach((v, i) => base[i] = v);
+  });
+  crosshair(svg, o, X, HY, i => S.map(s =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(${s.c})"></i>${s.n}</span><span>${D[s.k][i].toFixed(1)}%</span></div>`).join(""));
+  document.getElementById("l6").innerHTML = S.map(s =>
+    `<span class="lg"><i class="sw" style="background:var(${s.c})"></i>${s.n} <span class="mono" style="color:var(--ink-3)">${D[s.k][M - 1].toFixed(1)}%</span></span>`).join("");
+})();
+
+/* 7 — heatmap */
+(function () {
+  const wrap = document.getElementById("hm");
+  const bucket = v => v === 0 ? 0 : v < 1 ? 1 : v < 3 ? 2 : v < 6 ? 3 : v < 10 ? 4 : v < 18 ? 5 : v < 30 ? 6 : 7;
+  const head = document.createElement("div");
+  head.className = "hm-row";
+  head.innerHTML = "<div></div>" + HY.map(y => `<div class="hm-head">’${String(y).slice(2)}</div>`).join("");
+  wrap.appendChild(head);
+  D.heat.forEach(r => {
+    const row = document.createElement("div");
+    row.className = "hm-row";
+    const nm = document.createElement("div");
+    nm.className = "hm-name"; nm.textContent = r.name; row.appendChild(nm);
+    r.v.forEach((v, i) => {
+      const c = document.createElement("div");
+      c.className = "cell";
+      c.style.background = `var(--r${bucket(v)})`;
+      if (v >= 10) { c.textContent = v.toFixed(0); c.style.color = "var(--rt4)"; }
+      const html = `<div class="th">FY${HY[i]} · 09/30</div><div class="tr"><span>${r.name}</span><span>${v === 0 ? "未持有" : v.toFixed(2) + "%"}</span></div>`;
+      c.addEventListener("pointerenter", e => showTip(e, html));
+      c.addEventListener("pointermove", e => showTip(e, html));
+      c.addEventListener("pointerleave", hideTip);
+      row.appendChild(c);
+    });
+    wrap.appendChild(row);
+  });
+  document.getElementById("hmscale").innerHTML =
+    '<span>占净资产</span><span class="bar">' +
+    [0, 1, 2, 3, 4, 5, 6, 7].map(i => `<i style="background:var(--r${i})"></i>`).join("") +
+    '</span><span class="mono" style="font-size:11px">未持有 · &lt;1 · 1–3 · 3–6 · 6–10 · 10–18 · 18–30 · ≥30%</span>';
+})();
+
+/* 8 — per-year top ten */
+(function () {
+  const chips = document.getElementById("chips"), tb = document.getElementById("tbody");
+  const render = y => {
+    const rows = D.tables[String(y)], max = rows[0][1];
+    tb.innerHTML = rows.map((r, i) => `<tr>
+      <td class="r">${i + 1}</td>
+      <td>${r[0]}</td>
+      <td><span style="display:flex;align-items:center;gap:9px">
+        <span class="mono" style="width:48px;text-align:right">${r[1].toFixed(2)}%</span>
+        <span class="wbar" style="width:${(r[1] / max * 84).toFixed(1)}px"></span></span></td>
+      <td class="n">$${r[2].toLocaleString()}k</td></tr>`).join("");
+    [...chips.children].forEach(c => c.setAttribute("aria-pressed", String(+c.dataset.y === y)));
+  };
+  HY.forEach(y => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.dataset.y = y; b.id = "chip-" + y;
+    b.textContent = "FY" + y; b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => render(y));
+    chips.appendChild(b);
+  });
+  render(HY[M - 1]);
+
+  document.getElementById("printTables").innerHTML =
+    '<div class="ptgrid">' + HY.map(y => {
+      const rows = D.tables[String(y)];
+      return `<div class="pt"><h3>FY${y} · 09/30</h3><table><tbody>` +
+        rows.map((r, i) => `<tr><td class="r">${i + 1}</td><td>${r[0]}</td>` +
+          `<td class="n">${r[1].toFixed(2)}%</td><td class="n">$${r[2].toLocaleString()}k</td></tr>`).join("") +
+        `</tbody></table></div>`;
+    }).join("") + '</div>';
+})();
+
+</script>

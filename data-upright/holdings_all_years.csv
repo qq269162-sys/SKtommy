@@ -1,0 +1,854 @@
+fiscal_year_end,issuer,security_as_filed,type,sector_as_filed,shares,market_value_usd,pct_of_net_assets
+2003-09-30,Money Market Fund - Brown,Money Market Fund - Brown & Co,MMF,Telecommunication,488078.0,488078,12.696
+2003-09-30,1 350% due 10/1/03,1.350% due 10/1/03,MMF,Telecommunication,270864.0,270864,7.046
+2003-09-30,PacifiCare Health,"Pacificare Health Systems, Inc. *",STOCK,Healthcare,5200.0,253760,6.601
+2003-09-30,NetApp,"Network Appliance, Inc. *",STOCK,Storage Technology,8000.0,164240,4.272
+2003-09-30,Genentech,"Genetech, Inc. *",STOCK,Biotechnology,2000.0,160280,4.169
+2003-09-30,Andrx,Andrx Group,STOCK,Medical,6000.0,111960,2.912
+2003-09-30,Computer Associates,"Computer Associates International, Inc.",STOCK,Software and Services,4000.0,104440,2.717
+2003-09-30,Boeing,Boeing Co.,STOCK,Defense,3000.0,102990,2.679
+2003-09-30,Merck,"Merck & Co., Inc.",STOCK,Medical,2000.0,101240,2.633
+2003-09-30,Verisign,"Verisign, Inc. *",STOCK,Internet,7215.0,97114,2.526
+2003-09-30,McData CL,McData Corporation CL,STOCK,Networks,7000.0,83510,2.172
+2003-09-30,Watson Pharmaceuticals,"Watson Pharmaceuticals, Inc. *",STOCK,Medical,2000.0,83380,2.169
+2003-09-30,Scientific-Atlanta,"Scientific Atlanta, Inc.",STOCK,Telecommunication,2500.0,77875,2.026
+2003-09-30,Bristol-Meyers Squibb,Bristol-Meyers Squibb Co.,STOCK,Medical,3000.0,76980,2.002
+2003-09-30,America Online,America Online Inc. *,STOCK,Internet,5000.0,75550,1.965
+2003-09-30,Tyco International,Tyco International Ltd.,STOCK,Diversified Company,3500.0,71505,1.86
+2003-09-30,Veritas Software,Veritas Software Corp.*,STOCK,Software and Services,2200.0,69344,1.804
+2003-09-30,Check Point Software Technologies,"Check Point Software Technologies, Ltd. *",STOCK,Software and Services,4100.0,69044,1.796
+2003-09-30,General Motors,General Motors Corp.,STOCK,Auto/Truck,1600.0,65488,1.703
+2003-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,59620,1.551
+2003-09-30,Amgen,"Amgen, Inc. *",STOCK,Biotechnology,880.0,56778,1.477
+2003-09-30,Broadcom,Broadcom Corp. CL,STOCK,Semiconductor,2000.0,53320,1.387
+2003-09-30,Elan,Elan Corp P.L.C. ADR,STOCK,Medical,9671.0,51160,1.331
+2003-09-30,Dell,Dell Computer Corp. *,STOCK,Computer,1400.0,46788,1.217
+2003-09-30,Enzon Pharmaceuticals,Enzon Pharmaceuticals,STOCK,Medical,4000.0,46560,1.211
+2003-09-30,Yahoo,"Yahoo, Inc. *",STOCK,Internet,1300.0,46007,1.197
+2003-09-30,Juniper,"Juniper Networks, Inc. *",STOCK,Networks,3000.0,45000,1.171
+2003-09-30,Genesis Microchip,"Genesis Microchip, Inc. *",STOCK,Semiconductor,4000.0,44960,1.169
+2003-09-30,EMC,EMC Corp. Mass *,STOCK,Storage Technology,3500.0,44205,1.15
+2003-09-30,Tenet Healthcare,Tenet Healthcare Corp.,STOCK,Healthcare,3000.0,43440,1.13
+2003-09-30,Countrywide Financial,Countrywide Financial Corp. *,STOCK,Financial Service,500.0,39140,1.018
+2003-09-30,Cisco,"Cisco Systems, Inc. *",STOCK,Networks,1900.0,37221,0.968
+2003-09-30,Nortel Networks,Nortel Networks,STOCK,Telecommunication,9000.0,36900,0.96
+2003-09-30,Phillip Morris Companies,"Phillip Morris Companies, Inc.",STOCK,Telecommunication,800.0,35040,0.911
+2003-09-30,MDSI Mobile Data Solutions,"MDSI Mobile Data Solutions, Inc. *",STOCK,Networks,6000.0,33900,0.882
+2003-09-30,Millennium Pharma,"Millennium Pharmaceutical, Inc. *",STOCK,Biotechnology,2000.0,30900,0.804
+2003-09-30,McKesson Hboc,"McKesson Hboc, Inc.",STOCK,Medical,900.0,29961,0.779
+2003-09-30,Microsoft,Microsoft Corp. *,STOCK,Software and Services,1000.0,27800,0.723
+2003-09-30,Schering-Plough,Schering-Plough Corp.,STOCK,Medical,1800.0,27432,0.714
+2003-09-30,Corning,"Corning, Inc.",STOCK,Electronics,2600.0,24492,0.637
+2003-09-30,Calpine,Calpine Corp. *,STOCK,Electronics,5000.0,24450,0.636
+2003-09-30,Micron,"Micron Technology, Inc. *",STOCK,Semiconductor,1800.0,24156,0.628
+2003-09-30,Sanmina,Sanmina Corp. *,STOCK,Electronics,2500.0,24150,0.628
+2003-09-30,Oracle,Oracle Corp. *,STOCK,Software and Services,2100.0,23625,0.615
+2003-09-30,LSI Logic,LSI Logic Corp. *,STOCK,Semiconductor,2500.0,22475,0.585
+2003-09-30,Callaway Golf,Callaway Golf Co. *,STOCK,Internet,1400.0,19978,0.52
+2003-09-30,Biogen,"Biogen, Inc.*",STOCK,Biotechnology,500.0,19060,0.496
+2003-09-30,Adaptec,"Adaptec, Inc. *",STOCK,Computer,2500.0,18900,0.492
+2003-09-30,Cendant,Cendant Corp. *,STOCK,Financial Service,1000.0,18690,0.486
+2003-09-30,Campbell Soup,Campbell Soup Co.,STOCK,Financial Service,700.0,18550,0.483
+2003-09-30,Citigroup,"Citigroup, Inc.",STOCK,Financial Service,400.0,18204,0.474
+2003-09-30,Applied Materials,"Applied Materials, Inc. *",STOCK,Semiconductor,1000.0,18130,0.472
+2003-09-30,Solectron,Solectron Corp. *,STOCK,Electronics,3000.0,17550,0.456
+2003-09-30,First Data,First Data Corp.,STOCK,Software and Services,400.0,15984,0.416
+2003-09-30,Motorola,"Motorola, Inc.",STOCK,Telecommunication,1200.0,14340,0.373
+2003-09-30,Natrol,"Natrol, Inc. *",STOCK,Medical,5000.0,14000,0.364
+2003-09-30,Knight Trading Group,"Knight Trading Group, Inc. *",STOCK,Financial Service,1200.0,13716,0.357
+2003-09-30,Eastman Kodak,Eastman Kodak Company,STOCK,Electronics,600.0,12564,0.327
+2003-09-30,Tommy Hilfiger,Tommy Hilfiger Corp. *,STOCK,Telecommunication,1000.0,11910,0.31
+2003-09-30,Telephone Data Systems,"Telephone & Data Systems, Inc.",STOCK,Telecommunication,200.0,11308,0.294
+2003-09-30,Intel,Intel Corp.,STOCK,Semiconductor,400.0,11008,0.286
+2003-09-30,AVX,AVX Corp.,STOCK,Electronics,800.0,10952,0.285
+2003-09-30,SAP Aktiengesell,SAP Aktiengesell ADR,STOCK,Software and Services,300.0,9129,0.237
+2003-09-30,SBC Communications,SBC Communications,STOCK,Telecommunication,400.0,8900,0.232
+2003-09-30,Ciena,Ciena Corp. *,STOCK,Telecommunication,1400.0,8204,0.213
+2003-09-30,AT T,AT&T Corp.,STOCK,Telecommunication,320.0,6896,0.179
+2003-09-30,Wackenhut Corrections,Wackenhut Corrections Corp. *,STOCK,Healthcare,400.0,6820,0.177
+2003-09-30,Advanta,Advanta Corp.,STOCK,Financial Service,600.0,6588,0.171
+2003-09-30,Nokia,Nokia Corp. ADR,STOCK,Telecommunication,400.0,6240,0.162
+2003-09-30,Transocean Offshore,"Transocean Offshore, Inc. *",STOCK,Networks,200.0,4000,0.104
+2003-09-30,RF Micro Devices,"RF Micro Devices, Inc. *",STOCK,Electronics,400.0,3696,0.096
+2003-09-30,Sun Microsystems,"Sun Microsystems, Inc. *",STOCK,Computer,1100.0,3641,0.095
+2003-09-30,Continental Airlines,"Continental Airlines, Inc. *",STOCK,Telecommunication,200.0,3316,0.086
+2004-09-30,Money Market Fund - Brown,Money Market Fund - Brown & Co,MMF,Telecommunication,1231155.0,1231155,21.612
+2004-09-30,U S Bank-First American Prime Obligations,U.S. Bank-First American Prime Obligations,MMF,Telecommunication,646125.0,646125,11.342
+2004-09-30,PacifiCare Health,"Pacificare Health Systems, Inc. *",STOCK,Healthcare,7500.0,275250,4.832
+2004-09-30,Andrx,Andrx Group,STOCK,Medical,10000.0,223600,3.925
+2004-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,7000.0,214200,3.76
+2004-09-30,Biovail,Biovail Corp.,STOCK,Medical,12000.0,207600,3.644
+2004-09-30,Elan,Elan Corp P.L.C. ADR,STOCK,Medical,8000.0,187200,3.286
+2004-09-30,Scientific-Atlanta,"Scientific-Atlanta, Inc.",STOCK,Telecommunication,6000.0,155520,2.73
+2004-09-30,Verisign,"Verisign, Inc. *",STOCK,Internet,7215.0,143434,2.518
+2004-09-30,Merck,"Merck & Co., Inc.",STOCK,Medical,4000.0,132000,2.317
+2004-09-30,SanDisk,Sandisk Corp. *,STOCK,Storage Technology,4500.0,131040,2.3
+2004-09-30,Vishay,Vishay Intertechnology *,STOCK,Electronics,10000.0,129000,2.265
+2004-09-30,Medimmune,"Medimmune, Inc.*",STOCK,Biotechnology,5000.0,118500,2.08
+2004-09-30,Tyco International,Tyco International Ltd.,STOCK,Diversified Company,3500.0,107310,1.884
+2004-09-30,McKesson Hboc,"McKesson Hboc, Inc.",STOCK,Medical,4000.0,102600,1.801
+2004-09-30,AES,AES Corp. *,STOCK,Energy,10000.0,99900,1.754
+2004-09-30,Enzon Pharmaceuticals,Enzon Pharmaceuticals,STOCK,Medical,5500.0,87725,1.54
+2004-09-30,Utstarcom,"Utstarcom, Inc. *",STOCK,Telecommunication,5000.0,80550,1.414
+2004-09-30,Texas Instruments,"Texas Instruments, Inc.",STOCK,Semiconductor,3500.0,74480,1.307
+2004-09-30,General Motors,General Motors Corp.,STOCK,Auto/Truck,1600.0,67968,1.193
+2004-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,67160,1.179
+2004-09-30,TSMC,Taiwan Semiconductor ADRF,STOCK,Semiconductor,9126.0,65160,1.144
+2004-09-30,Cendant,Cendant Corp.,STOCK,Financial Service,3000.0,64800,1.138
+2004-09-30,Genentech,"Genetech, Inc. *",STOCK,Biotechnology,1200.0,62904,1.104
+2004-09-30,Cypress Semiconductor,Cypress Semiconductor *,STOCK,Semiconductor,7000.0,61880,1.086
+2004-09-30,Lockheed Martin,Lockheed Martin Corp.,STOCK,Defense,1000.0,55780,0.979
+2004-09-30,Genesis Microchip,"Genesis Microchip, Inc. *",STOCK,Semiconductor,4000.0,54000,0.948
+2004-09-30,King Pharmaceuticals,"King Pharmaceuticals, Inc. *",STOCK,Medical,4500.0,53730,0.943
+2004-09-30,Boeing,Boeing Co.,STOCK,Defense,1000.0,51620,0.906
+2004-09-30,Amgen,"Amgen, Inc. *",STOCK,Biotechnology,880.0,49993,0.878
+2004-09-30,Dell,Dell Computer Corp. *,STOCK,Computer,1400.0,49840,0.875
+2004-09-30,Applied Materials,"Applied Materials, Inc. *",STOCK,Semiconductor,3000.0,49470,0.868
+2004-09-30,Geo Group,"Geo Group, Inc. *",STOCK,Healthcare,2400.0,49080,0.862
+2004-09-30,Millennium Pharma,"Millennium Pharmaceutical, Inc. *",STOCK,Biotechnology,3500.0,47845,0.84
+2004-09-30,Computer Associates,"Computer Associates International, Inc.",STOCK,Software and Services,1800.0,47340,0.831
+2004-09-30,Forbes Medi-Tech,"Forbes Medi-Tech, Inc.*",STOCK,Biotechnology,20000.0,46400,0.815
+2004-09-30,EMC,EMC Corp. Mass *,STOCK,Storage Technology,4000.0,46160,0.81
+2004-09-30,NetApp,"Network Appliance, Inc. *",STOCK,Storage Technology,2000.0,46100,0.809
+2004-09-30,Nokia,Nokia Corp. Spon ADR,STOCK,Telecommunication,3000.0,41160,0.723
+2004-09-30,Scientific games Cp CI A,Scientific games Cp CI A *,STOCK,Software and Services,2000.0,38200,0.671
+2004-09-30,Phillip Morris Companies,"Phillip Morris Companies, Inc.",STOCK,Telecommunication,800.0,37632,0.661
+2004-09-30,McData CI A,McData Corporation CI A *,STOCK,Networks,7000.0,35210,0.618
+2004-09-30,Biogen,"Biogen, Inc.*",STOCK,Biotechnology,575.0,35173,0.617
+2004-09-30,Cisco,"Cisco Systems, Inc. *",STOCK,Networks,1900.0,34390,0.604
+2004-09-30,Tenet Healthcare,Tenet Healthcare Corp.,STOCK,Healthcare,3000.0,32370,0.568
+2004-09-30,LSI Logic,LSI Logic Corp. *,STOCK,Semiconductor,7500.0,32325,0.567
+2004-09-30,Nortel Networks,Nortel Networks,STOCK,Telecommunication,9000.0,30600,0.537
+2004-09-30,MDSI Mobile Data Solutions,"MDSI Mobile Data Solutions, Inc. *",STOCK,Networks,6000.0,30000,0.527
+2004-09-30,Sanmina,Sanmina Corp. *,STOCK,Electronics,4000.0,28200,0.495
+2004-09-30,Microsoft,Microsoft Corp. *,STOCK,Software and Services,1000.0,27650,0.485
+2004-09-30,Oracle,Oracle Corp. *,STOCK,Software and Services,2100.0,23688,0.416
+2004-09-30,Juniper,"Juniper Networks, Inc. *",STOCK,Networks,1000.0,23600,0.414
+2004-09-30,Knight Trading Group,"Knight Trading Group, Inc. *",STOCK,Financial Service,2500.0,23075,0.405
+2004-09-30,Eastman Kodak,Eastman Kodak Company,STOCK,Energy,600.0,19332,0.339
+2004-09-30,Campbell Soup,Campbell Soup Co.,STOCK,Financial Service,700.0,18403,0.323
+2004-09-30,Veritas Software,Veritas Software Corp.*,STOCK,Software and Services,1000.0,17800,0.312
+2004-09-30,Corning,"Corning, Inc.",STOCK,Electronics,1600.0,17728,0.311
+2004-09-30,Citigroup,"Citigroup, Inc.",STOCK,Financial Service,400.0,17648,0.31
+2004-09-30,First Data,First Data Corp.,STOCK,Software and Services,400.0,17400,0.305
+2004-09-30,Check Point Software Technologies,"Check Point Software Technologies, Ltd. *",STOCK,Software and Services,1000.0,16970,0.298
+2004-09-30,Telephone Data Systems,"Telephone & Data Systems, Inc.",STOCK,Telecommunication,200.0,16834,0.296
+2004-09-30,Natrol,"Natrol, Inc. *",STOCK,Medical,5000.0,15000,0.263
+2004-09-30,Solectron,Solectron Corp. *,STOCK,Electronics,3000.0,14850,0.261
+2004-09-30,Callaway Golf,Callaway Golf Co.,STOCK,Internet,1400.0,14798,0.26
+2004-09-30,Advanta CI A VTG,Advanta Corp. CI A VTG,STOCK,Financial Service,600.0,13680,0.24
+2004-09-30,Adaptec,"Adaptec, Inc. *",STOCK,Computer,1500.0,11400,0.2
+2004-09-30,Tommy Hilfiger,Tommy Hilfiger Corp. *,STOCK,Telecommunication,1000.0,9870,0.173
+2004-09-30,Intel,Intel Corp.,STOCK,Semiconductor,400.0,8024,0.141
+2004-09-30,Transocean Offshore,"Transocean Offshore, Inc.",STOCK,Networks,200.0,7156,0.126
+2004-09-30,Sun Microsystems,"Sun Microsystems, Inc. *",STOCK,Computer,1100.0,4444,0.078
+2004-09-30,RF Micro Devices,"RF Micro Devices, Inc. *",STOCK,Electronics,400.0,2536,0.045
+2005-09-30,U S Bank-First American Prime Obligations,U.S. Bank-First American Prime Obligations,MMF,Telecommunication,709427.0,709427,9.487
+2005-09-30,SanDisk,Sandisk Corp. *,STOCK,Storage Technology,13500.0,651240,8.709
+2005-09-30,Biovail,Biovail Corp. *,STOCK,Medical,18000.0,420660,5.626
+2005-09-30,Amgen,"Amgen, Inc. *",STOCK,Biotechnology,5100.0,406317,5.434
+2005-09-30,Odyssey Healthcare,"Odyssey Healthcare, Inc. *",STOCK,Medical,22500.0,381825,5.106
+2005-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,15000.0,374550,5.009
+2005-09-30,PacifiCare Health,"Pacificare Health Systems, Inc. *",STOCK,Healthcare,3000.0,239340,3.201
+2005-09-30,EMC,EMC Corp. Mass *,STOCK,Storage Technology,18000.0,232920,3.115
+2005-09-30,Merck,"Merck & Co., Inc.",STOCK,Medical,8000.0,217680,2.911
+2005-09-30,Andrx,Andrx Group *,STOCK,Medical,13100.0,202133,2.703
+2005-09-30,Corning,"Corning, Inc.",STOCK,Electronics,10000.0,193300,2.585
+2005-09-30,Texas Instruments,"Texas Instruments, Inc.",STOCK,Semiconductor,5500.0,186450,2.493
+2005-09-30,Vishay,Vishay Intertechnology *,STOCK,Electronics,15000.0,179250,2.397
+2005-09-30,Dell,Dell Computer Corp. *,STOCK,Computer,4900.0,167580,2.241
+2005-09-30,AES,AES Corp. *,STOCK,Energy,10000.0,164300,2.197
+2005-09-30,LSI Logic,LSI Logic Corp. *,STOCK,Semiconductor,16000.0,157600,2.108
+2005-09-30,Cypress Semiconductor,Cypress Semiconductor *,STOCK,Semiconductor,10000.0,150500,2.013
+2005-09-30,Redhat,"Redhat, Inc. *",STOCK,Software and Services,7000.0,148330,1.984
+2005-09-30,Ebay,"Ebay, Inc. *",STOCK,Internet,3000.0,123600,1.653
+2005-09-30,Nokia,Nokia Corp. Spon ADR,STOCK,Telecommunication,7000.0,118370,1.583
+2005-09-30,Geo Group,"Geo Group, Inc. *",STOCK,Industrial Service,4000.0,106000,1.418
+2005-09-30,Intel,Intel Corp.,STOCK,Semiconductor,4000.0,98600,1.319
+2005-09-30,Scientific-Atlanta,"Scientific-Atlanta, Inc.",STOCK,Telecommunication,2500.0,93775,1.254
+2005-09-30,Citigroup,"Citigroup, Inc.",STOCK,Financial Service,2000.0,91040,1.218
+2005-09-30,Utstarcom,"Utstarcom, Inc. *",STOCK,Telecommunication,11000.0,89870,1.202
+2005-09-30,Applied Materials,"Applied Materials, Inc. *",STOCK,Semiconductor,5000.0,84800,1.134
+2005-09-30,Omnivision Technologies,Omnivision Technologies *,STOCK,Electronics,6500.0,82030,1.097
+2005-09-30,TSMC,Taiwan Semiconductor ADRF,STOCK,Semiconductor,9582.0,78764,1.053
+2005-09-30,Forbes Medi-Tech,"Forbes Medi-Tech, Inc.*",STOCK,Biotechnology,35000.0,70350,0.941
+2005-09-30,Xerox,Xerox Corp.,STOCK,Medical,5000.0,68250,0.913
+2005-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,67340,0.901
+2005-09-30,La-Z-Boy,"La-Z-Boy, Inc.",STOCK,Financial Service,5000.0,65950,0.882
+2005-09-30,Money Market Fund - Brown,Money Market Fund - Brown & Co,MMF,Telecommunication,61450.0,61450,0.822
+2005-09-30,Phillip Morris Companies,"Phillip Morris Companies, Inc.",STOCK,Telecommunication,800.0,58968,0.789
+2005-09-30,Tyco International,Tyco International Ltd.,STOCK,Diversified Company,2000.0,55700,0.745
+2005-09-30,Stemcells,"Stemcells, Inc. *",STOCK,Medical,10000.0,55200,0.738
+2005-09-30,King Pharmaceuticals,"King Pharmaceuticals, Inc. *",STOCK,Medical,3500.0,53830,0.72
+2005-09-30,NetApp,"Network Appliance, Inc. *",STOCK,Storage Technology,2000.0,47480,0.635
+2005-09-30,Champion Enterprises,"Champion Enterprises, Inc. *",STOCK,Biotechnology,3000.0,44340,0.593
+2005-09-30,Multimedia Games,"Multimedia Games, Inc. *",STOCK,Internet,4500.0,43695,0.584
+2005-09-30,Helen of Troy,Helen of Troy Ltd. *,STOCK,Healthcare,2000.0,41800,0.559
+2005-09-30,Cisco,"Cisco Systems, Inc. *",STOCK,Medical,1900.0,34048,0.455
+2005-09-30,Corinthian Colleges,"Corinthian Colleges, Inc. *",STOCK,Medical,2500.0,33175,0.444
+2005-09-30,General Motors,General Motors Corp.,STOCK,,1000.0,30610,0.409
+2005-09-30,RF Micro Devices,"RF Micro Devices, Inc. *",STOCK,Electronics,5400.0,30510,0.408
+2005-09-30,Vitesse Semiconductor,Vitesse Semiconductor *,STOCK,Electronics,15000.0,28050,0.375
+2005-09-30,Millennium Pharma,"Millennium Pharmaceutical, Inc. *",STOCK,Biotechnology,3000.0,27990,0.374
+2005-09-30,Oracle,Oracle Corp. *,STOCK,Software and Services,2100.0,26040,0.348
+2005-09-30,Sanmina,Sanmina Corp. *,STOCK,Electronics,5000.0,21450,0.287
+2005-09-30,Callaway Golf,Callaway Golf Co.,STOCK,Internet,1400.0,21126,0.283
+2005-09-30,Tommy Hilfiger,Tommy Hilfiger Corp. *,STOCK,Telecommunication,1000.0,17350,0.232
+2005-09-30,Dryships,"Dryships, Inc.",STOCK,Telecommunication,1000.0,17230,0.23
+2005-09-30,Lucent Technologies,"Lucent Technologies, Inc.",STOCK,Telecommunication,5000.0,16250,0.217
+2005-09-30,Transocean Offshore,"Transocean Offshore, Inc.",STOCK,Medical,200.0,12262,0.164
+2006-09-30,SanDisk,Sandisk Corp *,STOCK,Storage Technology,13500.0,722790,8.614
+2006-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,25000.0,709000,8.449
+2006-09-30,Andrx,Andrx Group *,STOCK,Medical,23000.0,561890,6.696
+2006-09-30,UnitedHealth,Unitedhealth Group Inc,STOCK,Healthcare,10300.0,506760,6.039
+2006-09-30,Vishay,Vishay Intertechnology *,STOCK,Electronic,29000.0,407160,4.852
+2006-09-30,Micron,Micron Technology Inc. *,STOCK,Semiconductor,21000.0,365400,4.355
+2006-09-30,Amgen,Amgen Incorporated *,STOCK,Biotechnology,5100.0,364803,4.347
+2006-09-30,Integrated Device Technology,"Integrated Device Technology, Inc *",STOCK,Semiconductor,20000.0,321400,3.83
+2006-09-30,Biovail,Biovail Corp,STOCK,Medical,20000.0,304800,3.632
+2006-09-30,Merck,Merck & Co Inc,STOCK,Medical,6000.0,251400,2.996
+2006-09-30,Intel,Intel Corp,STOCK,Semiconductor,12000.0,246840,2.942
+2006-09-30,Corning,Corning Inc *,STOCK,Electronic,10000.0,244100,2.909
+2006-09-30,LSI Logic,LSI Logic Corp *,STOCK,Semiconductor,29000.0,238380,2.841
+2006-09-30,EMC,EMC Corp Mass *,STOCK,Storage Technology,16000.0,191680,2.284
+2006-09-30,Texas Instruments,Texas Instruments Inc,STOCK,Semiconductor,5500.0,182875,2.179
+2006-09-30,Oracle,Oracle Corporation,STOCK,Software & Services,10000.0,177400,2.114
+2006-09-30,Tyco Intl New,Tyco Intl Ltd New,STOCK,Diversified Company,6000.0,167940,2.001
+2006-09-30,Komag New,Komag Inc New *,STOCK,Storage Technology,5000.0,159800,1.904
+2006-09-30,Apple,Apple Computer Inc *,STOCK,Computer,2000.0,153960,1.835
+2006-09-30,NetApp,Network Appliance Inc *,STOCK,Storage Technology,4000.0,148040,1.764
+2006-09-30,Nokia,Nokia Corp Spon ADR,STOCK,Telecommunication,7000.0,137830,1.643
+2006-09-30,Dell,Dell Inc *,STOCK,Computer,6000.0,137040,1.633
+2006-09-30,Silicon Motion,Silicon Motion Technology *,STOCK,Semiconductor,6000.0,99780,1.189
+2006-09-30,Citigroup,Citigroup Inc,STOCK,Financial Service,2000.0,99340,1.184
+2006-09-30,TSMC,Taiwan Semiconductor ADR,STOCK,Semiconductor,9869.0,94742,1.129
+2006-09-30,Brunswick,Brunswick Corp,STOCK,Leisure,3000.0,93570,1.115
+2006-09-30,Omnivision Technologies,Omnivision Technologies *,STOCK,Electronic,6500.0,92755,1.105
+2006-09-30,Manitowoc,Manitowoc Company Inc,STOCK,Diversified Company,2000.0,89580,1.068
+2006-09-30,Cypress Semiconductor,Cypress Semiconductor *,STOCK,Semiconductor,5000.0,88850,1.059
+2006-09-30,Applied Materials,Applied Materials Inc,STOCK,Semiconductor,5000.0,88650,1.056
+2006-09-30,Sanmina,Sanmina Corp *,STOCK,Electronic,23450.0,87703,1.045
+2006-09-30,DirecTV Group,DirecTV Group Inc,STOCK,Telecommunication,4000.0,78720,0.938
+2006-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,70600,0.841
+2006-09-30,Forbes Medi-Tech,Forbes Medi-Tech Inc *,STOCK,Biotechnology,35000.0,70000,0.834
+2006-09-30,Entegris,Entegris Inc *,STOCK,Electronic,6000.0,65460,0.78
+2006-09-30,A E S,A E S Corp *,STOCK,Energy,3000.0,61170,0.729
+2006-09-30,Conexant Systems,Conexant Systems Inc *,STOCK,Semiconductor,30000.0,60000,0.715
+2006-09-30,Petsmart,Petsmart Inc,STOCK,Retail,2000.0,55520,0.662
+2006-09-30,Cisco,Cisco Systems Inc,STOCK,Medical,1900.0,43662,0.52
+2006-09-30,La-Z-Boy,La-Z-Boy Inc,STOCK,Financial Service,3000.0,41880,0.499
+2006-09-30,Allied Waste Industries,Allied Waste Industries *,STOCK,Healthcare,3000.0,33810,0.403
+2006-09-30,Altria Group,Altria Group Inc,STOCK,Telecommunication,400.0,30624,0.365
+2006-09-30,Timberland,Timberland Co *,STOCK,Retail,1000.0,28770,0.343
+2006-09-30,El Paso,El Paso Corporation,STOCK,Energy,2000.0,27280,0.325
+2006-09-30,Utstarcom,Utstarcom Inc *,STOCK,Telecommunication,3000.0,26610,0.317
+2006-09-30,Vitesse Semiconductor,Vitesse Semiconductor *,STOCK,Electronic,25000.0,24750,0.295
+2006-09-30,Stemcells,Stemcells Inc *,STOCK,Medical,10000.0,21300,0.254
+2006-09-30,Champion Enterprises,Champion Enterprises Inc *,STOCK,Biotechnology,3000.0,20700,0.247
+2007-09-30,Silicon Motion,Silicon Motion Technology *,STOCK,Semiconductor,50000.0,1125500,12.955
+2007-09-30,SanDisk,Sandisk Corp *,STOCK,Storage Technology,15000.0,826500,9.513
+2007-09-30,Pfizer,Pfizer Incorporated.,STOCK,Medical,25000.0,610525,7.027
+2007-09-30,UnitedHealth,Unitedhealth Group Inc.,STOCK,Healthcare,11300.0,547259,6.299
+2007-09-30,Alphabet,Google Inc. *,STOCK,Internet,900.0,510542,5.877
+2007-09-30,Manitowoc,Manitowoc Company Inc.,STOCK,Diversified Company,11000.0,487080,5.607
+2007-09-30,Vishay,Vishay Intertechnology *,STOCK,Electronic,29000.0,377870,4.349
+2007-09-30,Corning,Corning Inc.,STOCK,Electronic,15000.0,369750,4.256
+2007-09-30,Aeropostale,Aeropostale Inc. *,STOCK,Retail,18000.0,343080,3.949
+2007-09-30,Amgen,Amgen Incorporated *,STOCK,Biotechnology,5100.0,288507,3.321
+2007-09-30,Nokia,Nokia Corp Spon Adr,STOCK,Telecommunication,7000.0,265510,3.056
+2007-09-30,Biovail,Biovail Corp.,STOCK,Medical,14000.0,243180,2.799
+2007-09-30,E M C Mass,E M C Corp Mass *,STOCK,Storage Technology,11000.0,228800,2.634
+2007-09-30,Oracle,Oracle Corporation *,STOCK,Software & Services,10000.0,216500,2.492
+2007-09-30,LSI Logic,LSI Logic Corp. *,STOCK,Semiconductor,29000.0,215180,2.477
+2007-09-30,Merck,Merck & Co Inc.,STOCK,Medical,4000.0,206760,2.38
+2007-09-30,Genentech,Genetech Inc. *,STOCK,Biotechnology,2000.0,156080,1.797
+2007-09-30,Intel,Intel Corp.,STOCK,Semiconductor,6000.0,155160,1.786
+2007-09-30,Apple,Apple Computer Inc. *,STOCK,Computer,1000.0,153469,1.766
+2007-09-30,American International Group,American International Group Inc.,STOCK,Insurance,2000.0,135300,1.557
+2007-09-30,Texas Instruments,Texas Instruments Inc.,STOCK,Semiconductor,3500.0,128065,1.474
+2007-09-30,Citigroup,Citigroup Inc.,STOCK,Financial Service,2000.0,93280,1.074
+2007-09-30,Short Term Investments Trust Treasury Portfolio,Short Term Investments Trust Treasury Portfolio,MMF,Telecommunication,38597.0,92981,1.07
+2007-09-30,Dell,Dell Inc. *,STOCK,Computer,3000.0,82800,0.953
+2007-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,82800,0.953
+2007-09-30,Micron,Micron Technology Inc. *,STOCK,Semiconductor,7000.0,77700,0.894
+2007-09-30,Timberland,Timberland Co Cl A *,STOCK,Retail,4000.0,75840,0.873
+2007-09-30,Directv Group,Directv Group Inc *,STOCK,Telecommunication,3000.0,72840,0.838
+2007-09-30,Cisco,Cisco Systems Inc. *,STOCK,Networks,1900.0,62947,0.725
+2007-09-30,TSMC,Taiwan Semiconductr Adrf,STOCK,Semiconductor,5869.0,59394,0.684
+2007-09-30,Allied Waste Industries,Allied Waste Industries,STOCK,Industrial Service,3000.0,38250,0.44
+2007-09-30,El Paso,El Paso Corporation,STOCK,Energy,2000.0,33940,0.391
+2008-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,20000.0,368800,6.999
+2008-09-30,Checking Account,Checking Account,MMF,Storage Technology,3426.0,352383,6.687
+2008-09-30,SanDisk,Sandisk Corp *,STOCK,Storage Technology,18000.0,351900,6.678
+2008-09-30,UnitedHealth,Unitedhealth Group Inc.,STOCK,Healthcare,12300.0,312297,5.927
+2008-09-30,Amgen,Amgen Incorporated *,STOCK,Biotechnology,5100.0,302277,5.737
+2008-09-30,Silicon Motion,Silicon Motion Technology *,STOCK,Semiconductor,62800.0,293904,5.578
+2008-09-30,Coach,Coach. *,STOCK,Retail,11000.0,275440,5.227
+2008-09-30,Corning,Corning Inc.,STOCK,Electronic,15000.0,234600,4.452
+2008-09-30,Starbucks,Starbucks Corp,STOCK,Food,14000.0,208180,3.951
+2008-09-30,Oracle,Oracle Corporation *,STOCK,Software & Services,10000.0,203100,3.854
+2008-09-30,Manitowoc,Manitowoc Company Inc.,STOCK,Diversified Company,12000.0,186600,3.541
+2008-09-30,Apple,Apple Computer Inc. *,STOCK,Computer,1500.0,170490,3.236
+2008-09-30,Nokia,Nokia Corp Spon ADR.,STOCK,Telecommunication,8000.0,149200,2.831
+2008-09-30,E M C Mass,E M C Corp Mass *,STOCK,Storage Technology,11000.0,131560,2.497
+2008-09-30,Alphabet,Google Inc. *,STOCK,Internet,300.0,120156,2.28
+2008-09-30,Himax Technologies,Himax Technologies Adr,STOCK,Semiconductor,35000.0,101115,1.919
+2008-09-30,AU Optronics,Au Optronics Corp ADR,STOCK,Electronic,8399.0,95413,1.811
+2008-09-30,LSI Logic,LSI Logic Corp. *,STOCK,Semiconductor,17000.0,91120,1.729
+2008-09-30,Genentech,Genetech Inc. *,STOCK,Biotechnology,1000.0,88680,1.683
+2008-09-30,Biovail,Biovail Corp.,STOCK,Medical,9000.0,87930,1.669
+2008-09-30,Texas Instruments,Texas Instruments Inc.,STOCK,Semiconductor,3500.0,75250,1.428
+2008-09-30,American International Group,American International Group Inc.,STOCK,Insurance,22500.0,74925,1.422
+2008-09-30,Timberland,Timberland Co Cl A *,STOCK,Retail,4000.0,69480,1.319
+2008-09-30,Vishay,Vishay Intertechnology *,STOCK,Electronic,10000.0,66200,1.256
+2008-09-30,Mgm Mirage,Mgm Mirage,STOCK,Leisure,2300.0,65550,1.244
+2008-09-30,Intel,Intel Corp.,STOCK,Semiconductor,3000.0,56190,1.066
+2008-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,51000,0.968
+2008-09-30,Dell,Dell Inc. *,STOCK,Computer,3000.0,49440,0.938
+2008-09-30,Cisco,Cisco Systems Inc. *,STOCK,Networks,1900.0,42864,0.813
+2008-09-30,Allied Waste Industries,Allied Waste Industries,STOCK,Industrial Service,3000.0,33329,0.633
+2008-09-30,TSMC,Taiwan Semiconductr Adrf,STOCK,Semiconductor,2869.0,26883,0.51
+2008-09-30,Washington Mutual,Washington Mutual Inc.,STOCK,Financial Service,58395.0,6000,0.114
+2009-09-30,Apple,Apple Computer Inc. *,STOCK,Computer,3600.0,667260,11.559
+2009-09-30,Coach,Coach Inc. *,STOCK,Retail,13500.0,444420,7.699
+2009-09-30,SanDisk,Sandisk Corp *,STOCK,Storage Technology,18000.0,390600,6.767
+2009-09-30,Amgen,Amgen Incorporated *,STOCK,Biotechnology,5100.0,307173,5.321
+2009-09-30,Starbucks,Starbucks Corp,STOCK,Food,14000.0,289100,5.008
+2009-09-30,Silicon Motion,Silcon Motion Technology,STOCK,Semiconductor,71000.0,282580,4.895
+2009-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,16800.0,278040,4.817
+2009-09-30,Corning,Corning Inc.,STOCK,Electronic,18000.0,275580,4.774
+2009-09-30,UnitedHealth,Unitedhealth Group Inc.,STOCK,Healthcare,11000.0,275440,4.772
+2009-09-30,Manitowoc,Manitowoc Company Inc.,STOCK,Diversified Company,26000.0,246220,4.265
+2009-09-30,Direxion Shs Exch Trd Fd,Direxion Shs Exch Trd Fd,ETF,Financial Service,2600.0,213538,3.699
+2009-09-30,Aflac,A F L A C Inc.,STOCK,Insurance,4500.0,192330,3.332
+2009-09-30,Humana,Humana Inc.,STOCK,Medical,5000.0,186500,3.231
+2009-09-30,Alphabet,Google Inc. *,STOCK,Internet,300.0,148755,2.577
+2009-09-30,Nokia,Nokia Corp Spon ADR.,STOCK,Telecommunication,8000.0,116960,2.026
+2009-09-30,Himax Tchnologies,Himax Tchnologies Adr *,STOCK,Semiconductor,35000.0,116550,2.019
+2009-09-30,Bank of America,Bank of America Corp,STOCK,Bank,6000.0,101520,1.759
+2009-09-30,Mgm Mirage,Mgm Mirage,STOCK,Leisure,8300.0,99932,1.731
+2009-09-30,Dryships,Dryships Inc,STOCK,Transportation,14000.0,92820,1.608
+2009-09-30,AU Optronics,Au Optronics Corp Adr,STOCK,Electronic,8650.0,83732,1.451
+2009-09-30,MetLife,Metlife Inc.,STOCK,Insurance,2000.0,76140,1.319
+2009-09-30,American International Group,American International Group Inc.,STOCK,Insurance,1625.0,71679,1.242
+2009-09-30,Timberland,Timberland Co Cl A *,STOCK,Retail,4000.0,55680,0.965
+2009-09-30,Research In Motion,Research In Motion Ltd,STOCK,Telecommunication,700.0,47341,0.82
+2009-09-30,Dell,Dell Inc. *,STOCK,Computer,3000.0,45780,0.793
+2009-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,32840,0.569
+2009-09-30,Advanta CI A Vtg,Advanta Corp CI A Vtg,STOCK,Financial Service,58395.0,32117,0.556
+2009-09-30,TSMC,Taiwan Semiconductr Adrf,STOCK,Semiconductor,2926.0,32069,0.556
+2009-09-30,Citigroup,Citigroup Inc.,STOCK,Financial Service,6000.0,29040,0.503
+2009-09-30,Prudential Financial,Prudential Financial Inc.,STOCK,Financial Service,500.0,24955,0.432
+2009-09-30,Proshares Ultra S P,Proshares Ultra S&P. *,ETF,Investment Trust,600.0,20592,0.357
+2009-09-30,Medtronic,Medtronic Inc.,STOCK,Medical,500.0,18400,0.319
+2009-09-30,E M C Mass,E M C Corp Mass *,STOCK,Storage Technology,500.0,8525,0.148
+2010-09-30,Apple,Apple Computer Inc. *,STOCK,Computer,2400.0,681000,13.993
+2010-09-30,Silicon Motion,Silcon Motion Technology *,STOCK,Semiconductor,71000.0,386950,7.951
+2010-09-30,UnitedHealth,Unitedhealth Group Inc.,STOCK,Healthcare,11000.0,386210,7.936
+2010-09-30,Corning,Corning Inc.,STOCK,Electronic,18000.0,329040,6.761
+2010-09-30,Manitowoc,Manitowoc Company Inc.,STOCK,Diversified Company,26000.0,314860,6.47
+2010-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,16800.0,288456,5.927
+2010-09-30,Starbucks,Starbucks Corp,STOCK,Food,10000.0,255500,5.25
+2010-09-30,Aflac,A F L A C Inc.,STOCK,Insurance,4500.0,232695,4.781
+2010-09-30,Proshs Ultra Real Estate,Proshs Ultra Real Estate,ETF,Real Estate,5000.0,222450,4.571
+2010-09-30,Humana,Humana Inc. *,STOCK,Medical,4000.0,200960,4.129
+2010-09-30,Amgen,Amgen Incorporated *,STOCK,Biotechnology,3100.0,170841,3.51
+2010-09-30,Direxion Financial,Direxion Financial *,ETF,Financial Service,6000.0,128040,2.631
+2010-09-30,Proshs Ultrashrt S P,Proshs Ultrashrt S&P,ETF,Diversified Company,4000.0,118360,2.432
+2010-09-30,Mgm Mirage,Mgm Mirage *,STOCK,Leisure,8300.0,93624,1.924
+2010-09-30,AU Optronics,Au Optronics Corp ADR *,STOCK,Electronic,8650.0,90479,1.859
+2010-09-30,Himax Tchnologies,Himax Tchnologies Adr,STOCK,Semiconductor,35000.0,86800,1.784
+2010-09-30,Chevron,Chevron Corporation,STOCK,Oil,1000.0,81050,1.665
+2010-09-30,Nokia,Nokia Corp Spon ADR.,STOCK,Telecommunication,8000.0,80240,1.649
+2010-09-30,Bank of America,Bank of America Corp,STOCK,Bank,6000.0,78615,1.615
+2010-09-30,MetLife,Metlife Inc.,STOCK,Insurance,2000.0,76900,1.58
+2010-09-30,Direxion Large Cap Bear,Direxion Large Cap Bear *,ETF,Diversified Company,6000.0,74520,1.531
+2010-09-30,Dryships,Dryships Inc *,STOCK,Transportation,14000.0,67340,1.384
+2010-09-30,Oil Service Holders Tr,Oil Service Holders Tr,STOCK,Oil,500.0,56575,1.163
+2010-09-30,Dell,Dell Inc. *,STOCK,Computer,3000.0,38910,0.8
+2010-09-30,Research In Motion,Research In Motion Ltd *,STOCK,Telecommunication,700.0,34083,0.7
+2010-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,32500,0.668
+2010-09-30,TSMC,Taiwan Semiconductr Adrf,STOCK,Semiconductor,2926.0,29670,0.61
+2010-09-30,Prudential Financial,Prudential Financial Inc.,STOCK,Financial Service,500.0,27090,0.557
+2010-09-30,Citigroup,Citigroup Inc. *,STOCK,Financial Service,6000.0,23460,0.482
+2010-09-30,Medtronic,Medtronic Inc.,STOCK,Medical,500.0,16790,0.345
+2010-09-30,Canadian Solar,Canadian Solar Inc *,STOCK,Energy,1000.0,16300,0.335
+2011-09-30,Apple,Apple Computer Inc. *,STOCK,Computer,2400.0,915168,18.001
+2011-09-30,Silicon Motion,Silicon Motion Technology *,STOCK,Semiconductor,71000.0,820760,16.144
+2011-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,16800.0,297024,5.842
+2011-09-30,Starbucks,Starbucks Corp,STOCK,Food,7000.0,261030,5.134
+2011-09-30,Corning,Corning Inc.,STOCK,Electronic,18000.0,222480,4.376
+2011-09-30,Manitowoc,Manitowoc Company Inc.,STOCK,Diversified Company,29000.0,194590,3.828
+2011-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical,3500.0,178990,3.521
+2011-09-30,TSMC,Taiwan Semiconductr Adrf,STOCK,Semiconductor,14926.0,170604,3.356
+2011-09-30,Aflac,A F L A C Inc.,STOCK,Insurance,4500.0,157275,3.094
+2011-09-30,Humana,Humana Inc. *,STOCK,Medical,2000.0,145460,2.861
+2011-09-30,Amgen,Amgen Incorporated *,STOCK,Biotechnology,2100.0,115416,2.27
+2011-09-30,Teva Pharmaceutical,Teva Pharm Inds Ltd Adrf,STOCK,Medical,3000.0,111660,2.196
+2011-09-30,Proshs Ultrashrt S P,Proshs Ultrashrt S&P,ETF,Diversified Company,4000.0,101960,2.006
+2011-09-30,Chevron,Chevron Corporation,STOCK,Oil,1000.0,92590,1.821
+2011-09-30,UnitedHealth,Unitedhealth Group Inc.,STOCK,Healthcare,2000.0,92240,1.814
+2011-09-30,Proshs Ultra Real Estate,Proshs Ultra Real Estate,ETF,Real Estate,2000.0,81380,1.601
+2011-09-30,Direxion Financial,Direxion Financial *,ETF,Financial Service,6000.0,63720,1.253
+2011-09-30,MetLife,Metlife Inc.,STOCK,Insurance,2000.0,56020,1.102
+2011-09-30,Mgm Mirage,Mgm Mirage *,STOCK,Leisure,6000.0,55740,1.096
+2011-09-30,Direxion Large Cap Bear,Direxion Large Cap Bear *,ETF,Diversified Company,1200.0,55536,1.092
+2011-09-30,Oil Service Holders Tr,Oil Service Holders Tr,STOCK,Oil,500.0,51555,1.014
+2011-09-30,Dryships,Dryships Inc *,STOCK,Transportation,20000.0,46800,0.921
+2011-09-30,Nokia,Nokia Corp Spon ADR,STOCK,Telecommunication,8000.0,45280,0.891
+2011-09-30,Dell,Dell Inc. *,STOCK,Computer,3000.0,42420,0.834
+2011-09-30,Himax Technologies,Himax Technologies Adr,STOCK,Semiconductor,35000.0,38850,0.764
+2011-09-30,Bank of America,Bank of America Corp,STOCK,Bank,6000.0,36720,0.722
+2011-09-30,Canadian Solar,Canadian Solar Inc *,STOCK,Energy,9500.0,34960,0.688
+2011-09-30,AU Optronics,Au Optronics Corp ADR *,STOCK,Electronic,8650.0,34254,0.674
+2011-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,30440,0.599
+2011-09-30,Research In Motion,Research In Motion Ltd *,STOCK,Telecommunication,1100.0,22330,0.439
+2011-09-30,Directv Group,Directv Group Inc,STOCK,Telecommunication,500.0,21135,0.416
+2011-09-30,Medtronic,Medtronic Inc.,STOCK,Medical,500.0,16620,0.327
+2011-09-30,Citigroup,Citigroup Inc. *,STOCK,Financial Service,600.0,15369,0.302
+2012-09-30,Apple,Apple Inc,STOCK,Computer,2400.0,1601052,22.45
+2012-09-30,Silicon Motion,Silcon Motion Technology*,STOCK,Semiconductor,71000.0,1049380,14.715
+2012-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,16800.0,417480,5.854
+2012-09-30,Manitowoc,Manitowoc Company Inc,STOCK,Diversified Company,29000.0,386860,5.425
+2012-09-30,TSMC,Taiwan Semiconductr ADR,STOCK,Semiconductor,19426.0,307320,4.309
+2012-09-30,Aflac,A F L A C Inc,STOCK,Insurance,5500.0,263340,3.693
+2012-09-30,Corning,Corning Inc,STOCK,Electronic,18000.0,236700,3.319
+2012-09-30,Starbucks,Starbucks Corp,STOCK,Food,4500.0,228195,3.2
+2012-09-30,Teva Pharmaceutical,Teva Pharm Inds Ltd ADR,STOCK,Medical,5000.0,207050,2.903
+2012-09-30,Dow,Dow Chemical Company,STOCK,Basic Material,6700.0,193999,2.72
+2012-09-30,Memc Electric Materials,Memc Electric Materials*,STOCK,Semiconductor,67000.0,184250,2.584
+2012-09-30,Mosaic,Mosaic Company,STOCK,Basic Material,3000.0,172830,2.423
+2012-09-30,Direxion Shs Exch Trd Fd,Direxion Shs Exch Trd Fd *,ETF,Financial Service,1400.0,146916,2.06
+2012-09-30,MetLife,Metlife Inc,STOCK,Insurance,4000.0,137840,1.933
+2012-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical,2000.0,137120,1.923
+2012-09-30,Proshs Ultra Real Estate,Proshs Ultra Real Estate,ETF,Real Estate,2000.0,134360,1.884
+2012-09-30,Chevron,Chevron Corporation,STOCK,Oil,1000.0,116560,1.634
+2012-09-30,UnitedHealth,Unitedhealth Group Inc,STOCK,Healthcare,2000.0,110820,1.554
+2012-09-30,BHP,BHP Billiton Ltd ADR,STOCK,Basic Material,1600.0,109776,1.539
+2012-09-30,Canadian Solar,Canadian Solar Inc *,STOCK,Energy,38000.0,106020,1.487
+2012-09-30,Whirlpool,Whirlpool Corp,STOCK,Consumer,1000.0,82910,1.163
+2012-09-30,Bank of America,Bank Of America Corp,STOCK,Bank,9000.0,79470,1.114
+2012-09-30,Himax Technologies,Himax Technologies ADR,STOCK,Semiconductor,35000.0,68600,0.962
+2012-09-30,MGM Resorts International,MGM Resorts International *,STOCK,Leisure,6000.0,64500,0.904
+2012-09-30,Market Vectors Oil Service,Market Vectors Oil Service *,STOCK,Oil,1500.0,60352,0.846
+2012-09-30,Dryships,Dryships Inc *,STOCK,Transportation,25000.0,58500,0.82
+2012-09-30,Direct TV Group,Direct TV Group Inc *,STOCK,Telecommunication,1000.0,52440,0.735
+2012-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,45420,0.637
+2012-09-30,Caterpillar,"Caterpillar,Inc",STOCK,Machinery,500.0,43020,0.603
+2012-09-30,First Solar,First Solar Inc *,STOCK,Energy,1700.0,37646,0.528
+2012-09-30,AU Optronics,Au Optronics Corp ADR *,STOCK,Electronic,8650.0,30102,0.422
+2012-09-30,Dell,Dell Inc *,STOCK,Computer,3000.0,29565,0.415
+2012-09-30,Medtronic,Medtronic Inc,STOCK,Medical,500.0,21560,0.302
+2012-09-30,Citigroup,Citigroup Inc,STOCK,Financial Service,600.0,19632,0.275
+2012-09-30,Research In Motion,Research In Motion Ltd *,STOCK,Telecommunication,1100.0,8250,0.116
+2013-09-30,Apple,Apple Inc.,STOCK,Computer,2400.0,1144200,12.91
+2013-09-30,Silicon Motion,Silcon Motion Technology Corp.*,STOCK,Semiconductor,71000.0,927260,10.462
+2013-09-30,Manitowoc,Manitowoc Company Inc,STOCK,Diversified Company,29000.0,567240,6.4
+2013-09-30,SunEdison,SunEdison Inc.,STOCK,Energy,52000.0,414440,4.676
+2013-09-30,Starbucks,Starbucks Corp.,STOCK,Food,4500.0,346365,3.908
+2013-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,10800.0,310284,3.501
+2013-09-30,Himax Technologies,Himax Technologies Inc.ADR,STOCK,Semiconductor,30000.0,300000,3.385
+2013-09-30,Aflac,A F L A C Inc.,STOCK,Insurance,4000.0,247960,2.798
+2013-09-30,TSMC,Taiwan Semiconductor ADR,STOCK,Semiconductor,14000.0,237440,2.679
+2013-09-30,Corning,Corning Inc.,STOCK,Electronic,15000.0,218851,2.469
+2013-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Ltd ADR,STOCK,Medical,5000.0,188900,2.131
+2013-09-30,Dow,Dow Chemical Company,STOCK,Basic Material,4700.0,180480,2.036
+2013-09-30,Proshares Ultrashrt S P,Proshares Ultrashrt S&P,ETF,Diversified Company,4500.0,164610,1.857
+2013-09-30,Bank of America,Bank Of America Corp.,STOCK,Bank,9000.0,124200,1.401
+2013-09-30,MetLife,Metlife Inc.,STOCK,Insurance,2500.0,117375,1.324
+2013-09-30,BHP,BHP Billiton Ltd ADR,STOCK,Basic Material,1600.0,106400,1.2
+2013-09-30,Cirrus logic,Cirrus logic Inc.,STOCK,Electronic,4000.0,90640,1.023
+2013-09-30,Dryships,Dryships,STOCK,Transportation,25000.0,88475,0.998
+2013-09-30,Baidu,Baidu Inc.,STOCK,Internet Service,500.0,77590,0.875
+2013-09-30,Direxion Shares Exchange Trade Fd,Direxion Shares Exchange Trade Fd *,ETF,Financial Service,1000.0,68770,0.776
+2013-09-30,First Solar,First Solar Inc. *,STOCK,Energy,1700.0,68357,0.771
+2013-09-30,AbbVie,AbbVie Inc.,STOCK,Medical,1500.0,67095,0.757
+2013-09-30,MGM Resorts International,MGM Resorts International *,STOCK,Leisure,3000.0,61320,0.692
+2013-09-30,Direct TV Group,Direct TV Group Inc. *,STOCK,Telecommunication,1000.0,59780,0.674
+2013-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical,1500.0,49785,0.562
+2013-09-30,General Electric,General Electric Company,STOCK,Diversified Company,2000.0,47780,0.539
+2013-09-30,Caterpillar,Caterpillar Inc.,STOCK,Machinery,500.0,41700,0.47
+2013-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,36450,0.411
+2013-09-30,AU Optronics,Au Optronics Corp. ADR *,STOCK,Electronic,8650.0,31572,0.356
+2013-09-30,Citigroup,Citigroup Inc.,STOCK,Financial Service,600.0,29106,0.328
+2013-09-30,Proshares Ultra Real Estate,Proshares Ultra Real Estate,ETF,Real Estate,250.0,17232,0.194
+2013-09-30,Canadian Solar,Canadian Solar Inc. *,STOCK,Energy,1000.0,16990,0.192
+2013-09-30,Whirlpool,Whirlpool Corp.,STOCK,Consumer,100.0,14644,0.165
+2014-09-30,Silicon Motion,Silicon Motion Technology,STOCK,Semiconductor,71000.0,1912740,15.146
+2014-09-30,Apple,Apple Inc,STOCK,Computer,16800.0,1692599,13.403
+2014-09-30,Himax Technologies,Himax Technologies ADR,STOCK,Semiconductor,150000.0,1522500,12.056
+2014-09-30,TSMC,Taiwan Semiconductor Adr,STOCK,Semiconductor,25500.0,514590,4.075
+2014-09-30,Plug Power,Plug Power Inc,STOCK,Energy,90000.0,413100,3.271
+2014-09-30,Starbucks,Starbucks Corp,STOCK,Food,5000.0,377300,2.988
+2014-09-30,Dow,Dow Chemical Company,STOCK,Basic Material,4700.0,246468,1.952
+2014-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,7800.0,230646,1.826
+2014-09-30,Teva Pharmaceutical,Teva Pharmaceutical Inds Ltd ADR,STOCK,Medical,4000.0,215000,1.702
+2014-09-30,Vishay,Vishay Intertechnology,STOCK,Electronic,15000.0,214350,1.697
+2014-09-30,Aeropostale,Aeropostale Inc,STOCK,Retail,65000.0,213850,1.693
+2014-09-30,Noble PLC,Noble Corp PLC,STOCK,Oil,7000.0,155540,1.232
+2014-09-30,Bank of America,Bank Of America Corp,STOCK,Bank,9000.0,153450,1.215
+2014-09-30,MetLife,Metlife Inc,STOCK,Insurance,2500.0,134300,1.063
+2014-09-30,Coach,Coach Inc,STOCK,Retail,3000.0,106830,0.846
+2014-09-30,Caterpillar,"Caterpillar,Inc",STOCK,Machinery,1000.0,99030,0.784
+2014-09-30,Dryships,Dryships Inc,STOCK,Transportation,40000.0,98800,0.782
+2014-09-30,DirecTV Group,DirecTV Group Inc,STOCK,Semiconductor,1000.0,86520,0.685
+2014-09-30,Cirrus Logic,Cirrus Logic Inc,STOCK,Electronic,4000.0,83400,0.66
+2014-09-30,First Solar,First Solar Inc,STOCK,Energy,1000.0,65810,0.521
+2014-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical,1500.0,62385,0.494
+2014-09-30,Alphabet,Google Inc,STOCK,Internet,100.0,57736,0.457
+2014-09-30,Transocean Offshore,Transocean Offshore Inc,STOCK,Oil,1500.0,47955,0.38
+2014-09-30,BHO Billiton,BHO Billiton Ltd ADR,STOCK,Basic Material,800.0,47104,0.373
+2014-09-30,Manitowoc,Manitowoc Company Inc,STOCK,Diversified Company,2000.0,46900,0.371
+2014-09-30,Proshares Ultra Gold,Proshares Ultra Gold,ETF,Precious Metals,1000.0,40590,0.321
+2014-09-30,AU Optronics,Au Optronics Corp ADR,STOCK,Electronic,8650.0,35984,0.285
+2014-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,35796,0.283
+2014-09-30,Genworth,Genworth Financial Inc,STOCK,Insurance,2500.0,32750,0.259
+2014-09-30,Aflac,Aflac Inc,STOCK,Insurance,500.0,29125,0.231
+2014-09-30,AbbVie,Abbvie Inc,STOCK,Medical,500.0,28880,0.229
+2014-09-30,Proshares Ultra Real Estate,Proshares Ultra Real Estate,ETF,Real Estate,250.0,21188,0.168
+2014-09-30,Direxion Shares Trust ETF,Direxion Shares Trust ETF,ETF,Financial Service,200.0,20594,0.163
+2014-09-30,Corning,Corning Inc,STOCK,Electronic,1000.0,19340,0.153
+2014-09-30,Whirlpool,Whirlpool Corp,STOCK,Consumer,100.0,14565,0.115
+2014-09-30,Paragon Offshore,Paragon Offshore plc,STOCK,Basic Material,2333.0,14348,0.114
+2014-09-30,Avon Prods,Avon Prods Inc,STOCK,Consumer,1000.0,12600,0.1
+2014-09-30,SunEdison,SunEdison Inc,STOCK,Energy,100.0,1888,0.015
+2015-09-30,Silicon Motion,Silcon Motion Technology,STOCK,Electronic,71000.0,1939010,22.226
+2015-09-30,Apple,Apple Inc,STOCK,Consumer,16800.0,1853040,21.24
+2015-09-30,Himax Technologies,Himax Technologies Adr,STOCK,Semiconductor,220000.0,1753400,20.098
+2015-09-30,TSMC,Taiwan Semiconductr Adr,STOCK,Semiconductor,25500.0,529125,6.065
+2015-09-30,Plug Power,Plug Power Inc New,STOCK,Energy,90000.0,164700,1.888
+2015-09-30,Vishay,Vishay Intertechnology Inc,STOCK,Electronic,15000.0,145350,1.666
+2015-09-30,Bank of America,Bank Of America Corp,STOCK,Bank,9000.0,140220,1.607
+2015-09-30,MetLife,Metlife Inc,STOCK,Insurance,2500.0,117875,1.351
+2015-09-30,Teva Pharmaceutical,Teva Pharm Inds Ltd Adrf,STOCK,Medical,2000.0,112920,1.294
+2015-09-30,NOBLE CORPORATION PLC,NOBLE CORPORATION PLC,STOCK,Oil,7000.0,76370,0.875
+2015-09-30,Alphabet,Google Inc,STOCK,Internet,100.0,60842,0.697
+2015-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical,1500.0,60330,0.692
+2015-09-30,ALLERGAN Ordinary Sha,ALLERGAN plc Ordinary Sha,STOCK,Medical,200.0,54362,0.623
+2015-09-30,Dow,Dow Chemical Company,STOCK,Basic Material,1000.0,42400,0.486
+2015-09-30,Aeropostale,Aeropostale Inc,STOCK,Retail,65000.0,40300,0.462
+2015-09-30,Proshares Ultra Gold,Proshares Ultra Gold,ETF,Precious Metals,1000.0,33240,0.381
+2015-09-30,Manitowoc,Manitowoc Company Inc,STOCK,Diversified Company,2000.0,30000,0.344
+2015-09-30,AbbVie,ABBVIE INC COM,STOCK,Medical,500.0,27205,0.312
+2015-09-30,BHP,BHP Billiton Ltd Adr,STOCK,Basic Material,800.0,25296,0.29
+2015-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,23664,0.271
+2015-09-30,Whole Foods Market,"Whole Foods Market, Inc.",STOCK,Food,700.0,22155,0.254
+2015-09-30,Transocean Offshore,Transocean Offshore Inc,STOCK,Oil,1500.0,19380,0.222
+2015-09-30,Corning,Corning Inc,STOCK,Electronic,1000.0,17120,0.196
+2015-09-30,Pfizer,Pfizer Incorporated,STOCK,Medical,500.0,15705,0.18
+2015-09-30,Whirlpool,Whirlpool Corp,STOCK,Consumer,100.0,14716,0.169
+2015-09-30,Genworth,Genworth Financial Inc,STOCK,Insurance,2500.0,11550,0.132
+2015-09-30,Starbucks,Starbucks Corp,STOCK,Food,200.0,11368,0.13
+2015-09-30,Caterpillar,"Caterpillar,Inc",STOCK,Machinery,100.0,6536,0.075
+2015-09-30,Dryships,Dryships Inc,STOCK,Transportation,10000.0,1688,0.019
+2016-09-30,Himax Technologies,Himax Technologies Adr,STOCK,Semiconductor,250000.0,2147500,21.422
+2016-09-30,Apple,Apple Computer Inc,STOCK,Consumer,16800.0,1899240,18.945
+2016-09-30,TSMC,Taiwan Semiconductr Adr,STOCK,Technology Hardware&Equipment,17000.0,520030,5.187
+2016-09-30,Genworth,Genworth Financial Inc*,STOCK,Insurance,40500.0,200880,2.004
+2016-09-30,Lannett,LANNET INC*,STOCK,Medical,6000.0,159420,1.59
+2016-09-30,Silicon Motion,Silicon Motion Technology,STOCK,Electronic,3000.0,155370,1.55
+2016-09-30,Plug Power,Plug Power Inc New*,STOCK,Energy,90000.0,153900,1.535
+2016-09-30,Bank of America,Bank of America Corp,STOCK,Bank,9000.0,140850,1.405
+2016-09-30,MetLife,Metlife Inc,STOCK,Insurance,2500.0,111075,1.108
+2016-09-30,Teva Pharmaceutical,Teva Pharm Inds Ltd Adrf,STOCK,Medical,2000.0,92020,0.918
+2016-09-30,Alphabet,Google Inc,STOCK,Internet,100.0,77729,0.775
+2016-09-30,Steelcase,Steelcase Inc,STOCK,Basic Material,5500.0,76395,0.762
+2016-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical,1500.0,63435,0.633
+2016-09-30,Alibaba,Alibaba Group Holding Ltd*,STOCK,SERVICE,500.0,52895,0.528
+2016-09-30,Dow,Dow Chemical Company,STOCK,Basic Material,1000.0,51830,0.517
+2016-09-30,PROSHARES ULTRA GOL,PROSHARES ULTRA GOL*,ETF,Precious Metals,1000.0,44010,0.439
+2016-09-30,AbbVie,ABBVIE INC COM,STOCK,Medical,500.0,31535,0.315
+2016-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,30876,0.308
+2016-09-30,BHP,BHP Billiton Ltd Adr,STOCK,Basic Material,800.0,27720,0.277
+2016-09-30,Whole Foods Market,"Whole Foods Market, Inc.",STOCK,Food,700.0,19845,0.198
+2016-09-30,Whirlpool,Whirlpool Corp,STOCK,Consumer,100.0,16216,0.162
+2016-09-30,Transocean Offshore,Transocean Offshore Inc,STOCK,Oil,1500.0,15990,0.16
+2016-09-30,Valeant Pharma,Valeant Pharma*,STOCK,Medical,500.0,12275,0.122
+2016-09-30,Starbucks,Starbucks Corp,STOCK,Food,200.0,10828,0.108
+2016-09-30,Caterpillar,"Caterpillar, Inc",STOCK,Machinery,100.0,8877,0.089
+2016-09-30,Mosaic,Mosaic Company,STOCK,Basic Material,200.0,4892,0.049
+2017-09-30,Teva Pharmaceutical,Teva Pharm Inds Ltd Adrf (1),STOCK,Drug Manufacturer-other,220000.0,3872000,23.377
+2017-09-30,Mylan,Mylan NV Shs Euro* (1),STOCK,Generic Drug,108050.0,3389529,20.464
+2017-09-30,Himax Technologies,Himax Technologies Adr (1),STOCK,IC Design,270000.0,2951100,17.817
+2017-09-30,Apple,Apple Computer Inc (1),STOCK,Electronic Equipment,16800.0,2589216,15.632
+2017-09-30,TSMC,Taiwan Semiconductor Adrf (1),STOCK,Semi-IntCircuits,17000.0,638350,3.854
+2017-09-30,AbbVie,Abbvie Inc Com (1),STOCK,Pharmaceutical,5500.0,488730,2.951
+2017-09-30,Lannett,Lannet Inc*(1),STOCK,Generic Drug,20000.0,369000,2.228
+2017-09-30,Alibaba,Alibaba Group Holding Ltd* (1),STOCK,Retail Special Lines,2000.0,345420,2.085
+2017-09-30,Abbott Laboratories,Abbott Laboratories (1),STOCK,Medical Supplies,5500.0,293480,1.772
+2017-09-30,Plug Power,Plug Power Inc New* (1),STOCK,Alt-energy Ser.,90000.0,234900,1.418
+2017-09-30,Genworth,Genworth Financial Inc* (1),STOCK,Insurance,40500.0,155520,0.939
+2017-09-30,Bank of America,Bank of America Corp (1),STOCK,Bank Industry,6000.0,152040,0.918
+2017-09-30,Silicon Motion,Silicon Motion Technology (1),STOCK,Electronic,3000.0,144090,0.87
+2017-09-30,MetLife,Metlife Inc (1),STOCK,Insurance,2500.0,129875,0.784
+2017-09-30,Steelcase,Steelcase Inc (1),STOCK,Basic Material,7000.0,107800,0.651
+2017-09-30,Alphabet,Alphabet Inc* (1),STOCK,Internet Services,100.0,95911,0.579
+2017-09-30,Johnson Controls,Johnson Controls International (1),STOCK,Auto/Truck,2089.0,84166,0.508
+2017-09-30,DowDuPont,DowDuPont Inc. (1),STOCK,Basic Material,1000.0,69630,0.42
+2017-09-30,Proshs Ultrashrt S P,Proshs Ultrashrt S&P,ETF,Diversify Company,1250.0,58313,0.352
+2017-09-30,Facebook,Facebook Inc* (1),STOCK,Internet Services,300.0,51261,0.309
+2017-09-30,Proshares Ultra Gold,Proshares Ultra Gold*,ETF,Precious Metal,1000.0,39600,0.239
+2017-09-30,Valeant Pharma Intl,Valeant Pharma Intl*,STOCK,Generic Drug,2500.0,35825,0.216
+2017-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,35250,0.213
+2017-09-30,BHP,Bhp Billiton Ltd Adr,STOCK,Basic Material,800.0,32424,0.196
+2017-09-30,Disney Walt,Disney Walt Co,STOCK,Leisure,200.0,19714,0.119
+2017-09-30,Whirlpool,Whirlpool Corp,STOCK,Consumer,100.0,18454,0.111
+2017-09-30,Adient,Adient plc,STOCK,Basic Material,208.0,17470,0.105
+2017-09-30,CVS Health,CVS Health Corp,STOCK,Healthcare Services,200.0,16264,0.098
+2017-09-30,Transocean Offshore,Transocean Offshore Inc*,STOCK,Oil,1500.0,16140,0.097
+2017-09-30,Brighthouse Financial,Brighthouse Financial* (1),STOCK,Insurance,227.0,13802,0.083
+2017-09-30,Caterpillar,"Caterpillar, Inc",STOCK,Machinery,100.0,12471,0.075
+2017-09-30,Starbucks,Starbucks Corp,STOCK,Food,200.0,10740,0.065
+2017-09-30,Mosaic,Mosaic Company,STOCK,Chemicals Specialty,200.0,4316,0.026
+2018-09-30,Himax Technologies,"Himax Technologies, Inc.",STOCK,IC Design,1139400.0,6699673,46.567
+2018-09-30,Apple,Apple Inc.,STOCK,Electronic Equipment,6500.0,1467310,10.199
+2018-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Limited,STOCK,Drug Manufacturer-other,47892.0,1031594,7.17
+2018-09-30,TSMC,Taiwan Semiconductor Manu,STOCK,Semiconductor,17000.0,750720,5.218
+2018-09-30,AbbVie,AbbVie Inc.,STOCK,Drug Manufacturer-other,5500.0,520190,3.616
+2018-09-30,Mylan,Mylan N.V. *,STOCK,Generic Drug,12030.0,440298,3.06
+2018-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical Supplies,5500.0,403480,2.804
+2018-09-30,Alibaba,Alibaba Group Holding Limited *,STOCK,Retail Special Lines,2000.0,329520,2.29
+2018-09-30,Direxion Daily Energy Bull 3X ETF,Direxion Daily Energy Bull 3X ETF,ETF,Energy,7000.0,261100,1.815
+2018-09-30,Bank of America,Bank of America Corporation,STOCK,Bank Industry,6000.0,176760,1.229
+2018-09-30,Plug Power,Plug Power Inc. *,STOCK,Electronic Equipment,90000.0,172800,1.201
+2018-09-30,Genworth,"Genworth Financial, Inc. *",STOCK,Insurance,40500.0,168885,1.174
+2018-09-30,Silicon Motion,Silicon Motion Technology Corporation,STOCK,Semiconductor,3000.0,161100,1.12
+2018-09-30,Steelcase,Steelcase Inc.,STOCK,Basic Material,7000.0,129500,0.9
+2018-09-30,Alphabet,Alphabet Inc.,STOCK,Internet Services,100.0,119347,0.83
+2018-09-30,MetLife,"MetLife, Inc.",STOCK,Insurance,2500.0,116800,0.812
+2018-09-30,Lannett,"Lannett Company, Inc. *",STOCK,Pharmaceutical,20000.0,95000,0.66
+2018-09-30,Johnson Controls,Johnson Controls International plc,STOCK,Engineering & Construction,2089.0,73115,0.508
+2018-09-30,DowDuPont,DowDuPont Inc.,STOCK,Basic Material,1000.0,64310,0.447
+2018-09-30,Bausch Health,Bausch Health Companies Inc.,STOCK,Generic Drug,2500.0,64175,0.446
+2018-09-30,Facebook,"Facebook, Inc.",STOCK,Internet Services,300.0,49338,0.343
+2018-09-30,BHP,BHP Billiton Limited ADR,STOCK,Basic Material,800.0,39872,0.277
+2018-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,36684,0.255
+2018-09-30,ProShares Ultra Gold,ProShares Ultra Gold *,ETF,Precious Metal,1000.0,32750,0.228
+2018-09-30,Walt Disney,The Walt Disney Company,STOCK,Leisure,200.0,23388,0.163
+2018-09-30,Transocean,Transocean Ltd. *,STOCK,Oil,1500.0,20925,0.145
+2018-09-30,CVS Health,CVS Health Corporation,STOCK,Healthcare Services,200.0,15744,0.109
+2018-09-30,Caterpillar,Caterpillar Inc.,STOCK,Machinery,100.0,15249,0.106
+2018-09-30,Whirlpool,Whirlpool Corporation,STOCK,Household,100.0,11875,0.083
+2018-09-30,Starbucks,Starbucks Corporation,STOCK,Service - Restaurant,200.0,11368,0.079
+2018-09-30,Brighthouse Financial,"Brighthouse Financial, Inc. *",STOCK,Insurance,227.0,10042,0.07
+2018-09-30,Adient,Adient plc,STOCK,Basic Material,208.0,8176,0.057
+2018-09-30,Mosaic,The Mosaic Company,STOCK,Chemicals Specialty,200.0,6496,0.045
+2019-09-30,Himax Technologies,"Himax Technologies, Inc.*",STOCK,IC Design,1159400.0,2631838,28.061
+2019-09-30,Apple,Apple Inc.,STOCK,Electronic Equipment,6500.0,1455805,15.522
+2019-09-30,TSMC,Taiwan Semiconductor Manufacturing Company Limited,STOCK,Semiconductor,17000.0,790160,8.425
+2019-09-30,Lannett,"Lannett Company, Inc.*",STOCK,Pharmaceutical,50000.0,560000,5.971
+2019-09-30,Silicon Motion,Silicon Motion Technology Corporation,STOCK,Semiconductor,13500.0,477225,5.088
+2019-09-30,AbbVie,AbbVie Inc.,STOCK,Drug Manufacturer-other,6000.0,454320,4.844
+2019-09-30,Mylan,Mylan N.V. *,STOCK,Generic Drug,17030.0,336853,3.592
+2019-09-30,Alibaba,Alibaba Group Holding Limited*,STOCK,Retail Special Lines,2000.0,334460,3.566
+2019-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Limited *,STOCK,Drug Manufacturer-other,47892.0,329497,3.513
+2019-09-30,Plug Power,Plug Power Inc. *,STOCK,Electronic Equipment,90000.0,236700,2.524
+2019-09-30,Genworth,"Genworth Financial, Inc. *",STOCK,Insurance,40500.0,178200,1.9
+2019-09-30,Bank of America,Bank of America Corporation,STOCK,Bank Industry,6000.0,175020,1.866
+2019-09-30,Steelcase,Steelcase Inc.,STOCK,Basic Material,7000.0,128800,1.373
+2019-09-30,Alphabet,Alphabet Inc. *,STOCK,Internet Services,100.0,121900,1.3
+2019-09-30,MetLife,"MetLife, Inc.",STOCK,Insurance,2500.0,117900,1.257
+2019-09-30,Invesco Treasury Portfolio Institutional,Invesco Treasury Portfolio Institutional,ETF,IC Design,111079.0,111079,1.184
+2019-09-30,Direxion Daily Energy Bull 3X Shares,Direxion Daily Energy Bull 3X Shares *,ETF,IC Design,7000.0,109060,1.163
+2019-09-30,Johnson Controls,Johnson Controls International plc,STOCK,Engineering & Construction,2089.0,91686,0.978
+2019-09-30,Bed Bath & Beyond,Bed Bath & Beyond Inc.,STOCK,Consumer,8500.0,90440,0.964
+2019-09-30,Bausch Health,Bausch Health Companies Inc.,STOCK,Generic Drug,2500.0,54625,0.582
+2019-09-30,Facebook,"Facebook, Inc. *",STOCK,Internet Services,300.0,53424,0.57
+2019-09-30,ProShares Ultra Gold,ProShares Ultra Gold*,ETF,IC Design,1000.0,46940,0.5
+2019-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical Supplies,500.0,41835,0.446
+2019-09-30,Brighthouse Financial,"Brighthouse Financial, Inc. *",STOCK,Insurance,1000.0,40470,0.432
+2019-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,35580,0.379
+2019-09-30,CVS Health,CVS Health Corporation,STOCK,Healthcare Services,500.0,31535,0.336
+2019-09-30,BHP,BHP Billiton Limited,STOCK,Basic Material,500.0,24690,0.263
+2019-09-30,DuPont,"DuPont de Nemours, Inc.",STOCK,Basic Material,333.0,23747,0.253
+2019-09-30,Starbucks,Starbucks Corporation,STOCK,Service - Restaurant,200.0,17684,0.189
+2019-09-30,Dow,Dow Inc.,STOCK,Basic Material,333.0,15867,0.169
+2019-09-30,Whirlpool,Whirlpool Corporation,STOCK,Household,100.0,15836,0.169
+2019-09-30,Caterpillar,Caterpillar Inc.,STOCK,Machinery,100.0,12631,0.135
+2019-09-30,Morgan Stanley Institutional Liquidity Fund- Treasury Portfolio Institutional,Morgan Stanley Institutional Liquidity Fund- Treasury Portfolio Institutional,MMF,IC Design,6724.0,6724,0.072
+2019-09-30,Transocean,Transocean Ltd.,STOCK,Oil,1500.0,6705,0.071
+2019-09-30,Mosaic,The Mosaic Company,STOCK,Chemicals Specialty,200.0,4100,0.044
+2020-09-30,Himax Technologies,"Himax Technologies, Inc.* ADR",STOCK,IC Design,1159400.0,4127464,29.054
+2020-09-30,Apple,Apple Inc.,STOCK,Electronic Equipment,24800.0,2872088,20.217
+2020-09-30,Plug Power,Plug Power Inc.*,STOCK,Electronic Equipment,130000.0,1743300,12.271
+2020-09-30,TSMC,Taiwan Semiconductor Manufacturing Company Limited ADR,STOCK,Semiconductor,17000.0,1378190,9.701
+2020-09-30,Alibaba,Alibaba Group Holding Limited*,STOCK,Retail Special Lines,2000.0,587960,4.139
+2020-09-30,AbbVie,AbbVie Inc.,STOCK,Drug Manufacturer-other,6000.0,525540,3.699
+2020-09-30,Silicon Motion,Silicon Motion Technology Corporation,STOCK,Semiconductor,13500.0,510030,3.59
+2020-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Limited* ADR,STOCK,Drug Manufacturer-other,47892.0,431507,3.037
+2020-09-30,Lannett,"Lannett Company, Inc.*",STOCK,Pharmaceutical,50000.0,305500,2.15
+2020-09-30,Mylan,Mylan N.V.*,STOCK,Generic Drug,17030.0,252555,1.778
+2020-09-30,Invesco Treasury Portfolio Institutional,Invesco Treasury Portfolio Institutional,ETF,IC Design,246185.0,246185,1.733
+2020-09-30,Alphabet,Alphabet Inc.*,STOCK,Internet Services,100.0,146960,1.034
+2020-09-30,Bank of America,Bank of America Corporation,STOCK,Bank Industry,6000.0,144540,1.017
+2020-09-30,Bed Bath & Beyond,Bed Bath & Beyond Inc.,STOCK,Consumer,8500.0,127330,0.896
+2020-09-30,MetLife,"MetLife, Inc.",STOCK,Insurance,2500.0,92925,0.654
+2020-09-30,Facebook,"Facebook, Inc.*",STOCK,Internet Services,300.0,78570,0.553
+2020-09-30,Steelcase,Steelcase Inc.,STOCK,Basic Material,7000.0,70770,0.498
+2020-09-30,Direxion Financial Bull 3x,Direxion Financial Bull 3x,ETF,IC Design,2000.0,67740,0.477
+2020-09-30,Direxion Mid Cap Bull 3x Shares,Direxion Mid Cap Bull 3x Shares,ETF,IC Design,3000.0,65100,0.458
+2020-09-30,Direxion Daily Pharmaceutical Medical Bull 3X Shares,Direxion Daily Pharmaceutical & Medical Bull 3X Shares,ETF,IC Design,4000.0,61560,0.433
+2020-09-30,Direxion Daily Industrials Bull 3X Shares,Direxion Daily Industrials Bull 3X Shares,ETF,IC Design,3000.0,58710,0.413
+2020-09-30,Abbott Laboratories,Abbott Laboratories,STOCK,Medical Supplies,500.0,54415,0.383
+2020-09-30,Direxion Daily Real Estate Bull 3X Shares,Direxion Daily Real Estate Bull 3X Shares,ETF,IC Design,5000.0,50150,0.353
+2020-09-30,Direxion Daily Aerospace Defense Bull 3X,Direxion Daily Aerospace & Defense Bull 3X,ETF,IC Design,4500.0,46800,0.329
+2020-09-30,Direxion Daily Small Cap Bull (3x),Direxion Daily Small Cap Bull (3x),ETF,IC Design,1500.0,45900,0.323
+2020-09-30,Johnson Controls,Johnson Controls International plc,STOCK,Engineering & Construction,1000.0,40850,0.288
+2020-09-30,Bausch Health,Bausch Health Companies Inc.,STOCK,Generic Drug,2500.0,38850,0.273
+2020-09-30,Direxion Large Cap Bull 3x,Direxion Large Cap Bull 3x,ETF,IC Design,600.0,31596,0.222
+2020-09-30,CVS Health,CVS Health Corporation,STOCK,Healthcare Services,500.0,29200,0.206
+2020-09-30,Brighthouse Financial,"Brighthouse Financial, Inc.*",STOCK,Insurance,1000.0,26910,0.189
+2020-09-30,Chevron,Chevron Corporation,STOCK,Oil,300.0,21600,0.152
+2020-09-30,Whirlpool,Whirlpool Corporation,STOCK,Household,100.0,18389,0.129
+2020-09-30,Dow,Dow Inc.,STOCK,Basic Material,333.0,15667,0.11
+2020-09-30,Mosaic,The Mosaic Company,STOCK,Chemicals Specialty,200.0,3654,0.026
+2021-09-30,Himax Technologies,"Himax Technologies, Inc. ADR",STOCK,IC Design,1149400.0,12264098,49.098
+2021-09-30,Apple,Apple Inc.,STOCK,Electronic Equipment,24800.0,3509200,14.049
+2021-09-30,TSMC,Taiwan Semiconductor Manufacturing Company Limited ADR,STOCK,Semiconductor,17000.0,1898050,7.599
+2021-09-30,Plug Power,Plug Power Inc.*,STOCK,Electronic Equipment,72500.0,1851650,7.413
+2021-09-30,Silicon Motion,Silicon Motion Technology Corporation ADR,STOCK,Semiconductor,13500.0,931230,3.728
+2021-09-30,AbbVie,AbbVie Inc.,STOCK,Drug Manufacturer-other,6000.0,647220,2.591
+2021-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Limited* ADR,STOCK,Drug Manufacturer-other,60892.0,593088,2.374
+2021-09-30,Invesco Treasury Portfolio Institutional,Invesco Treasury Portfolio Institutional,ETF,IC Design,364436.0,364436,1.459
+2021-09-30,Alibaba,Alibaba Group Holding Limited* ADR,STOCK,Retail Special Lines,2000.0,296100,1.185
+2021-09-30,Alphabet,Alphabet Inc.*,STOCK,Internet Services,100.0,266531,1.067
+2021-09-30,Bank of America,Bank of America Corporation,STOCK,Bank Industry,6000.0,254700,1.02
+2021-09-30,Direxion Daily Financial Bull 3x Shares,Direxion Daily Financial Bull 3x Shares,ETF,IC Design,2000.0,231200,0.926
+2021-09-30,Viatris,Viatris Inc.,STOCK,Generic Drug,17030.0,230757,0.924
+2021-09-30,Direxion Daily Mid Cap Bull 3x Shares,Direxion Daily Mid Cap Bull 3x Shares,ETF,IC Design,3000.0,170730,0.684
+2021-09-30,MetLife,"MetLife, Inc.",STOCK,Insurance,2500.0,154325,0.618
+2021-09-30,Lannett,"Lannett Company, Inc.*",STOCK,Pharmaceutical,50000.0,150000,0.601
+2021-09-30,Direxion Daily Small Cap Bull 3X,Direxion Daily Small Cap Bull 3X,ETF,IC Design,1500.0,124350,0.498
+2021-09-30,Bed Bath & Beyond,Bed Bath & Beyond Inc.,STOCK,Consumer,7000.0,120925,0.484
+2021-09-30,Direxion Daily Aerospace Defense Bull 3x,Direxion Daily Aerospace & Defense Bull 3x,ETF,IC Design,5500.0,113080,0.453
+2021-09-30,Direxion Daily Industrials Bull 3x Shares,Direxion Daily Industrials Bull 3x Shares,ETF,IC Design,3000.0,112320,0.45
+2021-09-30,Direxion Daily MSCI Real Estate Bull 3x Shares,Direxion Daily MSCI Real Estate Bull 3x Shares,ETF,IC Design,5000.0,107250,0.429
+2021-09-30,Meta Platforms,"Meta Platforms, Inc.*",STOCK,Internet Services,300.0,101817,0.408
+2021-09-30,Direxion Daily Pharmaceutical Medical Bull 3x Shares ETF,Direxion Daily Pharmaceutical & Medical Bull 3x Shares ETF,ETF,IC Design,4000.0,70800,0.283
+2021-09-30,Steelcase,Steelcase Inc.,STOCK,Basic Material,5500.0,69740,0.279
+2021-09-30,Bausch Health,Bausch Health Companies Inc.,STOCK,Generic Drug,2500.0,69625,0.279
+2021-09-30,Brighthouse Financial,"Brighthouse Financial, Inc.",STOCK,Insurance,1000.0,45230,0.181
+2021-09-30,Mosaic,The Mosaic Company,STOCK,Chemicals Specialty,1200.0,42864,0.172
+2021-09-30,UMC,United Microelectronics Corporation ADR,STOCK,Semiconductor,500.0,5715,0.023
+2021-09-30,MSIL Federal Government Portfolio Institutional,MSIL Federal Government Portfolio Institutional,MMF,IC Design,2015.0,2015,0.008
+2022-09-30,Himax Technologies,"Himax Technologies, Inc. ADR",STOCK,IC Design,1149400.0,5563096,34.046
+2022-09-30,Apple,Apple Inc.,STOCK,Electronic Equipment,24800.0,3427360,20.975
+2022-09-30,Plug Power,Plug Power Inc.*,STOCK,Electronic Equipment,72500.0,1523225,9.322
+2022-09-30,Invesco Treasury Obligations Institutional,Invesco Treasury Obligations Institutional,ETF,IC Design,1409702.0,1409702,8.627
+2022-09-30,TSMC,Taiwan Semiconductor Manufacturing Company Limited ADR,STOCK,Semiconductor,17000.0,1165520,7.133
+2022-09-30,Silicon Motion,Silicon Motion Technology Corporation ADR,STOCK,Semiconductor,13000.0,847470,5.186
+2022-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Limited* ADR,STOCK,Drug Manufacturer-other,60892.0,491398,3.007
+2022-09-30,AbbVie,AbbVie Inc.,STOCK,Drug Manufacturer-other,2400.0,322104,1.971
+2022-09-30,Alphabet,Alphabet Inc.*,STOCK,Internet Services,2000.0,192300,1.177
+2022-09-30,Bank of America,Bank of America Corporation,STOCK,Bank Industry,6000.0,181200,1.109
+2022-09-30,Alibaba,Alibaba Group Holding Limited* ADR,STOCK,Retail Special Lines,2000.0,159980,0.979
+2022-09-30,MetLife,"MetLife, Inc.",STOCK,Insurance,2500.0,151950,0.93
+2022-09-30,Direxion Daily Dow Jones Internet Bull 3x Shares,Direxion Daily Dow Jones Internet Bull 3x Shares,ETF,Electronic Equipment,18000.0,127980,0.783
+2022-09-30,Direxion Daily Financial Bull 3x Shares,Direxion Daily Financial Bull 3x Shares,ETF,Financial Services,2000.0,108420,0.664
+2022-09-30,Direxion Daily Mid Cap Bull 3x Shares,Direxion Daily Mid Cap Bull 3x Shares,ETF,Insurance,3000.0,83850,0.513
+2022-09-30,Direxion Daily Semiconductor Bull 3x Shares,Direxion Daily Semiconductor Bull 3x Shares,ETF,Electronic Equipment,8000.0,70880,0.434
+2022-09-30,Direxion Daily Aerospace Defense Bull 3x,Direxion Daily Aerospace & Defense Bull 3x,ETF,Aero Space,5500.0,63195,0.387
+2022-09-30,Direxion Daily Industrials Bull 3x Shares,Direxion Daily Industrials Bull 3x Shares,ETF,Generic Drug,3000.0,60600,0.371
+2022-09-30,Mosaic,The Mosaic Company,STOCK,Chemicals Specialty,1200.0,57996,0.355
+2022-09-30,ASE Technology,ASE Technology Holding Company Limited ADR,STOCK,Semiconductor,10000.0,49900,0.305
+2022-09-30,Direxion Daily MSCI Real Estate Bull 3x Shares,Direxion Daily MSCI Real Estate Bull 3x Shares,ETF,MSCI-ETF,5000.0,47750,0.292
+2022-09-30,Brighthouse Financial,"Brighthouse Financial, Inc.",STOCK,Insurance,1000.0,43420,0.266
+2022-09-30,Direxion Daily Small Cap Bull 3x,Direxion Daily Small Cap Bull 3x,ETF,Small Cap,1500.0,43215,0.264
+2022-09-30,Bed Bath & Beyond,Bed Bath & Beyond Inc.,STOCK,Consumer,7000.0,42630,0.261
+2022-09-30,Meta Platforms,"Meta Platforms, Inc.*",STOCK,Internet Services,300.0,40704,0.249
+2022-09-30,Direxion Daily Pharmaceutical Medical Bull 3x Shares ETF,Direxion Daily Pharmaceutical & Medical Bull 3x Shares ETF,ETF,Pharmaceutical,4000.0,35520,0.217
+2022-09-30,UMC,United Microelectronics Corporation ADR,STOCK,Semiconductor,5500.0,30635,0.187
+2022-09-30,Lannett,"Lannett Company, Inc.*",STOCK,Pharmaceutical,50000.0,22500,0.138
+2022-09-30,Bausch Health,Bausch Health Companies Inc.,STOCK,Generic Drug,2000.0,13780,0.084
+2022-09-30,Invesco Government and Agency Portfolio Institutional,Invesco Government and Agency Portfolio Institutional,ETF,IC Design,8172.0,8172,0.05
+2023-09-30,Himax Technologies,"Himax Technologies, Inc. ADR",STOCK,Integrated Circuit Design,741261.0,4328964,24.874
+2023-09-30,Apple,"Apple, Inc.",STOCK,Consumer Electronics,24800.0,4246008,24.398
+2023-09-30,Portfolio Institutional Class 5 26%,Portfolio Institutional Class 5.26% **,MMF,Specialty Retail,205465.0,1911331,10.983
+2023-09-30,TSMC,Taiwan Semiconductor Manufacturing Co. Ltd. ADR,STOCK,Semiconductors,17000.0,1477300,8.489
+2023-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Ltd. ADR *,STOCK,Drug Manufacturers—Specialty & Generic,66102.0,674241,3.874
+2023-09-30,Silicon Motion,Silicon Motion Technology Corp. ADR *,STOCK,Semiconductors,13000.0,666250,3.828
+2023-09-30,Plug Power,"Plug Power, Inc. *",STOCK,Electrical Equipment & Parts,72500.0,551000,3.166
+2023-09-30,AbbVie,"AbbVie, Inc.",STOCK,Drug Manufacturers—General,2400.0,357744,2.056
+2023-09-30,Alphabet,"Alphabet, Inc. Class C *",STOCK,Internet Content & Information,2000.0,263700,1.515
+2023-09-30,Invesco Short-Term Investments Trust Government Agency,Invesco Short-Term Investments Trust Government & Agency,ETF,Specialty Retail,1111885.0,205465,1.181
+2023-09-30,Direxion Daily Dow Jones Internet Bull 3X Shares,Direxion Daily Dow Jones Internet Bull 3X Shares,ETF,Specialty Retail,18000.0,182520,1.049
+2023-09-30,Alibaba,Alibaba Group Holding Ltd. ADR *,STOCK,Internet Retail,2000.0,173480,0.997
+2023-09-30,Bank of America,Bank of America Corp.,STOCK,Banks—Diversified,6000.0,164280,0.944
+2023-09-30,MetLife,"Metlife, Inc.",STOCK,Insurance—Life,2500.0,157275,0.904
+2023-09-30,Direxion Daily Semiconductor Bull 3X Shares,Direxion Daily Semiconductor Bull 3X Shares,ETF,Specialty Retail,8000.0,150960,0.867
+2023-09-30,Direxion Financial Bull 3X Shares,Direxion Financial Bull 3X Shares,ETF,Specialty Retail,2000.0,117540,0.675
+2023-09-30,Direxion Daily Mid Cap Bull 3X Shares,Direxion Daily Mid Cap Bull 3X Shares,ETF,Specialty Retail,3000.0,101970,0.586
+2023-09-30,Direxion Daily Industrials Bull 3X Shares,Direxion Daily Industrials Bull 3X Shares,ETF,Specialty Retail,3000.0,93952,0.54
+2023-09-30,Meta Platforms,"Meta Platforms, Inc. Class A *",STOCK,Internet Content & Information,300.0,90063,0.518
+2023-09-30,Direxion Daily Aerospace Defense Bull 3X Shares,Direxion Daily Aerospace & Defense Bull 3X Shares,ETF,Specialty Retail,5500.0,82335,0.473
+2023-09-30,ASE Technology,Ase Technology Holding Co. Ltd. ADR,STOCK,Semiconductors,10000.0,75200,0.432
+2023-09-30,Brighthouse Financial,"Brighthouse Financial, Inc. *",STOCK,Insurance—Life,1000.0,48940,0.281
+2023-09-30,Direxion Small Cap Bull 3X Shares,Direxion Small Cap Bull 3X Shares,ETF,Specialty Retail,1500.0,43110,0.248
+2023-09-30,Mosaic,The Mosaic Co.,STOCK,Agricultural Inputs,1200.0,42720,0.245
+2023-09-30,UMC,United Microelectronics Corp. ADR,STOCK,Semiconductors,5500.0,38830,0.223
+2023-09-30,Direxion Daily Real Estate Bull 3X Shares,Direxion Daily Real Estate Bull 3X Shares,ETF,Specialty Retail,5000.0,34250,0.197
+2023-09-30,Direxion Daily Pharmaceutical Medical Bull 3X Shares,Direxion Daily Pharmaceutical & Medical Bull 3X Shares,ETF,Specialty Retail,4000.0,28680,0.165
+2023-09-30,Bausch Health,"Bausch Health Cos., Inc. *",STOCK,Drug Manufacturers—Specialty & Generic,2000.0,16440,0.094
+2023-09-30,Bed Bath & Beyond,"Bed Bath & Beyond, Inc. *",STOCK,Specialty Retail,7000.0,552,0.003
+2024-09-30,Apple,"Apple, Inc.",STOCK,Consumer Electronics,24800.0,5778400,28.048
+2024-09-30,Himax Technologies,"Himax Technologies, Inc. ADR",STOCK,Integrated Circuit Design,741261.0,4076936,19.789
+2024-09-30,TSMC,Taiwan Semiconductor Manufacturing Co. Ltd. ADR,STOCK,Semiconductors,17000.0,2952390,14.331
+2024-09-30,Morgan Stanley Institutional Liquidity Fund Government Portfolio 4 60%,Morgan Stanley Institutional Liquidity Fund Government Portfolio 4.60% **,MMF,Semiconductors,1755684.0,1755684,8.522
+2024-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Ltd. ADR *,STOCK,Drug Manufacturers—Specialty & Generic,66102.0,1191158,5.782
+2024-09-30,Silicon Motion,Silicon Motion Technology Corp. ADR,STOCK,Semiconductors,13000.0,789620,3.833
+2024-09-30,AbbVie,"AbbVie, Inc.",STOCK,Drug Manufacturers—General,2400.0,473952,2.301
+2024-09-30,Direxion Daily Dow Jones Internet Bull 3X Shares,Direxion Daily Dow Jones Internet Bull 3X Shares,ETF,Semiconductors,18000.0,335340,1.628
+2024-09-30,Alphabet,"Alphabet, Inc. Class C",STOCK,Internet Content & Information,2000.0,334380,1.623
+2024-09-30,Fidelity Institutional Money Market - Treasury Portfolio Class III 4 96%,Fidelity Institutional Money Market - Treasury Portfolio Class III 4.96% **,MMF,Semiconductors,312362.0,312362,1.516
+2024-09-30,Direxion Daily Semiconductor Bull 3X Shares,Direxion Daily Semiconductor Bull 3X Shares,ETF,Semiconductors,8000.0,293440,1.424
+2024-09-30,Direxion Daily 20+ Year Treasury Bull 3X Shares,Direxion Daily 20+ Year Treasury Bull 3X Shares,ETF,Semiconductors,5000.0,288800,1.402
+2024-09-30,Direxion Financial Bull 3X Shares,Direxion Financial Bull 3X Shares,ETF,Semiconductors,2000.0,259580,1.26
+2024-09-30,Bank of America,Bank of America Corp.,STOCK,Banks—Diversified,6000.0,238080,1.156
+2024-09-30,Alibaba,Alibaba Group Holding Ltd. ADR,STOCK,Internet Retail,2000.0,212240,1.03
+2024-09-30,MetLife,"Metlife, Inc.",STOCK,Insurance—Life,2500.0,206200,1.001
+2024-09-30,Direxion Daily Aerospace Defense Bull 3X Shares,Direxion Daily Aerospace & Defense Bull 3X Shares,ETF,Semiconductors,5500.0,196130,0.952
+2024-09-30,Direxion Daily Industrials Bull 3X Shares,Direxion Daily Industrials Bull 3X Shares,ETF,Semiconductors,3000.0,195000,0.947
+2024-09-30,Meta Platforms,"Meta Platforms, Inc. Class A",STOCK,Internet Content & Information,300.0,171732,0.834
+2024-09-30,Direxion Daily Mid Cap Bull 3X ETF,Direxion Daily Mid Cap Bull 3X ETF,ETF,Semiconductors,3000.0,164850,0.8
+2024-09-30,Plug Power,"Plug Power, Inc. *",STOCK,Electrical Equipment & Parts,72500.0,163850,0.795
+2024-09-30,ASE Technology,Ase Technology Holding Co. Ltd. ADR,STOCK,Semiconductors,10000.0,97600,0.474
+2024-09-30,Direxion Daily Robotics Artificial Intelligence Automation Index Bull 2X Shares,"Direxion Daily Robotics, Artificial Intelligence & Automation Index Bull 2X Shares",ETF,Semiconductors,4000.0,94643,0.459
+2024-09-30,Direxion Daily Real Estate Bull 3X Shares,Direxion Daily Real Estate Bull 3X Shares,ETF,Semiconductors,5000.0,66850,0.324
+2024-09-30,Direxion Small Cap Bull 3X Shares,Direxion Small Cap Bull 3X Shares,ETF,Semiconductors,1500.0,66510,0.323
+2024-09-30,UMC,United Microelectronics Corp. ADR,STOCK,Semiconductors,5500.0,46310,0.225
+2024-09-30,Brighthouse Financial,"Brighthouse Financial, Inc. *",STOCK,Insurance—Life,1000.0,45030,0.219
+2024-09-30,Direxion Daily Pharmaceutical Medical Bull 3X Shares,Direxion Daily Pharmaceutical & Medical Bull 3X Shares,ETF,Semiconductors,4000.0,32800,0.159
+2024-09-30,Mosaic,The Mosaic Co.,STOCK,Agricultural Inputs,1200.0,32136,0.156
+2024-09-30,Bausch Health,"Bausch Health Cos., Inc. *",STOCK,Drug Manufacturers—Specialty & Generic,2000.0,16320,0.079
+2025-09-30,Himax Technologies,"Himax Technologies, Inc. ADR",STOCK,Integrated Circuit Design,671261.0,5927235,24.483
+2025-09-30,TSMC,Taiwan Semiconductor Manufacturing Co. Ltd. ADR,STOCK,Semiconductors,17000.0,4747930,19.612
+2025-09-30,Fidelity Institutional Money Market - Treasury Portfolio Class III 4 11%,Fidelity Institutional Money Market - Treasury Portfolio Class III 4.11% **,MMF,Specialty Retail,2000000.0,2000000,8.261
+2025-09-30,Apple,"Apple, Inc.",STOCK,Consumer Electronics,6200.0,1578706,6.521
+2025-09-30,Morgan Stanley Institutional Liquidity Fund Government Portfolio 3 80%,Morgan Stanley Institutional Liquidity Fund Government Portfolio 3.80% **,MMF,Specialty Retail,1468255.0,1468255,6.065
+2025-09-30,Teva Pharmaceutical,Teva Pharmaceutical Industries Ltd. ADR *,STOCK,Drug Manufacturers—Specialty & Generic,66102.0,1335260,5.515
+2025-09-30,Silicon Motion,Silicon Motion Technology Corp. ADR,STOCK,Semiconductors,13000.0,1232530,5.091
+2025-09-30,Direxion Daily Dow Jones Internet Bull 3X Shares,Direxion Daily Dow Jones Internet Bull 3X Shares,ETF,Specialty Retail,22000.0,710600,2.935
+2025-09-30,AbbVie,"AbbVie, Inc.",STOCK,Drug Manufacturers—General,2400.0,555696,2.295
+2025-09-30,Alphabet,"Alphabet, Inc. Class C",STOCK,Internet Content & Information,2000.0,487100,2.012
+2025-09-30,iShares 20+ Year Treasury Bond ETF,iShares 20+ Year Treasury Bond ETF,ETF,Specialty Retail,5000.0,446850,1.846
+2025-09-30,Direxion Daily 20+ Year Treasury Bull 3X Shares,Direxion Daily 20+ Year Treasury Bull 3X Shares,ETF,Specialty Retail,10000.0,401800,1.66
+2025-09-30,Direxion Daily Aerospace Defense Bull 3X Shares,Direxion Daily Aerospace & Defense Bull 3X Shares,ETF,Specialty Retail,5500.0,378125,1.562
+2025-09-30,Alibaba,Alibaba Group Holding Ltd. ADR,STOCK,Internet Retail,2000.0,357460,1.477
+2025-09-30,Direxion Financial Bull 3X Shares,Direxion Financial Bull 3X Shares,ETF,Specialty Retail,2000.0,355800,1.47
+2025-09-30,Direxion Daily Semiconductor Bull 3X Shares,Direxion Daily Semiconductor Bull 3X Shares,ETF,Specialty Retail,10100.0,351884,1.453
+2025-09-30,Bank of America,Bank of America Corp.,STOCK,Banks—Diversified,6000.0,309540,1.279
+2025-09-30,PDD Holdings,"PDD Holdings, Inc. ADR *",STOCK,Specialty Retail,2000.0,264340,1.092
+2025-09-30,Direxion Daily Industrials Bull 3X Shares,Direxion Daily Industrials Bull 3X Shares,ETF,Specialty Retail,3000.0,227160,0.938
+2025-09-30,Meta Platforms,"Meta Platforms, Inc. Class A",STOCK,Internet Content & Information,300.0,220314,0.91
+2025-09-30,MetLife,"Metlife, Inc.",STOCK,Insurance—Life,2500.0,205925,0.851
+2025-09-30,Plug Power,"Plug Power, Inc. *",STOCK,Electrical Equipment & Parts,72500.0,168925,0.698
+2025-09-30,Direxion Daily Pharmaceutical Medical Bull 3X Shares ETF,Direxion Daily Pharmaceutical & Medical Bull 3X Shares ETF,ETF,Specialty Retail,3000.0,152070,0.628
+2025-09-30,ASE Technology,Ase Technology Holding Co. Ltd. ADR,STOCK,Semiconductors,10000.0,110900,0.458
+2025-09-30,Direxion Daily Robotics Artificial Intelligence Automation Index Bull 2X Shares,"Direxion Daily Robotics, Artificial Intelligence & Automation Index Bull 2X Shares",ETF,Specialty Retail,4000.0,100080,0.413
+2025-09-30,Direxion Small Cap Bull 3X Shares,Direxion Small Cap Bull 3X Shares,ETF,Specialty Retail,1500.0,67860,0.28
+2025-09-30,Brighthouse Financial,"Brighthouse Financial, Inc. *",STOCK,Insurance—Life,1000.0,53080,0.219
+2025-09-30,Direxion Daily Real Estate Bull 3X Shares,Direxion Daily Real Estate Bull 3X Shares,ETF,Specialty Retail,5000.0,48950,0.202
+2025-09-30,UMC,United Microelectronics Corp. ADR,STOCK,Semiconductors,5500.0,41690,0.172
+2025-09-30,Mosaic,The Mosaic Co.,STOCK,Agricultural Inputs,1200.0,41616,0.172
+2025-09-30,Direxion Daily Pharmaceutical Medical Bull 3X Shares,Direxion Daily Pharmaceutical & Medical Bull 3X Shares,ETF,Specialty Retail,4000.0,32280,0.133
+2025-09-30,Bausch Health,"Bausch Health Cos., Inc. *",STOCK,Drug Manufacturers—Specialty & Generic,2000.0,12900,0.053
