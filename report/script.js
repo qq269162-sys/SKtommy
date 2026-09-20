@@ -166,4 +166,13 @@ function endpoint(svg, x, y, v, c) {
     chips.appendChild(b);
   });
   render(YS[N - 1]);
+
+  document.getElementById("printTables").innerHTML =
+    '<div class="ptgrid">' + YS.map(y => {
+      const rows = D.tables[String(y)];
+      return `<div class="pt"><h3>FY${y} · 11/30</h3><table><tbody>` +
+        rows.map((r, i) => `<tr><td class="r">${i + 1}</td><td>${r[0]}</td>` +
+          `<td class="n">${r[1].toFixed(2)}%</td><td class="n">$${r[2].toLocaleString()}M</td></tr>`).join("") +
+        `</tbody></table></div>`;
+    }).join("") + '</div>';
 })();
