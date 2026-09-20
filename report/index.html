@@ -1,0 +1,459 @@
+<title>Liu-Er Chen 的十九年持仓</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#f6f6f3; --surface:#ffffff; --surface-2:#fbfbf8; --raise:#ffffff;
+  --ink:#15171a; --ink-2:#4e535b; --ink-3:#878c93;
+  --rule:#e5e5e0; --rule-2:#d0d1cb;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#4a3aa7;
+  --r0:#f0f1ee; --r1:#e2ecf9; --r2:#cde2fb; --r3:#9ec5f4; --r4:#5598e7; --r5:#2a78d6; --r6:#1c5cab; --r7:#0d366b;
+  --rt0:var(--ink-3); --rt4:#ffffff;
+  --shadow:0 1px 2px rgba(20,22,26,.05),0 6px 18px -12px rgba(20,22,26,.25);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --ground:#121311; --surface:#1b1c19; --surface-2:#1f211d; --raise:#24261f;
+  --ink:#f3f3ef; --ink-2:#b3b5ac; --ink-3:#7e8178;
+  --rule:#2b2d28; --rule-2:#3b3d37;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9;
+  --r0:#232420; --r1:#1a2a3c; --r2:#16385f; --r3:#184f95; --r4:#256abf; --r5:#3987e5; --r6:#6da7ec; --r7:#9ec5f4;
+  --rt0:var(--ink-3); --rt4:#0b1b2e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px -14px rgba(0,0,0,.8);
+}}
+:root[data-theme="dark"]{
+  --ground:#121311; --surface:#1b1c19; --surface-2:#1f211d; --raise:#24261f;
+  --ink:#f3f3ef; --ink-2:#b3b5ac; --ink-3:#7e8178;
+  --rule:#2b2d28; --rule-2:#3b3d37;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300; --s7:#9085e9;
+  --r0:#232420; --r1:#1a2a3c; --r2:#16385f; --r3:#184f95; --r4:#256abf; --r5:#3987e5; --r6:#6da7ec; --r7:#9ec5f4;
+  --rt0:var(--ink-3); --rt4:#0b1b2e;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px -14px rgba(0,0,0,.8);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:"Archivo","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",sans-serif;
+  font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding-inline:20px; padding-block:0 72px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace; font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; margin:0}
+h1{font-size:clamp(28px,5.2vw,42px); font-weight:700; letter-spacing:-.022em; line-height:1.18}
+h2{font-size:clamp(19px,2.6vw,23px); font-weight:600; letter-spacing:-.012em}
+h3{font-size:16px; font-weight:600; letter-spacing:-.005em}
+p{margin:0}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
+
+header.top{padding-block:52px 34px; border-bottom:1px solid var(--rule-2)}
+.dek{margin-top:16px; max-width:64ch; color:var(--ink-2); font-size:16.5px}
+.prov{margin-top:22px; display:flex; flex-wrap:wrap; gap:6px 26px; font-size:12.5px; color:var(--ink-3)}
+.prov b{color:var(--ink-2); font-weight:500}
+
+section{padding-block:40px; border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.shead{display:flex; flex-direction:column; gap:7px; margin-bottom:22px}
+.shead p{color:var(--ink-2); font-size:14.5px; max-width:68ch}
+
+.tiles{display:grid; grid-template-columns:repeat(auto-fit,minmax(196px,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); border-radius:3px; overflow:hidden}
+.tile{background:var(--surface); padding:20px 18px 18px}
+.tile .lab{font-size:12px; color:var(--ink-3); letter-spacing:.01em}
+.tile .row{display:flex; align-items:baseline; gap:9px; margin-top:12px}
+.tile .from{font-size:15px; color:var(--ink-3)}
+.tile .arrow{color:var(--ink-3); font-size:13px}
+.tile .to{font-size:29px; font-weight:600; letter-spacing:-.02em; line-height:1}
+.tile .note{margin-top:9px; font-size:12px; color:var(--ink-3)}
+
+figure{margin:0}
+.chart{background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:18px 16px 14px}
+.chart svg{display:block; width:100%; height:auto; overflow:visible}
+figcaption{margin-top:11px; font-size:12.5px; color:var(--ink-3); max-width:72ch}
+.legend{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:14px; padding-top:13px; border-top:1px solid var(--rule)}
+.lg{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--ink-2)}
+.sw{width:11px; height:11px; border-radius:2px; flex:none}
+.grid-line{stroke:var(--rule); stroke-width:1}
+.axis-txt{fill:var(--ink-3); font-size:11px; font-family:"IBM Plex Mono",monospace}
+.dlabel{font-size:11.5px; font-family:"IBM Plex Mono",monospace; font-weight:500}
+
+.scroller{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.hm{display:grid; gap:2px; min-width:826px}
+.hm-row{display:grid; grid-template-columns:168px repeat(19,1fr); gap:2px; align-items:stretch}
+.hm-name{font-size:12.5px; color:var(--ink-2); display:flex; align-items:center; padding-right:10px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.hm-head{font-size:10.5px; color:var(--ink-3); text-align:center; font-family:"IBM Plex Mono",monospace; padding-bottom:3px}
+.cell{height:23px; border-radius:2px; display:flex; align-items:center; justify-content:center; font-size:10px; font-family:"IBM Plex Mono",monospace; font-weight:500; cursor:default}
+.scale{display:flex; align-items:center; gap:9px; margin-top:16px; font-size:12px; color:var(--ink-3); flex-wrap:wrap}
+.scale .bar{display:flex; gap:2px}
+.scale .bar i{width:22px; height:11px; border-radius:2px; display:block}
+
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px}
+.chip{font-family:"IBM Plex Mono",monospace; font-size:12px; padding:5px 10px; border:1px solid var(--rule-2); background:var(--surface); color:var(--ink-2); border-radius:3px; cursor:pointer; line-height:1.3}
+.chip[aria-pressed="true"]{background:var(--s1); border-color:var(--s1); color:#fff}
+.chip:focus-visible{outline:2px solid var(--s1); outline-offset:2px}
+table{width:100%; border-collapse:collapse; font-size:14px}
+th,td{padding:9px 10px; text-align:left; border-bottom:1px solid var(--rule)}
+th{font-size:11.5px; font-weight:500; color:var(--ink-3); letter-spacing:.05em; text-transform:uppercase}
+td.n{text-align:right; font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums}
+td.r{color:var(--ink-3); font-family:"IBM Plex Mono",monospace; width:34px}
+tbody tr:last-child td{border-bottom:0}
+.wbar{display:block; height:5px; border-radius:2px; background:var(--s1); min-width:2px}
+
+.phases{display:flex; flex-direction:column; gap:2px}
+.phase{background:var(--surface); border:1px solid var(--rule); padding:22px 20px; display:grid; grid-template-columns:118px 1fr; gap:22px}
+.phase + .phase{border-top:0}
+.phase .when{font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-3); line-height:1.6}
+.phase .when b{display:block; color:var(--s1); font-weight:600; font-size:13px; margin-bottom:3px}
+.phase h3{margin-bottom:9px}
+.phase p{color:var(--ink-2); font-size:14.5px; max-width:70ch}
+.phase p + p{margin-top:10px}
+.phase .k{color:var(--ink); font-weight:600}
+.phase .k.mono{font-weight:500}
+
+blockquote{margin:22px 0 0; padding:16px 20px; border-left:2px solid var(--s1); background:var(--surface-2); color:var(--ink-2); font-size:14.5px}
+blockquote cite{display:block; margin-top:9px; font-size:12px; color:var(--ink-3); font-style:normal}
+
+.notes{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:20px 30px; margin-top:6px}
+.notes div{font-size:13.5px; color:var(--ink-2)}
+.notes h3{font-size:13px; margin-bottom:7px; color:var(--ink)}
+
+#tip{position:fixed; z-index:50; pointer-events:none; opacity:0; transition:opacity .09s;
+  background:var(--raise); color:var(--ink); border:1px solid var(--rule-2); border-radius:4px;
+  padding:9px 11px; font-size:12.5px; box-shadow:var(--shadow); max-width:260px; line-height:1.55}
+#tip .th{font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-3); margin-bottom:5px; letter-spacing:.05em}
+#tip .tr{display:flex; align-items:center; gap:7px; justify-content:space-between}
+#tip .tr span:last-child{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; margin-left:14px}
+.tk{display:inline-flex; align-items:center; gap:6px}
+
+@media (max-width:640px){
+  .phase{grid-template-columns:1fr; gap:12px}
+  .tile .to{font-size:25px}
+  body{font-size:14.5px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<div id="tip" role="status" aria-live="polite"></div>
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">SEC EDGAR · N-CSR &amp; N-PORT-P · FY2007–FY2025</p>
+  <h1>Liu-Er Chen 的十九年持仓</h1>
+  <p class="dek">同一位经理、同一只新兴市场基金，十九个财年的完整逐仓记录。从巴西电力与俄罗斯石油，到中概互联网 ADR，再到今天把三分之一资产押在存储周期上——这份档案把「风格没变、标的全换」的过程逐年摊开。</p>
+  <div class="prov">
+    <span><b>基金</b> Delaware → Macquarie → Nomura Emerging Markets Fund（CIK 875610）</span>
+    <span><b>经理</b> Liu-Er Chen, CFA（2006 年 9 月至今）</span>
+    <span><b>财年末</b> 每年 11 月 30 日</span>
+  </div>
+</header>
+
+<section>
+  <div class="shead">
+    <h2>十九年之间发生了什么</h2>
+    <p>四个数字概括了全部变化。持仓个数几乎没动——变的是钱压在哪里。</p>
+  </div>
+  <div class="tiles">
+    <div class="tile"><div class="lab">前十大持仓占净资产</div><div class="row"><span class="from mono">26.4%</span><span class="arrow">→</span><span class="to mono">72.5%</span></div><div class="note">FY2007 → FY2025</div></div>
+    <div class="tile"><div class="lab">第一大持仓占净资产</div><div class="row"><span class="from mono">3.98%</span><span class="arrow">→</span><span class="to mono">17.9%</span></div><div class="note">Samsung Electronics → SK Square</div></div>
+    <div class="tile"><div class="lab">韩国 + 台湾合计</div><div class="row"><span class="from mono">24.1%</span><span class="arrow">→</span><span class="to mono">61.8%</span></div><div class="note">中国／香港同期 13.4% → 13.4%，中途曾达 36.8%</div></div>
+    <div class="tile"><div class="lab">发行人个数</div><div class="row"><span class="from mono">144</span><span class="arrow">→</span><span class="to mono">114</span></div><div class="note">只减少了两成，集中度却翻了近三倍</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>集中度：一条几乎单调的上升线</h2>
+    <p>前一、前五、前十大持仓占净资产的比重。2008 年那次跳升来自净资产腰斩（分母变小），2019 年之后的抬升则是主动加仓的结果。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c1" viewBox="0 0 900 330" role="img" aria-label="集中度折线图"></svg>
+      <div class="legend" id="l1"></div>
+    </div>
+    <figcaption>按发行人合并口径：同一公司的普通股、优先股、ADR、GDR 合并计入一个名字。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>持仓迁移图</h2>
+    <p>十九年里曾进过任一年度前十的公司中，出现过三次以上或曾达 5% 以上的 22 家。颜色深浅是该年占净资产的比重；空白代表当年不持有。横着看是一只股票的生命周期，竖着看是某一年的组合长相。</p>
+  </div>
+  <figure>
+    <div class="chart">
+      <div class="scroller"><div class="hm" id="hm"></div></div>
+      <div class="scale" id="hmscale"></div>
+    </div>
+    <figcaption>三次换血清晰可见：左上角的资源股在 FY2013 前后集体消失，中段的中概 ADR 在 FY2017 后退潮，右下角的半导体与控股公司在最近四年迅速变深。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>地域重心的两次搬家</h2>
+    <p>按基金年报自己的「country of risk」分类堆叠。中国／香港在 FY2020 达到 36.8% 的顶点后五年内掉到 13.4%；韩国与台湾接手，FY2025 合计 61.8%，其中韩国一国就占 43.9%。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c2" viewBox="0 0 900 330" role="img" aria-label="国别权重堆叠面积图"></svg>
+      <div class="legend" id="l2"></div>
+    </div>
+    <figcaption>俄罗斯一档在 FY2022 归零——2022 年 3 月起俄股在境外基金中普遍被估值为零或接近零，该基金财年末（2022-11-30）已无实质敞口。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>半导体与存储复合体</h2>
+    <p>TSMC、SK Hynix、SK Square、Samsung Electronics、MediaTek、Micron 六家合计占净资产的比重。这是整份档案里斜率最陡的一条线。</p>
+  </div>
+  <figure>
+    <div class="chart"><svg id="c3" viewBox="0 0 900 220" role="img" aria-label="半导体与存储权重面积图"></svg></div>
+    <figcaption>FY2016 的 9.4% 到 FY2025 的 55.4%。一只全球新兴市场基金把一半以上资产放进一条产业链，这在同类产品里极为罕见。</figcaption>
+  </figure>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>逐年前十大持仓</h2>
+    <p>选择财年查看当年的完整前十。金额为财年末市值。</p>
+  </div>
+  <div class="chips" id="chips" role="group" aria-label="选择财年"></div>
+  <div class="scroller"><table>
+    <thead><tr><th style="width:34px">#</th><th>发行人</th><th style="width:160px">占净资产</th><th style="width:110px; text-align:right">市值</th></tr></thead>
+    <tbody id="tbody"></tbody>
+  </table></div>
+</section>
+
+<section>
+  <div class="shead"><h2>四个阶段</h2></div>
+  <div class="phases">
+    <div class="phase">
+      <div class="when"><b>阶段一</b>FY2007–FY2012<br>前十 26–38%</div>
+      <div>
+        <h3>资源、电力与电信的分散组合</h3>
+        <p>这是一个典型的「旧新兴市场」组合：<span class="k">Gazprom</span>、<span class="k">Petrobras</span>、<span class="k">Vale</span>、巴西国家电力 Eletrobras（FY2008 达 <span class="k mono">6.3%</span>，当年第一大）、<span class="k">China Unicom</span> 与 <span class="k">China Mobile</span>。持仓极度分散，FY2011 有 161 个发行人，第一大仓位也只有 4.7%。</p>
+        <p>最反直觉的一笔在这里：FY2011–FY2013，组合里同时出现了三家美国公司——<span class="k">Avon Products</span>（FY2012 占 4.85%）、<span class="k">Yahoo!</span>（FY2012 占 5.26%）和 <span class="k">Archer-Daniels-Midland</span>。它们在年报里被明确归类为「United States」，是用发达市场的壳去买新兴市场的生意：Avon 的收入大头在拉美，Yahoo! 当时的主要价值是它持有的阿里巴巴股权。</p>
+        <p>FY2008 净资产从 <span class="k mono">10.7 亿</span>美元掉到 <span class="k mono">3.58 亿</span>美元，跌幅 66%，是十九年里唯一一次断崖。</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>阶段二</b>FY2013–FY2016<br>中国／香港峰值 33.4%</div>
+      <div>
+        <h3>中概互联网 ADR 的四年</h3>
+        <p>组合在两年内完成了第一次彻底换血。<span class="k">Baidu</span>（FY2015 占 6.2%）、<span class="k">SINA</span>（FY2016 占 6.25%，当年第一大）、<span class="k">Sohu.com</span>（FY2015 占 4.6%）、Youku Tudou、Weibo、YY——一批当时估值被压得很低的美股上市中国互联网公司。中国／香港权重从 FY2012 的 17.4% 升到 FY2015 的 <span class="k mono">33.4%</span>。</p>
+        <p>同一时期 <span class="k">Reliance Industries</span> 从 2.2% 加到 7.2%，此后连续十四年留在前十，是整份档案里唯一横跨全部三次换血的仓位。</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>阶段三</b>FY2017–FY2021<br>半导体 12.9% → 31.2%</div>
+      <div>
+        <h3>半导体接棒</h3>
+        <p><span class="k">TSMC</span> 第一次进入前十是 FY2017，当时只有 <span class="k mono">2.34%</span>；<span class="k">SK Hynix</span> 同年以 3.39% 首次上榜。四年后 TSMC 已是 <span class="k mono">10.27%</span>，MediaTek 5.70%。与此同时中概股仓位被系统性削减——SINA 从 6.25% 降到清仓，Baidu 从 6.2% 降到 1% 上下。</p>
+        <p>这一阶段还有一条短暂的支线：白酒。<span class="k">Kweichow Moutai</span> 与 <span class="k">Wuliangye Yibin</span> 在 FY2020 合计占 <span class="k mono">11.35%</span>，两家 A 股公司占去组合九分之一，FY2024 后同样退出前十。</p>
+      </div>
+    </div>
+    <div class="phase">
+      <div class="when"><b>阶段四</b>FY2022–FY2025<br>前十 72.5%</div>
+      <div>
+        <h3>存储周期与控股公司折价</h3>
+        <p>最近四年组合收敛到了极致。<span class="k">SK Square</span>——2021 年 11 月从 SK Telecom 分拆出来、主要资产是 SK Hynix 约两成股权的控股公司——FY2022 首次上榜时 3.64%，FY2025 已是 <span class="k mono">17.86%</span> 的第一大重仓。同期 SK Hynix 本身 <span class="k mono">14.00%</span>，TSMC 在 FY2024 冲到 <span class="k mono">18.43%</span> 的历史峰值后，FY2025 回落到 14.95%。</p>
+        <p>把 SK Square 和 SK Hynix 放在一起看，等于对同一块存储资产做了两次下注，合计 <span class="k mono">31.9%</span>。加上 Samsung Electronics 与 Samsung C&amp;T，韩国单一国家权重达到 <span class="k mono">43.9%</span>。</p>
+        <p>FY2025 净资产 <span class="k mono">79.8 亿</span>美元，是这十九年的最高点。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="shead">
+    <h2>一句写在 2007 年的话，解释了 2025 年的仓位</h2>
+  </div>
+  <blockquote>
+    「韩国市场通常很适合我们的投资方式，因为它有大量被严重低估的资产。韩国公司常以控股公司的结构组合在一起，我们认为这种结构是低效的，也因此提供了价值。」
+    <cite>—— Delaware Emerging Markets Fund FY2007 年报（N-CSR，2008-02-04 报送），Chen 接手后的第一份完整年度报告</cite>
+  </blockquote>
+  <p style="margin-top:22px; color:var(--ink-2); max-width:70ch">十八年后，组合里权重最大的三个名字中有两个正是这个论点的直接产物：<b>SK Square</b>（持有 SK Hynix 的控股公司）和 <b>Samsung C&amp;T</b>（三星集团的实际控股主体，FY2025 占 3.87%）。更早的 SK Telecom 在 FY2011–FY2023 连续十二年在册，峰值 6.66%——而 SK Square 正是从它分拆出来的。所以这不是三次风格转换，而是同一套「买结构性折价资产」的方法，先后落在资源股、中概 ADR 和韩国控股公司上。</p>
+</section>
+
+<section>
+  <div class="shead"><h2>数据来源与口径</h2></div>
+  <div class="notes">
+    <div><h3>原始文件</h3>FY2007–FY2018 来自年报 N-CSR 中的 Statement of net assets / Schedule of investments；FY2019–FY2025 来自 N-PORT-P 的结构化持仓明细。全部取自 SEC EDGAR，CIK 875610。</div>
+    <div><h3>交叉校验</h3>解析器在 FY2019 上同时跑了两个来源：N-CSR 解析结果与同日 N-PORT 申报的前十二大持仓逐项一致（5.79 / 5.61 / 5.07 / 4.78 / 4.47 …）。各年解析出的证券合计占净资产 96.7%–104.0%，与年报自报的 Total Value of Securities 吻合。</div>
+    <div><h3>合并口径</h3>按发行人合并：Samsung Electronics 的普通股与优先股、Reliance Industries 的本地股与 GDR 合并为一个名字，因此这里的数字可能高于年报中单行的数值。</div>
+    <div><h3>已剔除</h3>证券出借抵押品、贴现票据、回购协议等非权益头寸，以及已归零的 Lehman LEPO 权证。国别沿用基金年报自己的分类。</div>
+  </div>
+</section>
+
+</div>
+
+<script type="application/json" id="payload">{"years":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"net":[1.07,0.36,0.73,1.44,2.42,1.85,2.66,3.1,1.68,1.96,4.74,5.13,5.35,5.73,6.42,4.76,4.82,5.24,7.98],"top1":[3.98,6.29,3.94,4.84,4.73,7.24,4.57,5.59,7.21,6.25,6.55,7.19,8.65,9.12,10.27,10.7,11.87,18.43,17.86],"top5":[16.57,24.1,17.13,17.54,19.03,23.81,21.15,21.15,29.43,24.13,24.2,26.51,29.56,35.57,34.88,37.47,41.31,46.89,58.7],"top10":[26.37,37.68,27.24,27.27,28.59,35.54,35.98,33.68,42.25,37.91,39.16,43.4,47.85,59.21,57.26,56.34,61.47,61.07,72.49],"semis":[5.38,6.8,4.51,3.52,5.02,8.53,6.71,8.08,10.16,9.39,12.88,15.54,20.33,26.4,31.23,31.62,38.95,43.48,55.37],"issuers":[144,116,136,144,162,108,116,125,103,104,133,136,129,115,128,129,125,120,114],"heat":[{"name":"Samsung Electronics","v":[3.98,5.44,3.6,2.66,4.3,7.24,4.57,5.59,6.59,5.05,4.21,4.59,5.84,6.61,5.86,6.32,7.18,4.66,5.21]},{"name":"Eletrobras","v":[2.53,6.29,3.59,1.63,0.81,0.41,0.2,0.16,0.19,0.83,0.26,0.26,0,0,0,0.19,0.17,0.11,0]},{"name":"Petrobras","v":[3.38,4.18,3.94,4.84,4.73,3.29,2.97,2.79,1.49,1.91,0.79,1.79,1.03,0.4,0.4,0.54,0.75,2.34,1.29]},{"name":"Vale","v":[3.06,4.23,3.16,2.94,1.9,1.3,0.97,0,0.23,0.49,0.26,0.3,0.55,0.51,0.58,1.88,1.55,0.28,0.16]},{"name":"China Mobile","v":[1.41,0,2.84,3.45,1.84,1.35,2.69,3.09,2.97,1.09,3.31,4.04,1.93,1.22,0,0,0,0,0]},{"name":"China Unicom","v":[2.54,3.96,1.99,1.33,1.99,0.91,0.65,0,0,0.21,0,0,0,0,0,0,0,0,0]},{"name":"Gazprom","v":[3.54,2.7,2.25,2.54,1.48,1.25,1.3,0.75,0.98,1.88,1.38,1.36,2.17,1.19,2.02,0.0,0.0,0.0,0.0]},{"name":"Yahoo!","v":[0,0,0,3.64,3.44,5.26,2.08,0.84,1.0,1.04,0,0,0,0,0,0,0,0,0]},{"name":"SK Telecom","v":[0.94,0.99,1.24,1.04,1.99,3.16,3.43,2.93,3.11,3.22,5.28,6.66,4.5,4.96,4.26,3.24,3.37,1.38,0.76]},{"name":"Reliance Industries","v":[1.05,1.29,1.27,0.86,1.34,2.17,3.36,4.79,7.21,5.78,6.55,7.19,8.65,6.88,7.56,10.7,8.99,8.84,6.68]},{"name":"SINA","v":[0,0,0.78,0.71,0.82,0.86,2.75,1.96,4.8,6.25,3.62,2.67,1.38,1.55,0,0,0,0,0]},{"name":"Baidu","v":[0.74,0,0,0,0,0.52,4.38,4.75,6.21,3.2,1.66,2.15,1.38,1.02,0.98,0.96,1.03,1.29,1.24]},{"name":"Sohu.com","v":[0,0,0.07,0.84,0.69,1.68,3.07,2.53,4.62,3.12,2.13,0.9,0.42,0.71,0.58,0.69,0.37,0.55,0.43]},{"name":"Tencent","v":[0,0,0,0,0,0,0,0,2.36,2.54,4.05,3.7,3.76,6.02,4.31,3.98,4.17,2.65,2.64]},{"name":"MediaTek","v":[0.7,0,0,0,0,0,0.6,1.45,1.8,2.3,1.5,1.36,2.32,4.35,5.7,5.13,5.52,4.12,2.17]},{"name":"Alibaba","v":[0,0,0,0,0,0,0,0,0.44,3.83,4.11,4.01,4.78,4.55,2.99,4.1,3.46,3.23,3.82]},{"name":"TSMC","v":[0.7,1.36,0.91,0.86,0.72,1.28,0.93,1.03,1.77,2.05,2.34,4.03,5.79,9.12,10.27,10.47,11.87,18.43,14.95]},{"name":"SK Hynix","v":[0,0,0,0,0,0,0.6,0,0,0,3.39,4.0,4.47,5.37,5.2,4.84,7.51,7.78,14.0]},{"name":"JD.com","v":[0,0,0,0,0,0,0,0,0.83,1.07,2.3,1.2,1.77,4.17,4.04,3.84,1.18,1.0,0.5]},{"name":"Wuliangye Yibin","v":[0,0,0,0,0,0,0,0,0,0,0,0,3.49,6.94,5.49,3.27,3.04,0,0]},{"name":"Kweichow Moutai","v":[0,0,0,0,0,0,0,0,0,0,0,0.0,2.91,4.41,4.58,3.32,3.65,0,0]},{"name":"SK Square","v":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1.52,3.64,5.76,7.18,17.86]}],"regions":["KR","TW","CN","IN","BR","RU","OT"],"cser":{"KR":[15.38,15.21,14.09,11.24,16.16,21.91,18.86,20.47,15.98,13.07,20.48,19.37,16.96,18.71,18.12,19.99,25.62,24.96,43.94],"TW":[8.76,9.15,5.08,6.23,5.6,5.02,3.53,4.47,4.85,5.72,5.24,7.31,10.18,13.66,16.09,15.77,17.51,23.55,17.88],"CN":[13.43,11.5,17.06,17.35,16.98,17.44,20.69,20.73,33.35,31.08,30.4,29.7,29.99,36.8,29.06,27.49,24.46,17.05,13.42],"IN":[2.68,2.33,1.69,1.69,3.31,2.34,4.24,7.32,10.91,7.67,7.95,9.64,10.55,8.89,12.09,15.86,14.58,15.69,10.59],"BR":[14.52,18.58,16.28,15.59,16.96,16.73,20.55,15.63,12.74,16.52,11.27,12.88,11.61,6.77,4.74,6.72,6.61,5.94,5.25],"RU":[8.81,7.47,8.43,7.7,6.47,7.81,6.48,10.66,10.16,11.84,7.3,6.73,8.2,5.54,6.86,0.01,0.0,0.0,0.0],"OT":[35.92,36.84,37.95,36.87,33.98,28.12,26.55,21.23,16.04,17.45,18.14,14.37,12.71,9.53,13.68,14.7,11.78,12.99,9.53]},"tables":{"2007":[["Samsung Electronics",3.98,42],["Gazprom",3.54,38],["Petrobras",3.38,36],["Vale",3.06,33],["LUKOIL",2.61,28],["China Unicom",2.54,27],["Eletrobras",2.53,27],["PetroChina",1.77,19],["Buenaventura",1.54,16],["China Mobile",1.41,15]],"2008":[["Eletrobras",6.29,23],["Samsung Electronics",5.44,20],["Vale",4.23,15],["Petrobras",4.18,15],["China Unicom",3.96,14],["Korea Electric Power",3.11,11],["PetroChina",3.03,11],["Gazprom",2.7,10],["Sasol",2.59,9],["Evergreen Marine",2.15,8]],"2009":[["Petrobras",3.94,29],["Samsung Electronics",3.6,26],["Eletrobras",3.59,26],["Vale",3.16,23],["China Mobile",2.84,21],["Gazprom",2.25,16],["Korea Electric Power",2.13,15],["China Unicom",1.99,14],["Vodacom Group",1.91,14],["Sberbank",1.82,13]],"2010":[["Petrobras",4.84,70],["Yahoo!",3.64,53],["China Mobile",3.45,50],["Vale",2.94,43],["Samsung Electronics",2.66,38],["Gazprom",2.54,37],["Bunge",2.11,30],["KB Financial",1.75,25],["Archer-Daniels-Midland",1.71,25],["Eletrobras",1.63,23]],"2011":[["Petrobras",4.73,115],["Avon Products",4.52,110],["Samsung Electronics",4.3,104],["Yahoo!",3.44,83],["Archer-Daniels-Midland",2.05,50],["China Unicom",1.99,48],["SK Telecom",1.99,48],["Vale",1.9,46],["China Mobile",1.84,45],["Hon Hai Precision",1.83,44]],"2012":[["Samsung Electronics",7.24,134],["Yahoo!",5.26,98],["Avon Products",4.85,90],["Petrobras",3.29,61],["SK Telecom",3.16,59],["Grupo Televisa",2.67,49],["Hon Hai Precision",2.66,49],["Reliance Industries",2.17,40],["Uni-President China",2.15,40],["Fibria Celulose",2.07,38]],"2013":[["Samsung Electronics",4.57,122],["Tim Participacoes",4.47,119],["Baidu",4.38,117],["Teva Pharmaceutical Industries",4.29,114],["SK Telecom",3.43,91],["Reliance Industries",3.36,89],["Sohu.com",3.07,82],["Petrobras",2.97,79],["SINA",2.75,73],["China Mobile",2.69,71]],"2014":[["Samsung Electronics",5.59,173],["Reliance Industries",4.79,148],["Baidu",4.75,147],["China Mobile",3.09,96],["SK Telecom",2.93,91],["Petrobras",2.79,87],["Sohu.com",2.53,78],["Grupo Televisa",2.53,78],["Teva Pharmaceutical Industries",2.39,74],["iShares MSCI Emerging Markets",2.28,71]],"2015":[["Reliance Industries",7.21,121],["Samsung Electronics",6.59,111],["Baidu",6.21,105],["SINA",4.8,81],["Sohu.com",4.62,78],["SK Telecom",3.11,52],["China Mobile",2.97,50],["Youku Tudou",2.39,40],["Tencent",2.36,40],["Yandex",1.98,33]],"2016":[["SINA",6.25,123],["Reliance Industries",5.78,114],["Samsung Electronics",5.05,99],["Alibaba",3.83,75],["SK Telecom",3.22,63],["Baidu",3.2,63],["Sohu.com",3.12,61],["Itau Unibanco",2.61,51],["Tencent",2.54,50],["MediaTek",2.3,45]],"2017":[["Reliance Industries",6.55,310],["SK Telecom",5.28,250],["Samsung Electronics",4.21,199],["Alibaba",4.11,195],["Tencent",4.05,192],["SINA",3.62,172],["SK Hynix",3.39,160],["China Mobile",3.31,157],["TSMC",2.34,111],["JD.com",2.3,109]],"2018":[["Reliance Industries",7.19,369],["SK Telecom",6.66,342],["Samsung Electronics",4.59,236],["China Mobile",4.04,207],["TSMC",4.03,207],["Alibaba",4.01,206],["SK Hynix",4.0,205],["Tencent",3.7,190],["SINA",2.67,137],["B2W / Americanas",2.51,129]],"2019":[["Reliance Industries",8.65,463],["Samsung Electronics",5.84,312],["TSMC",5.79,310],["Alibaba",4.78,256],["SK Telecom",4.5,241],["SK Hynix",4.47,239],["Tencent",3.76,201],["B2W / Americanas",3.67,196],["Wuliangye Yibin",3.49,187],["Kweichow Moutai",2.91,156]],"2020":[["TSMC",9.12,523],["Wuliangye Yibin",6.94,397],["Reliance Industries",6.88,394],["Samsung Electronics",6.61,379],["Tencent",6.02,345],["SK Hynix",5.37,308],["SK Telecom",4.96,284],["Alibaba",4.55,261],["Kweichow Moutai",4.41,253],["MediaTek",4.35,249]],"2021":[["TSMC",10.27,659],["Reliance Industries",7.56,485],["Samsung Electronics",5.86,376],["MediaTek",5.7,366],["Wuliangye Yibin",5.49,353],["SK Hynix",5.2,334],["Kweichow Moutai",4.58,294],["Tencent",4.31,277],["SK Telecom",4.26,273],["JD.com",4.04,259]],"2022":[["Reliance Industries",10.7,509],["TSMC",10.47,498],["Samsung Electronics",6.32,301],["MediaTek",5.13,244],["SK Hynix",4.84,230],["Alibaba",4.1,195],["Tencent",3.98,189],["JD.com",3.84,183],["SK Square",3.64,173],["Kweichow Moutai",3.32,158]],"2023":[["TSMC",11.87,573],["Reliance Industries",8.99,433],["SK Hynix",7.51,362],["Samsung Electronics",7.18,347],["SK Square",5.76,278],["MediaTek",5.52,266],["Tencent",4.17,201],["Kweichow Moutai",3.65,176],["Alibaba",3.46,167],["SK Telecom",3.37,163]],"2024":[["TSMC",18.43,966],["Reliance Industries",8.84,463],["SK Hynix",7.78,407],["SK Square",7.18,376],["Samsung Electronics",4.66,244],["MediaTek",4.12,216],["Alibaba",3.23,169],["Tencent",2.65,139],["Petrobras",2.34,123],["PDD Holdings",1.84,97]],"2025":[["SK Square",17.86,1425],["TSMC",14.95,1193],["SK Hynix",14.0,1117],["Reliance Industries",6.68,533],["Samsung Electronics",5.21,416],["Samsung C&T",3.87,309],["Alibaba",3.82,305],["Tencent",2.64,211],["MediaTek",2.17,173],["Petrobras",1.29,103]]}}</script>
+<script>
+const D = JSON.parse(document.getElementById("payload").textContent);
+const YS = D.years, N = YS.length;
+const tip = document.getElementById("tip");
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+
+function showTip(evt, html) {
+  tip.innerHTML = html; tip.style.opacity = 1;
+  const r = tip.getBoundingClientRect();
+  let x = evt.clientX + 14, y = evt.clientY - r.height - 12;
+  if (x + r.width > innerWidth - 8) x = evt.clientX - r.width - 14;
+  if (x < 8) x = 8;
+  if (y < 8) y = evt.clientY + 18;
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+const hideTip = () => { tip.style.opacity = 0; };
+const path = pts => pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+
+function frame(svg, o) {
+  const { W, H, ml, mr, mt, mb, yMax, ticks } = o;
+  const pw = W - ml - mr, ph = H - mt - mb;
+  const X = i => ml + (pw * i) / (N - 1);
+  const Y = v => mt + ph - (ph * v) / yMax;
+  ticks.forEach(t => {
+    svg.appendChild(el("line", { x1: ml, x2: ml + pw, y1: Y(t), y2: Y(t), class: "grid-line" }));
+    const lb = el("text", { x: ml - 9, y: Y(t) + 4, class: "axis-txt", "text-anchor": "end" });
+    lb.textContent = t + "%"; svg.appendChild(lb);
+  });
+  YS.forEach((y, i) => {
+    if (i % 2) return;
+    const lb = el("text", { x: X(i), y: mt + ph + 20, class: "axis-txt", "text-anchor": "middle" });
+    lb.textContent = "’" + String(y).slice(2); svg.appendChild(lb);
+  });
+  return { X, Y, pw, ph };
+}
+
+function crosshair(svg, o, X, rowsFor) {
+  const { W, ml, mr, mt, mb, H } = o, pw = W - ml - mr, ph = H - mt - mb;
+  const rule = el("line", { y1: mt, y2: mt + ph, style: "stroke:var(--rule-2);stroke-width:1", opacity: 0 });
+  svg.appendChild(rule);
+  const hit = el("rect", { x: ml, y: mt, width: pw, height: ph, style: "fill:transparent" });
+  svg.appendChild(hit);
+  hit.addEventListener("pointermove", e => {
+    const b = svg.getBoundingClientRect();
+    const sx = ((e.clientX - b.left) / b.width) * W;
+    let i = Math.round(((sx - ml) / pw) * (N - 1));
+    i = Math.max(0, Math.min(N - 1, i));
+    rule.setAttribute("x1", X(i)); rule.setAttribute("x2", X(i)); rule.setAttribute("opacity", 1);
+    showTip(e, `<div class="th">FY${YS[i]} · 11/30</div>` + rowsFor(i));
+  });
+  hit.addEventListener("pointerleave", () => { rule.setAttribute("opacity", 0); hideTip(); });
+}
+
+function endpoint(svg, x, y, v, c) {
+  svg.appendChild(el("circle", { cx: x, cy: y, r: 4, style: `fill:var(${c});stroke:var(--surface);stroke-width:2` }));
+  const t = el("text", { x: x + 11, y: y + 4, class: "dlabel", style: `fill:var(${c})` });
+  t.textContent = v.toFixed(1) + "%"; svg.appendChild(t);
+}
+
+/* 1 — concentration */
+(function () {
+  const svg = document.getElementById("c1");
+  const o = { W: 900, H: 330, ml: 48, mr: 104, mt: 16, mb: 38, yMax: 80, ticks: [0, 20, 40, 60, 80] };
+  const { X, Y } = frame(svg, o);
+  const S = [
+    { k: "top10", n: "前十大合计", c: "--s1" },
+    { k: "top5", n: "前五大合计", c: "--s2" },
+    { k: "top1", n: "第一大持仓", c: "--s3" }
+  ];
+  S.forEach(s => {
+    const pts = D[s.k].map((v, i) => [X(i), Y(v)]);
+    svg.appendChild(el("path", { d: path(pts), style: `fill:none;stroke:var(${s.c});stroke-width:2;stroke-linejoin:round;stroke-linecap:round` }));
+    endpoint(svg, pts[N - 1][0], pts[N - 1][1], D[s.k][N - 1], s.c);
+  });
+  crosshair(svg, o, X, i => S.map(s =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(${s.c})"></i>${s.n}</span><span>${D[s.k][i].toFixed(1)}%</span></div>`).join(""));
+  document.getElementById("l1").innerHTML = S.map(s =>
+    `<span class="lg"><i class="sw" style="background:var(${s.c})"></i>${s.n}</span>`).join("");
+})();
+
+/* 2 — regions, stacked */
+(function () {
+  const svg = document.getElementById("c2");
+  const o = { W: 900, H: 330, ml: 48, mr: 104, mt: 16, mb: 38, yMax: 110, ticks: [0, 25, 50, 75, 100] };
+  const { X, Y } = frame(svg, o);
+  const NM = { KR: "韩国", TW: "台湾", CN: "中国／香港", IN: "印度", BR: "巴西", RU: "俄罗斯", OT: "其他市场" };
+  const C = { KR: "--s1", TW: "--s2", CN: "--s3", IN: "--s4", BR: "--s5", RU: "--s6", OT: "--s7" };
+  const order = D.regions, base = new Array(N).fill(0);
+  order.forEach(g => {
+    const lo = base.slice(), hi = base.map((b, i) => b + D.cser[g][i]);
+    const pts = hi.map((v, i) => [X(i), Y(v)]).concat(lo.map((v, i) => [X(i), Y(v)]).reverse());
+    svg.appendChild(el("path", { d: path(pts) + " Z", style: `fill:var(${C[g]});stroke:var(--surface);stroke-width:2;stroke-linejoin:round` }));
+    hi.forEach((v, i) => base[i] = v);
+  });
+  crosshair(svg, o, X, i => order.map(g =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(${C[g]})"></i>${NM[g]}</span><span>${D.cser[g][i].toFixed(1)}%</span></div>`).join(""));
+  document.getElementById("l2").innerHTML = order.map(g =>
+    `<span class="lg"><i class="sw" style="background:var(${C[g]})"></i>${NM[g]} <span class="mono" style="color:var(--ink-3)">${D.cser[g][N - 1].toFixed(1)}%</span></span>`).join("");
+})();
+
+/* 3 — semiconductor complex */
+(function () {
+  const svg = document.getElementById("c3");
+  const o = { W: 900, H: 220, ml: 48, mr: 104, mt: 14, mb: 32, yMax: 60, ticks: [0, 20, 40, 60] };
+  const { X, Y } = frame(svg, o);
+  const v = D.semis, line = v.map((d, i) => [X(i), Y(d)]);
+  const area = line.concat([[X(N - 1), Y(0)], [X(0), Y(0)]]);
+  svg.appendChild(el("path", { d: path(area) + " Z", style: "fill:var(--s1);opacity:.14" }));
+  svg.appendChild(el("path", { d: path(line), style: "fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round;stroke-linecap:round" }));
+  endpoint(svg, line[N - 1][0], line[N - 1][1], v[N - 1], "--s1");
+  crosshair(svg, o, X, i =>
+    `<div class="tr"><span class="tk"><i class="sw" style="background:var(--s1)"></i>半导体／存储合计</span><span>${v[i].toFixed(1)}%</span></div>`);
+})();
+
+/* 4 — heatmap */
+(function () {
+  const wrap = document.getElementById("hm");
+  const bucket = v => v === 0 ? 0 : v < 1 ? 1 : v < 2 ? 2 : v < 4 ? 3 : v < 6 ? 4 : v < 9 ? 5 : v < 14 ? 6 : 7;
+  const head = document.createElement("div");
+  head.className = "hm-row";
+  head.innerHTML = "<div></div>" + YS.map(y => `<div class="hm-head">’${String(y).slice(2)}</div>`).join("");
+  wrap.appendChild(head);
+  D.heat.forEach(r => {
+    const row = document.createElement("div");
+    row.className = "hm-row";
+    const nm = document.createElement("div");
+    nm.className = "hm-name"; nm.textContent = r.name; row.appendChild(nm);
+    r.v.forEach((v, i) => {
+      const c = document.createElement("div");
+      c.className = "cell";
+      c.style.background = `var(--r${bucket(v)})`;
+      if (v >= 6) { c.textContent = v.toFixed(1); c.style.color = "var(--rt4)"; }
+      const html = `<div class="th">FY${YS[i]} · 11/30</div><div class="tr"><span>${r.name}</span><span>${v === 0 ? "未持有" : v.toFixed(2) + "%"}</span></div>`;
+      c.addEventListener("pointerenter", e => showTip(e, html));
+      c.addEventListener("pointermove", e => showTip(e, html));
+      c.addEventListener("pointerleave", hideTip);
+      row.appendChild(c);
+    });
+    wrap.appendChild(row);
+  });
+  document.getElementById("hmscale").innerHTML =
+    '<span>占净资产</span><span class="bar">' +
+    [0, 1, 2, 3, 4, 5, 6, 7].map(i => `<i style="background:var(--r${i})"></i>`).join("") +
+    '</span><span class="mono" style="font-size:11px">未持有 · &lt;1 · 1–2 · 2–4 · 4–6 · 6–9 · 9–14 · ≥14%</span>';
+})();
+
+/* 5 — per-year top ten */
+(function () {
+  const chips = document.getElementById("chips"), tb = document.getElementById("tbody");
+  const render = y => {
+    const rows = D.tables[String(y)], max = rows[0][1];
+    tb.innerHTML = rows.map((r, i) => `<tr>
+      <td class="r">${i + 1}</td>
+      <td>${r[0]}</td>
+      <td><span style="display:flex;align-items:center;gap:9px">
+        <span class="mono" style="width:48px;text-align:right">${r[1].toFixed(2)}%</span>
+        <span class="wbar" style="width:${(r[1] / max * 84).toFixed(1)}px"></span></span></td>
+      <td class="n">$${r[2].toLocaleString()}M</td></tr>`).join("");
+    [...chips.children].forEach(c => c.setAttribute("aria-pressed", String(+c.dataset.y === y)));
+  };
+  YS.forEach(y => {
+    const b = document.createElement("button");
+    b.className = "chip"; b.type = "button"; b.dataset.y = y; b.id = "chip-" + y;
+    b.textContent = "FY" + y; b.setAttribute("aria-pressed", "false");
+    b.addEventListener("click", () => render(y));
+    chips.appendChild(b);
+  });
+  render(YS[N - 1]);
+})();
+
+</script>
