@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SK 海力士 / SK Square 外资持股结构</title>
+<style>
+:root{color-scheme:light dark;
+--plane:#f2f2f0;--surface:#fbfbfa;--sunken:#ececeb;--ink:#111214;--ink-2:#55565c;--muted:#8a8b92;
+--rule:#e0e0dc;--rule-soft:#ebebe7;--s1:#2a78d6;--s1-wash:rgba(42,120,214,.13);
+--s1-wash-2:rgba(42,120,214,.06);--s2:#eb6834;--par:#9a9ba1;--focus:#2a78d6;
+--shadow:0 1px 2px rgba(17,18,20,.05),0 8px 24px -16px rgba(17,18,20,.22);
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+--mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+--plane:#0e0e10;--surface:#171719;--sunken:#1e1e21;--ink:#f4f4f3;--ink-2:#b4b5ba;--muted:#84858b;
+--rule:#2a2a2d;--rule-soft:#232326;--s1:#3987e5;--s1-wash:rgba(57,135,229,.20);
+--s1-wash-2:rgba(57,135,229,.07);--s2:#d95926;--par:#75767c;--focus:#3987e5;
+--shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px -16px rgba(0,0,0,.8)}}
+:root[data-theme=dark]{
+--plane:#0e0e10;--surface:#171719;--sunken:#1e1e21;--ink:#f4f4f3;--ink-2:#b4b5ba;--muted:#84858b;
+--rule:#2a2a2d;--rule-soft:#232326;--s1:#3987e5;--s1-wash:rgba(57,135,229,.20);
+--s1-wash-2:rgba(57,135,229,.07);--s2:#d95926;--par:#75767c;--focus:#3987e5;
+--shadow:0 1px 2px rgba(0,0,0,.5),0 8px 24px -16px rgba(0,0,0,.8)}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--plane);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-text-size-adjust:100%}
+.sheet{max-width:960px;margin:0 auto;padding-inline:20px;padding-block:36px 52px;display:flex;flex-direction:column;gap:32px}
+@media (max-width:600px){.sheet{padding-inline:14px;padding-block:24px 36px;gap:24px}}
+.eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(28px,7vw,42px);line-height:1.1;font-weight:650;letter-spacing:-.022em;margin:10px 0 0}
+.standfirst{margin:12px 0 0;max-width:54ch;font-size:16px;color:var(--ink-2)}
+.asof{margin-top:14px;padding-top:13px;border-top:1px solid var(--rule);font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:5px 16px}
+h2{font-size:13px;font-weight:650;letter-spacing:.055em;text-transform:uppercase;color:var(--ink-2);margin:0 0 13px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h2 .n{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:500;text-transform:none;letter-spacing:0}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:4px;box-shadow:var(--shadow)}
+.pad{padding:24px 22px}
+@media (max-width:600px){.pad{padding:18px 14px}}
+.readout{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 30px}
+.figure{display:flex;align-items:baseline;gap:4px}
+.figure .won{font-family:var(--mono);font-size:clamp(22px,5vw,30px);color:var(--muted);line-height:1}
+.figure .val{font-family:var(--mono);font-size:clamp(50px,13vw,74px);font-weight:600;letter-spacing:-.035em;line-height:.92;color:var(--s1);font-variant-numeric:tabular-nums}
+.figure-cap{font-size:13.5px;color:var(--ink-2);padding-bottom:6px;max-width:24ch}
+.figure-cap b{color:var(--ink);font-weight:650}
+.sidestats{display:flex;gap:24px;padding-bottom:6px;margin-left:auto}
+@media (max-width:640px){.sidestats{margin-left:0;width:100%;padding-top:2px}}
+.sidestat .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sidestat .v{font-family:var(--mono);font-size:19px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.3}
+.bars{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.bar-row{display:grid;grid-template-columns:58px 1fr;align-items:center;gap:10px}
+@media (max-width:480px){.bar-row{grid-template-columns:48px 1fr;gap:8px}}
+.bar-label{font-size:12.5px;color:var(--ink-2);text-align:right;white-space:nowrap}
+.bar-track{position:relative;height:38px;background:var(--sunken);border-radius:3px;overflow:hidden}
+.bar-fill{position:absolute;top:0;bottom:0;left:0;border-radius:3px 0 0 3px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px}
+.bar-fill.pay{background:var(--s1)}
+.bar-fill.get{background:var(--s1-wash);border-right:2px solid var(--s1)}
+.bar-amt{font-family:var(--mono);font-size:13.5px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar-fill.pay .bar-amt{color:#fff}
+.bar-fill.get .bar-amt{color:var(--ink)}
+.bar-note{margin-top:11px;font-size:12.5px;color:var(--muted);border-top:1px dashed var(--rule);padding-top:11px}
+.inputs{margin-top:18px;padding-top:16px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 16px}
+.field{display:flex;flex-direction:column;gap:5px;flex:1 1 180px;min-width:0}
+.field label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.field input{font-family:var(--mono);font-size:16px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink);background:var(--plane);border:1px solid var(--rule);border-radius:3px;padding:9px 10px;width:100%;min-width:0}
+.field input:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.nojs{margin-top:12px;font-size:12px;color:var(--muted)}
+/* chart */
+.pr{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.chart-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:10px}
+.legend{display:flex;flex-wrap:wrap;gap:5px 16px}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink-2)}
+.swatch{width:15px;height:3px;border-radius:2px;flex:none}
+.seg{display:flex;border:1px solid var(--rule);border-radius:3px;overflow:hidden}
+.seg label{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);padding:6px 13px;cursor:pointer;background:var(--surface);border-right:1px solid var(--rule)}
+.seg label:last-child{border-right:0}
+#p3:checked~.chart-head label[for=p3],#p6:checked~.chart-head label[for=p6],#p12:checked~.chart-head label[for=p12]{background:var(--s1);color:#fff}
+.pr:focus-visible~.chart-head .seg{outline:2px solid var(--focus);outline-offset:2px}
+.view{display:none}
+#p3:checked~.views .v3,#p6:checked~.views .v6,#p12:checked~.views .v12{display:block}
+svg.ch{display:block;width:100%;height:auto;overflow:visible}
+svg.ch.narrow{display:none}
+@media (max-width:600px){svg.ch.wide{display:none}svg.ch.narrow{display:block}}
+svg.ch text{fill:var(--muted);font-family:var(--mono)}
+svg.ch text.par-t{fill:var(--par);font-family:var(--sans)}
+svg.ch text.val{fill:var(--ink);font-weight:600}
+svg.ch .grid{stroke:var(--rule-soft);stroke-width:1}
+svg.ch .par{stroke:var(--par);stroke-width:1;stroke-dasharray:5 4}
+svg.ch .s1-line{fill:none;stroke:var(--s1);stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+svg.ch .s2-line{fill:none;stroke:var(--s2);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+svg.ch .s1-area{fill:var(--s1-wash-2);stroke:none}
+svg.ch .dot{fill:var(--s1);stroke:var(--surface);stroke-width:2}
+.chart-foot{display:flex;flex-wrap:wrap;gap:5px 18px;padding-top:12px;margin-top:10px;border-top:1px solid var(--rule-soft);font-size:12px;color:var(--muted)}
+.chart-foot b{font-family:var(--mono);font-weight:500;color:var(--ink-2)}
+/* formula */
+.eq{background:var(--plane);border:1px solid var(--rule);border-radius:4px;padding:16px 14px;overflow-x:auto;font-family:var(--mono);font-size:14px;line-height:2;color:var(--ink);font-variant-numeric:tabular-nums}
+@media (max-width:600px){.eq{font-size:12px;line-height:1.95}}
+.eq .c{color:var(--s1);font-weight:600}
+.eq .cm{color:var(--muted)}
+.eq .op{color:var(--ink-2)}
+.eq div{white-space:nowrap}
+/* tables */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--rule-soft)}
+th{font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--rule);white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.k{color:var(--ink-2)}
+td.v{font-family:var(--mono);font-weight:500;font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:none}
+.src{font-size:12px;color:var(--muted)}
+.was{color:var(--s2)}
+.to{color:var(--muted)}
+.same{color:var(--muted)}
+/* stacked cards for the wide param table on phones */
+@media (max-width:600px){
+ table.stack thead{display:none}
+ table.stack tr{display:block;border-bottom:1px solid var(--rule);padding:12px 12px 10px}
+ table.stack tr:last-child{border-bottom:none}
+ table.stack td{display:block;border:none;padding:0}
+ table.stack td.v,table.stack td.num{text-align:left}
+ table.stack td[data-l]::before{content:attr(data-l);display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:7px}
+ table.stack td:first-child{font-weight:650;color:var(--ink)}
+ table.stack td.v{font-size:17px}
+}
+/* 对照表:窄屏下让「原值 → 基准值」换行,而不是横向溢出 */
+@media (max-width:600px){
+ table.cmp{font-size:11.5px}
+ table.cmp th,table.cmp td{padding:7px 6px}
+ table.cmp td.num{white-space:normal}
+ table.cmp .to{display:block;line-height:1.1}
+}
+/* 手算查表 */
+table.lk{font-size:12.5px;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+table.lk th,table.lk td{padding:7px 9px;text-align:right;white-space:nowrap}
+table.lk thead th{font-size:10.5px;letter-spacing:.04em;text-transform:none}
+table.lk th.rh{position:sticky;left:0;background:var(--surface);text-align:right;
+ color:var(--ink-2);font-weight:600;border-right:1px solid var(--rule)}
+table.lk th.corner{color:var(--muted);font-size:10px;text-align:left}
+table.lk tr.hitrow th.rh,table.lk tr.hitrow td{background:var(--s1-wash-2)}
+table.lk td.hit{background:var(--s1);color:#fff;font-weight:700;border-radius:2px}
+@media (max-width:600px){
+ table.lk{font-size:10.5px}
+ table.lk th,table.lk td{padding:6px 3px}
+ table.lk thead th{font-size:9.5px}
+ table.lk th:nth-child(even):not(.rh),table.lk td:nth-child(even){display:none}
+ table.lk th.kc,table.lk td.kc{display:table-cell!important}
+}
+.dt-wrap{max-height:320px;overflow:auto;border-top:1px solid var(--rule-soft)}
+.dt-wrap thead th{position:sticky;top:0;background:var(--surface)}
+@media (max-width:600px){.dt-wrap table{font-size:11.5px}.dt-wrap th,.dt-wrap td{padding:6px 5px}}
+details{border-top:1px solid var(--rule)}
+summary{cursor:pointer;padding:12px 11px;font-size:13px;color:var(--ink-2);list-style:none;display:flex;align-items:center;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-family:var(--mono);font-size:14px;color:var(--muted);width:13px}
+details[open] summary::before{content:"\2212"}
+/* notes */
+.notes ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:12px}
+.notes li{display:grid;grid-template-columns:7px 1fr;gap:11px;font-size:13.5px;color:var(--ink-2)}
+.notes li::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--rule);margin-top:8px}
+.notes li.warn::before{background:var(--s2)}
+.notes b{color:var(--ink);font-weight:650}
+code{font-family:var(--mono);font-size:12.5px;background:var(--sunken);padding:1px 5px;border-radius:3px;color:var(--ink)}
+.colophon{font-size:11.5px;color:var(--muted);border-top:1px solid var(--rule);padding-top:14px;line-height:1.75}
+
+.yr{font-family:var(--mono);font-weight:650;color:var(--ink);white-space:nowrap}
+.ytd{font-family:var(--mono);font-size:9px;letter-spacing:.06em;background:var(--sunken);color:var(--muted);padding:1px 4px;border-radius:2px;vertical-align:middle}
+td.big{font-size:16px;font-weight:650;color:var(--ink)}
+td.dim{color:var(--muted)}
+td.chg-up{color:#0ca30c}
+td.chg-dn{color:var(--s2)}
+.flowbox{display:flex;flex-wrap:wrap;gap:14px 28px;padding:14px 16px;border-top:1px solid var(--rule);font-size:13px}
+.flowbox .fk{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block}
+.flowbox .fv{font-family:var(--mono);font-size:16px;font-weight:650;font-variant-numeric:tabular-nums}
+.pos{color:#0ca30c}.neg{color:var(--s2)}
+@media (max-width:600px){
+ table.own{font-size:11.5px}
+ table.own th,table.own td{padding:7px 4px}
+ table.own td.src,table.own th.ev{display:none}
+ table.own th{white-space:normal;line-height:1.35}
+ table.own td.dim{white-space:normal}
+ table.own td.big{font-size:13.5px}
+ table.own .ytd{display:none}
+}
+</style>
+</head>
+<body>
+<div class="sheet">
+<header>
+  <div class="eyebrow">KOSPI 000660 &middot; 402340</div>
+  <h1>外资持股结构 历年统计</h1>
+  <p class="standfirst">SK 海力士与 SK Square 的外国人持股比率逐年变化。持股率为各年最后一个交易日的收盘口径。</p>
+  <div class="asof">
+    <span>数据源 Naver 证券</span>
+    <span>截至 2026-09-22</span>
+    <span>构建 2026-09-22 08:13</span>
+  </div>
+</header>
+<section>
+  <h2>SK 海力士 <span class="n">SK하이닉스 &middot; 000660 &middot; 1996 – 2026 · 31 个年度</span></h2>
+  <div class="panel">
+    <div class="pad" style="padding-bottom:6px"><svg class="ch wide" viewBox="0 0 880 300" role="img" aria-label="外资持股率历年走势,最新 50.2%"><line class="grid" x1="52" y1="266.0" x2="854" y2="266.0"/><text x="45" y="270" text-anchor="end" font-size="12">0%</text><line class="grid" x1="52" y1="225.3" x2="854" y2="225.3"/><text x="45" y="230" text-anchor="end" font-size="12">10%</text><line class="grid" x1="52" y1="184.7" x2="854" y2="184.7"/><text x="45" y="189" text-anchor="end" font-size="12">20%</text><line class="grid" x1="52" y1="144.0" x2="854" y2="144.0"/><text x="45" y="148" text-anchor="end" font-size="12">30%</text><line class="grid" x1="52" y1="103.3" x2="854" y2="103.3"/><text x="45" y="108" text-anchor="end" font-size="12">40%</text><line class="grid" x1="52" y1="62.7" x2="854" y2="62.7"/><text x="45" y="67" text-anchor="end" font-size="12">50%</text><line class="grid" x1="52" y1="22.0" x2="854" y2="22.0"/><text x="45" y="26" text-anchor="end" font-size="12">60%</text><text x="52.0" y="284" text-anchor="middle" font-size="12">96</text><text x="132.2" y="284" text-anchor="middle" font-size="12">99</text><text x="212.4" y="284" text-anchor="middle" font-size="12">02</text><text x="292.6" y="284" text-anchor="middle" font-size="12">05</text><text x="372.8" y="284" text-anchor="middle" font-size="12">08</text><text x="453.0" y="284" text-anchor="middle" font-size="12">11</text><text x="533.2" y="284" text-anchor="middle" font-size="12">14</text><text x="613.4" y="284" text-anchor="middle" font-size="12">17</text><text x="693.6" y="284" text-anchor="middle" font-size="12">20</text><text x="773.8" y="284" text-anchor="middle" font-size="12">23</text><text x="854.0" y="284" text-anchor="middle" font-size="12">26</text><path class="s1-area" d="M 52 266 L 52.0 266.0 L 78.7 224.1 L 105.5 251.6 L 132.2 219.6 L 158.9 121.4 L 185.7 233.5 L 212.4 262.9 L 239.1 262.0 L 265.9 243.8 L 292.6 189.6 L 319.3 180.4 L 346.1 164.4 L 372.8 215.5 L 399.5 164.6 L 426.3 197.6 L 453.0 172.0 L 479.7 164.8 L 506.5 91.4 L 533.2 63.0 L 559.9 74.2 L 586.7 57.3 L 613.4 72.7 L 640.1 69.3 L 666.9 61.3 L 693.6 63.8 L 720.3 67.0 L 747.1 63.8 L 773.8 49.8 L 800.5 43.5 L 827.3 47.1 L 854.0 62.0 L 854 266 Z"/><path class="s1-line" d="M 52.0 266.0 L 78.7 224.1 L 105.5 251.6 L 132.2 219.6 L 158.9 121.4 L 185.7 233.5 L 212.4 262.9 L 239.1 262.0 L 265.9 243.8 L 292.6 189.6 L 319.3 180.4 L 346.1 164.4 L 372.8 215.5 L 399.5 164.6 L 426.3 197.6 L 453.0 172.0 L 479.7 164.8 L 506.5 91.4 L 533.2 63.0 L 559.9 74.2 L 586.7 57.3 L 613.4 72.7 L 640.1 69.3 L 666.9 61.3 L 693.6 63.8 L 720.3 67.0 L 747.1 63.8 L 773.8 49.8 L 800.5 43.5 L 827.3 47.1 L 854.0 62.0"/><circle class="dot" cx="800.5" cy="43.5" r="4"/><circle class="dot" cx="854.0" cy="62.0" r="4"/><text class="val" x="800.5" y="34.5" text-anchor="middle" font-size="13">54.7%</text><text class="val" x="854.0" y="86.0" text-anchor="end" font-size="13">50.2%</text></svg><svg class="ch narrow" viewBox="0 0 380 250" role="img" aria-label="外资持股率历年走势,最新 50.2%"><line class="grid" x1="42" y1="220.0" x2="366" y2="220.0"/><text x="35" y="224" text-anchor="end" font-size="11">0%</text><line class="grid" x1="42" y1="186.3" x2="366" y2="186.3"/><text x="35" y="190" text-anchor="end" font-size="11">10%</text><line class="grid" x1="42" y1="152.7" x2="366" y2="152.7"/><text x="35" y="157" text-anchor="end" font-size="11">20%</text><line class="grid" x1="42" y1="119.0" x2="366" y2="119.0"/><text x="35" y="123" text-anchor="end" font-size="11">30%</text><line class="grid" x1="42" y1="85.3" x2="366" y2="85.3"/><text x="35" y="89" text-anchor="end" font-size="11">40%</text><line class="grid" x1="42" y1="51.7" x2="366" y2="51.7"/><text x="35" y="56" text-anchor="end" font-size="11">50%</text><line class="grid" x1="42" y1="18.0" x2="366" y2="18.0"/><text x="35" y="22" text-anchor="end" font-size="11">60%</text><text x="42.0" y="237" text-anchor="middle" font-size="11">96</text><text x="106.8" y="237" text-anchor="middle" font-size="11">02</text><text x="171.6" y="237" text-anchor="middle" font-size="11">08</text><text x="236.4" y="237" text-anchor="middle" font-size="11">14</text><text x="301.2" y="237" text-anchor="middle" font-size="11">20</text><text x="366.0" y="237" text-anchor="middle" font-size="11">26</text><path class="s1-area" d="M 42 220 L 42.0 220.0 L 52.8 185.3 L 63.6 208.1 L 74.4 181.6 L 85.2 100.3 L 96.0 193.1 L 106.8 217.4 L 117.6 216.7 L 128.4 201.7 L 139.2 156.8 L 150.0 149.2 L 160.8 135.9 L 171.6 178.2 L 182.4 136.1 L 193.2 163.4 L 204.0 142.1 L 214.8 136.3 L 225.6 75.5 L 236.4 51.9 L 247.2 61.2 L 258.0 47.2 L 268.8 60.0 L 279.6 57.2 L 290.4 50.5 L 301.2 52.6 L 312.0 55.2 L 322.8 52.6 L 333.6 41.0 L 344.4 35.8 L 355.2 38.8 L 366.0 51.1 L 366 220 Z"/><path class="s1-line" d="M 42.0 220.0 L 52.8 185.3 L 63.6 208.1 L 74.4 181.6 L 85.2 100.3 L 96.0 193.1 L 106.8 217.4 L 117.6 216.7 L 128.4 201.7 L 139.2 156.8 L 150.0 149.2 L 160.8 135.9 L 171.6 178.2 L 182.4 136.1 L 193.2 163.4 L 204.0 142.1 L 214.8 136.3 L 225.6 75.5 L 236.4 51.9 L 247.2 61.2 L 258.0 47.2 L 268.8 60.0 L 279.6 57.2 L 290.4 50.5 L 301.2 52.6 L 312.0 55.2 L 322.8 52.6 L 333.6 41.0 L 344.4 35.8 L 355.2 38.8 L 366.0 51.1"/><circle class="dot" cx="344.4" cy="35.8" r="4"/><circle class="dot" cx="366.0" cy="51.1" r="4"/><text class="val" x="344.4" y="26.799999999999997" text-anchor="middle" font-size="12">54.7%</text><text class="val" x="366.0" y="74.1" text-anchor="end" font-size="12">50.2%</text></svg></div>
+    <div class="flowbox">
+      <div><span class="fk">近 60 日 外资净买超</span><span class="fv neg">-13,811,192</span></div>
+      <div><span class="fk">机构</span><span class="fv neg">-3,574,416</span></div>
+      <div><span class="fk">个人</span><span class="fv pos">+2,543,580</span></div>
+      <div><span class="fk">区间</span><span class="fv" style="font-size:13px;color:var(--muted)">06/26 – 09/21</span></div>
+    </div>
+    <div class="tw"><table class="own">
+      <thead><tr><th>年度</th><th class="num">年末外资持股 %</th><th class="num">同比 pp</th>
+      <th class="num">年内高 / 低</th><th class="num">年末收盘 &#8361;</th><th class="ev">事件</th></tr></thead>
+      <tbody><tr><td class="yr">1996</td><td class="num big">0.00</td><td class="num" data-l="同比">—</td><td class="num dim" data-l="年内高/低">0.00 / 0.00</td><td class="num dim" data-l="年末收盘">232,871</td><td class="src" data-l="事件">现代电子产业上市(12/26)</td></tr><tr><td class="yr">1997</td><td class="num big">10.31</td><td class="num" class="chg-up" data-l="同比">+10.31</td><td class="num dim" data-l="年内高/低">11.75 / 0.00</td><td class="num dim" data-l="年末收盘">250,337</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">1998</td><td class="num big">3.54</td><td class="num" class="chg-dn" data-l="同比">-6.77</td><td class="num dim" data-l="年内高/低">10.31 / 3.16</td><td class="num dim" data-l="年末收盘">419,199</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">1999</td><td class="num big">11.41</td><td class="num" class="chg-up" data-l="同比">+7.87</td><td class="num dim" data-l="年内高/低">11.41 / 0.00</td><td class="num dim" data-l="年末收盘">473,074</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2000</td><td class="num big">35.55</td><td class="num" class="chg-up" data-l="同比">+24.14</td><td class="num dim" data-l="年内高/低">45.82 / 10.26</td><td class="num dim" data-l="年末收盘">79,009</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2001</td><td class="num big">8.00</td><td class="num" class="chg-dn" data-l="同比">-27.55</td><td class="num dim" data-l="年内高/低">53.39 / 7.42</td><td class="num dim" data-l="年末收盘">47,503</td><td class="src" data-l="事件">债权团接管,更名海力士半导体,大规模减资</td></tr><tr><td class="yr">2002</td><td class="num big">0.77</td><td class="num" class="chg-dn" data-l="同比">-7.23</td><td class="num dim" data-l="年内高/低">8.12 / 0.63</td><td class="num dim" data-l="年末收盘">5,496</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2003</td><td class="num big">0.98</td><td class="num" class="chg-up" data-l="同比">+0.21</td><td class="num dim" data-l="年内高/低">15.17 / 0.46</td><td class="num dim" data-l="年末收盘">5,600</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2004</td><td class="num big">5.45</td><td class="num" class="chg-up" data-l="同比">+4.47</td><td class="num dim" data-l="年内高/低">7.65 / 0.98</td><td class="num dim" data-l="年末收盘">11,650</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2005</td><td class="num big">18.78</td><td class="num" class="chg-up" data-l="同比">+13.33</td><td class="num dim" data-l="年内高/低">20.15 / 4.49</td><td class="num dim" data-l="年末收盘">35,300</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2006</td><td class="num big">21.04</td><td class="num" class="chg-up" data-l="同比">+2.26</td><td class="num dim" data-l="年内高/低">27.94 / 18.74</td><td class="num dim" data-l="年末收盘">36,450</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2007</td><td class="num big">24.99</td><td class="num" class="chg-up" data-l="同比">+3.95</td><td class="num dim" data-l="年内高/低">25.25 / 19.52</td><td class="num dim" data-l="年末收盘">25,950</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2008</td><td class="num big">12.43</td><td class="num" class="chg-dn" data-l="同比">-12.56</td><td class="num dim" data-l="年内高/低">26.09 / 11.08</td><td class="num dim" data-l="年末收盘">6,700</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2009</td><td class="num big">24.93</td><td class="num" class="chg-up" data-l="同比">+12.50</td><td class="num dim" data-l="年内高/低">24.93 / 10.87</td><td class="num dim" data-l="年末收盘">23,150</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2010</td><td class="num big">16.82</td><td class="num" class="chg-dn" data-l="同比">-8.11</td><td class="num dim" data-l="年内高/低">28.58 / 16.05</td><td class="num dim" data-l="年末收盘">24,000</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2011</td><td class="num big">23.12</td><td class="num" class="chg-up" data-l="同比">+6.31</td><td class="num dim" data-l="年内高/低">25.77 / 16.85</td><td class="num dim" data-l="年末收盘">21,950</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2012</td><td class="num big">24.87</td><td class="num" class="chg-up" data-l="同比">+1.75</td><td class="num dim" data-l="年内高/低">28.52 / 22.99</td><td class="num dim" data-l="年末收盘">25,750</td><td class="src" data-l="事件">SK 电信收购,更名 SK 海力士</td></tr><tr><td class="yr">2013</td><td class="num big">42.92</td><td class="num" class="chg-up" data-l="同比">+18.05</td><td class="num dim" data-l="年内高/低">42.92 / 24.82</td><td class="num dim" data-l="年末收盘">36,800</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2014</td><td class="num big">49.92</td><td class="num" class="chg-up" data-l="同比">+6.99</td><td class="num dim" data-l="年内高/低">50.21 / 42.82</td><td class="num dim" data-l="年末收盘">47,750</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2015</td><td class="num big">47.17</td><td class="num" class="chg-dn" data-l="同比">-2.75</td><td class="num dim" data-l="年内高/低">53.33 / 46.34</td><td class="num dim" data-l="年末收盘">30,750</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2016</td><td class="num big">51.32</td><td class="num" class="chg-up" data-l="同比">+4.15</td><td class="num dim" data-l="年内高/低">51.92 / 46.66</td><td class="num dim" data-l="年末收盘">44,700</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2017</td><td class="num big">47.53</td><td class="num" class="chg-dn" data-l="同比">-3.79</td><td class="num dim" data-l="年内高/低">51.39 / 47.49</td><td class="num dim" data-l="年末收盘">76,500</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2018</td><td class="num big">48.37</td><td class="num" class="chg-up" data-l="同比">+0.84</td><td class="num dim" data-l="年内高/低">51.12 / 47.40</td><td class="num dim" data-l="年末收盘">60,500</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2019</td><td class="num big">50.34</td><td class="num" class="chg-up" data-l="同比">+1.97</td><td class="num dim" data-l="年内高/低">52.07 / 48.37</td><td class="num dim" data-l="年末收盘">94,100</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2020</td><td class="num big">49.72</td><td class="num" class="chg-dn" data-l="同比">-0.62</td><td class="num dim" data-l="年内高/低">50.99 / 47.08</td><td class="num dim" data-l="年末收盘">118,500</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2021</td><td class="num big">48.94</td><td class="num" class="chg-dn" data-l="同比">-0.78</td><td class="num dim" data-l="年内高/低">50.66 / 45.72</td><td class="num dim" data-l="年末收盘">131,000</td><td class="src" data-l="事件">SK 电信分拆,SK Square 成为持股母公司</td></tr><tr><td class="yr">2022</td><td class="num big">49.71</td><td class="num" class="chg-up" data-l="同比">+0.77</td><td class="num dim" data-l="年内高/低">51.12 / 48.99</td><td class="num dim" data-l="年末收盘">75,000</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2023</td><td class="num big">53.17</td><td class="num" class="chg-up" data-l="同比">+3.46</td><td class="num dim" data-l="年内高/低">53.17 / 49.42</td><td class="num dim" data-l="年末收盘">141,500</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2024</td><td class="num big">54.71</td><td class="num" class="chg-up" data-l="同比">+1.54</td><td class="num dim" data-l="年内高/低">56.41 / 52.98</td><td class="num dim" data-l="年末收盘">173,900</td><td class="src" data-l="事件">HBM 周期,外资持股创历史新高 56.41%</td></tr><tr><td class="yr">2025</td><td class="num big">53.83</td><td class="num" class="chg-dn" data-l="同比">-0.88</td><td class="num dim" data-l="年内高/低">56.32 / 53.14</td><td class="num dim" data-l="年末收盘">651,000</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2026 <span class="ytd">YTD</span></td><td class="num big">50.17</td><td class="num" class="chg-dn" data-l="同比">-3.66</td><td class="num dim" data-l="年内高/低">54.64 / 49.77</td><td class="num dim" data-l="年末收盘">1,823,000</td><td class="src" data-l="事件">8/19 决议 40 万亿韩元自社股回购注销</td></tr></tbody>
+    </table></div>
+  </div>
+</section>
+<section>
+  <h2>SK Square <span class="n">SK스퀘어 &middot; 402340 &middot; 2021 – 2026 · 6 个年度</span></h2>
+  <div class="panel">
+    <div class="pad" style="padding-bottom:6px"><svg class="ch wide" viewBox="0 0 880 300" role="img" aria-label="外资持股率历年走势,最新 46.7%"><line class="grid" x1="52" y1="266.0" x2="854" y2="266.0"/><text x="45" y="270" text-anchor="end" font-size="12">30%</text><line class="grid" x1="52" y1="184.7" x2="854" y2="184.7"/><text x="45" y="189" text-anchor="end" font-size="12">40%</text><line class="grid" x1="52" y1="103.3" x2="854" y2="103.3"/><text x="45" y="108" text-anchor="end" font-size="12">50%</text><line class="grid" x1="52" y1="22.0" x2="854" y2="22.0"/><text x="45" y="26" text-anchor="end" font-size="12">60%</text><text x="52.0" y="284" text-anchor="middle" font-size="12">21</text><text x="212.4" y="284" text-anchor="middle" font-size="12">22</text><text x="372.8" y="284" text-anchor="middle" font-size="12">23</text><text x="533.2" y="284" text-anchor="middle" font-size="12">24</text><text x="693.6" y="284" text-anchor="middle" font-size="12">25</text><text x="854.0" y="284" text-anchor="middle" font-size="12">26</text><path class="s1-area" d="M 52 266 L 52.0 196.4 L 212.4 163.4 L 372.8 138.7 L 533.2 88.0 L 693.6 91.0 L 854.0 130.2 L 854 266 Z"/><path class="s1-line" d="M 52.0 196.4 L 212.4 163.4 L 372.8 138.7 L 533.2 88.0 L 693.6 91.0 L 854.0 130.2"/><circle class="dot" cx="533.2" cy="88.0" r="4"/><circle class="dot" cx="854.0" cy="130.2" r="4"/><text class="val" x="533.2" y="79.0" text-anchor="middle" font-size="13">51.9%</text><text class="val" x="854.0" y="154.2" text-anchor="end" font-size="13">46.7%</text></svg><svg class="ch narrow" viewBox="0 0 380 250" role="img" aria-label="外资持股率历年走势,最新 46.7%"><line class="grid" x1="42" y1="220.0" x2="366" y2="220.0"/><text x="35" y="224" text-anchor="end" font-size="11">30%</text><line class="grid" x1="42" y1="152.7" x2="366" y2="152.7"/><text x="35" y="157" text-anchor="end" font-size="11">40%</text><line class="grid" x1="42" y1="85.3" x2="366" y2="85.3"/><text x="35" y="89" text-anchor="end" font-size="11">50%</text><line class="grid" x1="42" y1="18.0" x2="366" y2="18.0"/><text x="35" y="22" text-anchor="end" font-size="11">60%</text><text x="42.0" y="237" text-anchor="middle" font-size="11">21</text><text x="106.8" y="237" text-anchor="middle" font-size="11">22</text><text x="171.6" y="237" text-anchor="middle" font-size="11">23</text><text x="236.4" y="237" text-anchor="middle" font-size="11">24</text><text x="301.2" y="237" text-anchor="middle" font-size="11">25</text><text x="366.0" y="237" text-anchor="middle" font-size="11">26</text><path class="s1-area" d="M 42 220 L 42.0 162.4 L 106.8 135.0 L 171.6 114.6 L 236.4 72.6 L 301.2 75.1 L 366.0 107.6 L 366 220 Z"/><path class="s1-line" d="M 42.0 162.4 L 106.8 135.0 L 171.6 114.6 L 236.4 72.6 L 301.2 75.1 L 366.0 107.6"/><circle class="dot" cx="236.4" cy="72.6" r="4"/><circle class="dot" cx="366.0" cy="107.6" r="4"/><text class="val" x="236.4" y="63.599999999999994" text-anchor="middle" font-size="12">51.9%</text><text class="val" x="366.0" y="130.6" text-anchor="end" font-size="12">46.7%</text></svg></div>
+    <div class="flowbox">
+      <div><span class="fk">近 60 日 外资净买超</span><span class="fv pos">+639,868</span></div>
+      <div><span class="fk">机构</span><span class="fv neg">-494,178</span></div>
+      <div><span class="fk">个人</span><span class="fv neg">-147,669</span></div>
+      <div><span class="fk">区间</span><span class="fv" style="font-size:13px;color:var(--muted)">06/26 – 09/21</span></div>
+    </div>
+    <div class="tw"><table class="own">
+      <thead><tr><th>年度</th><th class="num">年末外资持股 %</th><th class="num">同比 pp</th>
+      <th class="num">年内高 / 低</th><th class="num">年末收盘 &#8361;</th><th class="ev">事件</th></tr></thead>
+      <tbody><tr><td class="yr">2021</td><td class="num big">38.56</td><td class="num" data-l="同比">—</td><td class="num dim" data-l="年内高/低">42.90 / 37.70</td><td class="num dim" data-l="年末收盘">66,400</td><td class="src" data-l="事件">11/29 自 SK 电信分割上市</td></tr><tr><td class="yr">2022</td><td class="num big">42.62</td><td class="num" class="chg-up" data-l="同比">+4.06</td><td class="num dim" data-l="年内高/低">42.62 / 37.20</td><td class="num dim" data-l="年末收盘">33,550</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2023</td><td class="num big">45.65</td><td class="num" class="chg-up" data-l="同比">+3.03</td><td class="num dim" data-l="年内高/低">45.71 / 42.11</td><td class="num dim" data-l="年末收盘">52,600</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2024</td><td class="num big">51.89</td><td class="num" class="chg-up" data-l="同比">+6.24</td><td class="num dim" data-l="年内高/低">53.21 / 45.64</td><td class="num dim" data-l="年末收盘">79,300</td><td class="src" data-l="事件">外资持股升至 51.89%</td></tr><tr><td class="yr">2025</td><td class="num big">51.52</td><td class="num" class="chg-dn" data-l="同比">-0.37</td><td class="num dim" data-l="年内高/低">53.64 / 51.33</td><td class="num dim" data-l="年末收盘">368,000</td><td class="src" data-l="事件"></td></tr><tr><td class="yr">2026 <span class="ytd">YTD</span></td><td class="num big">46.70</td><td class="num" class="chg-dn" data-l="同比">-4.82</td><td class="num dim" data-l="年内高/低">51.55 / 45.30</td><td class="num dim" data-l="年末收盘">1,120,000</td><td class="src" data-l="事件">海力士回购注销推进,持股比例将被动上升</td></tr></tbody>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <h2>方法与口径</h2>
+  <div class="panel pad notes">
+    <ul>
+      <li><span><b>外资持股率取自 Naver 证券日线接口的 <code>foreignRetentionRate</code> 字段</b>,逐日提供,海力士可回溯至 1996-12-26 上市首日。表中「年末」为该年最后一个交易日的数值。</span></li>
+      <li><span><b>已做三源交叉验证。</b> 当前值:海力士 Naver 50.10% / AlphaSquare 50.2% / WiseReport 50.10%;SK Square 46.50% / 46.49% / 46.50%。历史时点抽查:2026-03-06 海力士 53.76%,与公开报道的「约 53%」一致。上市日期 1996-12-26 与 AlphaSquare 登记的 <code>list_date</code> 完全吻合。</span></li>
+      <li class="warn"><span><b>没有做到的部分:逐年「外资/投信/自营」分项买卖超。</b> 韩国交易所数据系统(data.krx.co.kr)现已要求登录账号,Naver 的旧版投资者动向页面(<code>frgn.naver</code>)已下线,其新版接口忽略翻页参数、最多只返回最近 60 个交易日。因此本表只能给出最近 60 日的分项净买超,更早的年度分项数据需要 KRX 账号或付费终端。</span></li>
+      <li><span><b>净买超三项不轧平。</b> Naver 只给外资 / 机构 / 个人三类,不含「其他法人」等类别,三者相加不等于零。</span></li>
+      <li class="warn"><span><b>历史价格为复权价,不可直接比较。</b> 海力士 2001–2003 年经历债权团接管与大规模减资,复权后的早期价格与当时实际股价差异极大。外资持股率不受此影响。</span></li>
+      <li><span><b>2001 年的异常值。</b> 该年外资持股率在 7.42%–53.39% 间剧烈波动,年末落至 8.00%,主要与当年的减资及债转股导致股本基数剧变有关,不宜按常规年份解读。</span></li>
+    </ul>
+  </div>
+</section>
+<div class="colophon">
+  由 <code>sk-discount ownership --html</code> 生成。外资持股率与投资者净买超:Naver 证券
+  · 当前值交叉验证:AlphaSquare、WiseReport(整合 DART / KRX 公示)。
+</div>
+</div>
+</body>
+</html>
