@@ -16,6 +16,7 @@ import re
 import statistics
 import string
 import sys
+import time
 import urllib.error
 import urllib.request
 
@@ -441,10 +442,11 @@ def cmd_calibrate(args, f):
     print()
 
 
-def cmd_html(args, f):
+def build_page(source="alphasquare"):
+    """抓取全部数据并渲染整页,返回 (html, 摘要 dict)。"""
     nav = nav_page()
     official = dict(nav["series"])
-    if args.source == "alphasquare":
+    if source == "alphasquare":
         hy, sq = alpha_series("000660"), alpha_series("402340")
         src_name = "AlphaSquare"
     else:
@@ -476,11 +478,88 @@ def cmd_html(args, f):
         "calib": calib, "n_total": len(days),
         "built": dt.datetime.now().strftime("%Y-%m-%d %H:%M"),
     })
+    last = rows[-1]
+    return html, {"source": src_name, "days": len(rows), "div": len(div),
+                  "asof": last["d"], "c": round(last["c"], 4),
+                  "hynix": last["hy"], "skq": last["sq"]}
+
+
+def cmd_html(args, f):
+    html, info = build_page(args.source)
     with open(args.out, "w", encoding="utf-8") as fh:
         fh.write(html)
     size = os.path.getsize(args.out)
-    print(f"已写出 {args.out}({size / 1024:.0f} KB,{len(rows)} 个交易日,"
-          f"行情源 {src_name},分歧 {len(div)} 天)")
+    print(f"已写出 {args.out}({size / 1024:.0f} KB,{info['days']} 个交易日,"
+          f"行情源 {info['source']},分歧 {info['div']} 天,{info['asof']} c={info['c']})")
+
+
+def cmd_serve(args, f):
+    """本地实时服务:每次打开都重新抓取当日最新价格并渲染。"""
+    import http.server
+
+    state = {"html": None, "info": None, "at": 0.0, "err": None}
+
+    def refresh(force=False):
+        now = time.time()
+        if not force and state["html"] and now - state["at"] < args.cache:
+            return
+        try:
+            state["html"], state["info"] = build_page(args.source)
+            state["at"], state["err"] = now, None
+        except DataError as e:
+            state["err"] = str(e)
+            if not state["html"]:
+                raise
+
+    class Handler(http.server.BaseHTTPRequestHandler):
+        def log_message(self, fmt, *a):
+            if args.verbose:
+                sys.stderr.write("  %s %s\n" % (self.address_string(), fmt % a))
+
+        def _send(self, code, body, ctype):
+            data = body.encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", ctype + "; charset=utf-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(data)
+
+        def do_GET(self):
+            path = self.path.split("?")[0]
+            try:
+                refresh(force=(path == "/refresh"))
+            except DataError as e:
+                self._send(503, f"取数失败:{e}", "text/plain")
+                return
+            if path in ("/", "/index.html", "/refresh"):
+                age = int(time.time() - state["at"])
+                note = (f'<div style="position:fixed;left:0;right:0;bottom:0;padding:6px 12px;'
+                        f'font:12px/1.5 ui-monospace,monospace;background:#111214;color:#f4f4f3;'
+                        f'text-align:center">实时服务 · 数据 {age}s 前抓取 · '
+                        f'<a href="/refresh" style="color:#9ec5f4">强制刷新</a>'
+                        + (f' · <span style="color:#eb6834">上次刷新失败:{state["err"]}</span>'
+                           if state["err"] else "") + "</div>")
+                self._send(200, state["html"].replace("</body>", note + "</body>"), "text/html")
+            elif path == "/api.json":
+                self._send(200, json.dumps(state["info"], ensure_ascii=False, indent=2),
+                           "application/json")
+            else:
+                self._send(404, "not found", "text/plain")
+
+    refresh(force=True)
+    srv = http.server.ThreadingHTTPServer((args.host, args.port), Handler)
+    url = f"http://{args.host}:{args.port}/"
+    print(f"  {f.bold('SK Square 折价追踪 · 实时服务')}")
+    print(f"  {url}        {f.dim('页面(每次打开重新取数)')}")
+    print(f"  {url}api.json  {f.dim('当前读数 JSON')}")
+    foot = f"缓存 {args.cache}s · 行情源 {state['info']['source']} · Ctrl-C 停止"
+    print(f"  {f.dim(foot)}")
+    try:
+        srv.serve_forever()
+    except KeyboardInterrupt:
+        print("\n  已停止。")
+        srv.shutdown()
 
 
 _OWN_TMPL = """<!doctype html>
@@ -1255,6 +1334,15 @@ def build_parser():
                    help="行情源,默认 alphasquare")
     add_global(w, False)
 
+    v = sub.add_parser("serve", help="启动本地实时服务,每次打开重新抓取当日价格")
+    v.add_argument("-p", "--port", type=int, default=8765, help="端口,默认 8765")
+    v.add_argument("--host", default="127.0.0.1", help="绑定地址,默认仅本机 127.0.0.1")
+    v.add_argument("--cache", type=int, default=60, metavar="S", help="取数缓存秒数,默认 60")
+    v.add_argument("--source", choices=["alphasquare", "yahoo"], default="alphasquare",
+                   help="行情源,默认 alphasquare")
+    v.add_argument("--verbose", action="store_true", help="打印访问日志")
+    add_global(v, False)
+
     o = sub.add_parser("ownership", help="外资持股结构历年统计(海力士 / SK Square)")
     o.add_argument("--html", metavar="FILE", help="写出独立网页而不是打印表格")
     o.add_argument("--csv", action="store_true", help="输出 CSV")
@@ -1272,7 +1360,8 @@ def main(argv=None):
     f = Fmt(color)
     handlers = {None: cmd_now, "now": cmd_now, "history": cmd_history,
                 "calibrate": cmd_calibrate, "params": cmd_params, "html": cmd_html,
-                "ownership": cmd_ownership}
+                "ownership": cmd_ownership,
+                "serve": cmd_serve}
     try:
         handlers[args.cmd](args, f)
     except DataError as e:

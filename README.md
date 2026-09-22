@@ -38,22 +38,55 @@ sk-discount history --csv > c.csv            # 导出 CSV
 
 sk-discount calibrate                        # 校验内置持股数是否仍然成立
 sk-discount params                           # 结构参数、公式、数据源
+
+sk-discount serve                            # 本地实时服务,每次打开重新取数
+sk-discount html                             # 生成静态快照网页
+sk-discount ownership                        # 外资持股结构历年统计
 ```
 
 区间可选 `3m` `6m` `1y` `2y` `5y`。
 
-## 离线网页版
+## 动态更新
 
-`sk-discount.html` 是一个单文件网页,双击即可打开,**不需要网络、不依赖任何 CDN**。
+**先说清楚一个硬约束:网页自己取不到韩股行情。** Yahoo、Naver(两个域)、
+AlphaSquare 四个接口全部不返回 `Access-Control-Allow-Origin` 头,浏览器的跨域策略
+会直接拦掉;本地 `file://`、GitHub Pages、claude.ai Artifact 都一样。Artifact 的
+运行时能力里也没有「抓取任意外部接口」这一项(`mcp` 只能调用户已连接的 connector,
+`sample` 是问模型——拿它取股价等于让模型编数字)。
 
-用 CLI 重新生成(抓最新数据):
+所以取数必须发生在服务端。有两条路径:
+
+### 1. 本地实时服务 —— 每次打开都重新取数
 
 ```sh
-sk-discount html                      # 默认写到 ./sk-discount.html,行情用 AlphaSquare
+sk-discount serve                 # http://127.0.0.1:8765
+sk-discount serve -p 9000 --cache 0 --source yahoo
+```
+
+打开页面即抓取当日最新价格重新渲染,底部固定条显示数据抓取于几秒前,可点「强制刷新」。
+`--cache` 控制重复抓取的最小间隔(默认 60 秒,设 0 表示每次请求都抓)。
+另有 `/api.json` 返回当前读数。默认只绑定 `127.0.0.1`,不对外网暴露。
+
+### 2. GitHub Actions —— 每个交易日自动重建
+
+`.github/workflows/refresh.yml` 在每个工作日 07:10 UTC(KRX 收盘 40 分钟后)运行,
+重新生成 `docs/index.html` 与 `docs/ownership.html` 并提交。页面带构建时间戳,
+工作流会先剔掉时间戳行再比对,**只有行情或 NAV 真的变化时才提交**,非交易日不产生噪音提交。
+AlphaSquare 取数失败时自动退回 Yahoo。
+
+要拿到一个长期有效的公开地址:仓库 Settings → Pages → Source 选 `main` 分支的
+`/docs` 目录,之后 `https://<用户名>.github.io/SKtommy/` 就是始终最新的折价页。
+
+### 3. 手动生成一份快照
+
+```sh
+sk-discount html                      # 写到 ./sk-discount.html
 sk-discount html --source yahoo -o out.html
 ```
 
-**关键约束:页面在完全不执行 JavaScript 的情况下也必须能读完。** 聊天软件的内置
+生成出来的页面是单文件,双击即可打开,不需要网络、不依赖任何 CDN。
+
+**另一个关键约束:页面在完全不执行 JavaScript 的情况下也必须能读完。** 聊天软件的内置
 预览、邮件客户端、部分沙箱 iframe 都不跑脚本,而这正是最常见的打开方式。所以:
 
 - 折线图是**预渲染的静态 SVG**,直接写在 HTML 里,不是 JS 画的
@@ -66,7 +99,7 @@ sk-discount html --source yahoo -o out.html
 对照,以及「数据源校验」面板(列出行情源与官方 NAV 基准不一致的全部 10 天)。
 
 行情来自 AlphaSquare(`api.alphasquare.co.kr/data/v3/prices/candles`,stock_id 1456 / 3493)。
-页面数据是生成时的快照;要看最新数字重跑 `sk-discount html`,或在页面里手动填两个股价。
+静态生成的页面是快照;要始终看到当日最新值,用上面的 `serve` 或 Actions 两种方式。
 
 ## 外资持股结构统计
 
