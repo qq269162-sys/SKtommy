@@ -685,6 +685,38 @@ def _svg_own(series, W, H, ml, mr, mt, mb, fs, xticks):
             f'aria-label="外资持股率历年走势,最新 {last["end"]:.1f}%">' + "".join(g) + "</svg>")
 
 
+def _lookup_grid(hy0, sq0):
+    """预渲染的二维查表:行=海力士股价,列=SK Q 股价,格=成本系数 c。
+
+    计算器依赖 JavaScript,而聊天内置预览、邮件客户端等环境不执行脚本。
+    查表把常用价位区间的结果直接算好写进 HTML,这些场景下照样能查。
+    """
+    hstep = 100_000 if hy0 >= 1_000_000 else 50_000
+    sstep = 50_000 if sq0 >= 500_000 else 25_000
+    hbase = max(hstep, round(hy0 / hstep) * hstep)
+    sbase = max(sstep, round(sq0 / sstep) * sstep)
+    hys = [h for h in (hbase + (i - 5) * hstep for i in range(11)) if h > 0]
+    sqs = [s for s in (sbase + (j - 4) * sstep for j in range(9)) if s > 0]
+    hit_h = min(hys, key=lambda h: abs(h - hy0))
+    hit_s = min(sqs, key=lambda s: abs(s - sq0))
+
+    # 窄屏会按位置隐藏偶数列,命中列可能正好被隐藏,故给它打上保留标记。
+    head = "".join(f'<th class="num{" kc" if s == hit_s else ""}">{s:,}</th>' for s in sqs)
+    body = []
+    for h in hys:
+        cells = []
+        for s in sqs:
+            c = s / (K * h)
+            cls = "kc" if s == hit_s else ""
+            if h == hit_h and s == hit_s:
+                cls += " hit"
+            cells.append(f'<td class="num {cls}">{c:.3f}</td>')
+        rowcls = ' class="hitrow"' if h == hit_h else ""
+        body.append(f'<tr{rowcls}><th class="rh">{h:,}</th>{"".join(cells)}</tr>')
+    return (f'<thead><tr><th class="rh corner">海力士 \\ SK&nbsp;Q</th>{head}</tr></thead>'
+            f'<tbody>{"".join(body)}</tbody>')
+
+
 def _own_table(rows, code, ytd_year):
     body = []
     ev = OWN_EVENTS.get(code, {})
@@ -945,6 +977,22 @@ tbody tr:last-child td{border-bottom:none}
  table.cmp td.num{white-space:normal}
  table.cmp .to{display:block;line-height:1.1}
 }
+/* 手算查表 */
+table.lk{font-size:12.5px;font-variant-numeric:tabular-nums;font-family:var(--mono)}
+table.lk th,table.lk td{padding:7px 9px;text-align:right;white-space:nowrap}
+table.lk thead th{font-size:10.5px;letter-spacing:.04em;text-transform:none}
+table.lk th.rh{position:sticky;left:0;background:var(--surface);text-align:right;
+ color:var(--ink-2);font-weight:600;border-right:1px solid var(--rule)}
+table.lk th.corner{color:var(--muted);font-size:10px;text-align:left}
+table.lk tr.hitrow th.rh,table.lk tr.hitrow td{background:var(--s1-wash-2)}
+table.lk td.hit{background:var(--s1);color:#fff;font-weight:700;border-radius:2px}
+@media (max-width:600px){
+ table.lk{font-size:10.5px}
+ table.lk th,table.lk td{padding:6px 3px}
+ table.lk thead th{font-size:9.5px}
+ table.lk th:nth-child(even):not(.rh),table.lk td:nth-child(even){display:none}
+ table.lk th.kc,table.lk td.kc{display:table-cell!important}
+}
 .dt-wrap{max-height:320px;overflow:auto;border-top:1px solid var(--rule-soft)}
 .dt-wrap thead th{position:sticky;top:0;background:var(--surface)}
 @media (max-width:600px){.dt-wrap table{font-size:11.5px}.dt-wrap th,.dt-wrap td{padding:6px 5px}}
@@ -1010,7 +1058,24 @@ _HTML_TMPL = """<!doctype html>
       <div class="field"><label for="pSq">SK스퀘어 402340 股价 &#8361;</label>
         <input id="pSq" type="number" inputmode="numeric" step="1000" min="1" value="$sq"></div>
     </div>
-    <p class="nojs">改上面两个数字可即时重算(需浏览器执行脚本;若在不跑脚本的预览里打开,显示的是 $asof 收盘快照)。</p>
+    <p class="nojs"><b>改这两个数字即自动重算,没有「计算」按钮</b> —— 每敲一个字符上面的大数字、折价、对照条就跟着变。
+    这需要浏览器执行脚本:在 Chrome / Safari 里打开本文件有效;在聊天软件的内置预览、邮件客户端等不跑脚本的环境里,
+    输入框不会有反应,此时请用下面的查表。当前显示的是 $asof 收盘值。</p>
+  </div>
+</section>
+
+<section>
+  <h2>手算查表 <span class="n">不需要脚本</span></h2>
+  <div class="panel">
+    <div class="tw"><table class="lk">$lookup</table></div>
+    <div class="pad notes" style="border-top:1px solid var(--rule)">
+      <ul>
+        <li><span><b>怎么查:</b>左列找 SK 海力士股价,顶行找 SK Square 股价,交叉格就是 c —— 买 &#8361;1 海力士资产要付多少。
+        高亮格是 $asof 的实际收盘位置。折价率 = 1 &minus; c。</span></li>
+        <li><span><b>表外的价位怎么办:</b>c 对两个价格都是线性的,可直接按比例推。例如 SK Q 股价翻倍则 c 翻倍;
+        海力士股价翻倍则 c 减半。精确公式:<code>c = P_SKQ &divide; ($k &times; P海力士)</code>。</span></li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -1273,6 +1338,7 @@ def render_html(rows, div_rows, meta):
         calib=meta["calib"],
         other=f"{meta['other_krw'] / 1e12:.2f}",
         built=meta["built"],
+        lookup=_lookup_grid(last["hy"], last["sq"]),
     )
 
 
